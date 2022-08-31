@@ -1,0 +1,3 @@
+usr/lib/${DEB_HOST_MULTIARCH}/qt6/qml/QtQuick/Scene3D/libqtquickscene3dplugin.so
+usr/lib/${DEB_HOST_MULTIARCH}/qt6/qml/QtQuick/Scene3D/plugins.qmltypes
+usr/lib/${DEB_HOST_MULTIARCH}/qt6/qml/QtQuick/Scene3D/qmldir

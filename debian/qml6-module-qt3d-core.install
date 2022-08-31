@@ -1,0 +1,3 @@
+usr/lib/${DEB_HOST_MULTIARCH}/qt6/qml/Qt3D/Core/libquick3dcoreplugin.so
+usr/lib/${DEB_HOST_MULTIARCH}/qt6/qml/Qt3D/Core/plugins.qmltypes
+usr/lib/${DEB_HOST_MULTIARCH}/qt6/qml/Qt3D/Core/qmldir

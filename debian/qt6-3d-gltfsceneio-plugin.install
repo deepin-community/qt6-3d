@@ -1,0 +1,3 @@
+usr/lib/${DEB_HOST_MULTIARCH}/qt6/plugins/geometryloaders/libgltfgeometryloader.so
+usr/lib/${DEB_HOST_MULTIARCH}/qt6/plugins/sceneparsers/libgltfsceneexport.so
+usr/lib/${DEB_HOST_MULTIARCH}/qt6/plugins/sceneparsers/libgltfsceneimport.so

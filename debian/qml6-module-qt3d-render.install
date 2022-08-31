@@ -1,0 +1,3 @@
+usr/lib/${DEB_HOST_MULTIARCH}/qt6/qml/Qt3D/Render/libquick3drenderplugin.so
+usr/lib/${DEB_HOST_MULTIARCH}/qt6/qml/Qt3D/Render/plugins.qmltypes
+usr/lib/${DEB_HOST_MULTIARCH}/qt6/qml/Qt3D/Render/qmldir

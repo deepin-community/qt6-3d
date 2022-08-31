@@ -1,0 +1,3 @@
+usr/lib/${DEB_HOST_MULTIARCH}/qt6/qml/Qt3D/Logic/libquick3dlogicplugin.so
+usr/lib/${DEB_HOST_MULTIARCH}/qt6/qml/Qt3D/Logic/plugins.qmltypes
+usr/lib/${DEB_HOST_MULTIARCH}/qt6/qml/Qt3D/Logic/qmldir

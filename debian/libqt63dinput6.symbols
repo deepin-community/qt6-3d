@@ -1,4 +1,4 @@
-# SymbolsHelper-Confirmed: 6.2.2 amd64 armel armhf i386 mipsel
+# SymbolsHelper-Confirmed: 6.2.4 arm64
 libQt63DInput.so.6 libqt63dinput6 #MINVER#
 * Build-Depends-Package: qt6-3d-dev
  _ZGVZN9QMetaType21registerConverterImplI5QListIiE9QIterableI13QMetaSequenceEEEbSt8functionIFbPKvPvEES_S_E10unregister@Base 6.2.1
@@ -484,7 +484,7 @@ libQt63DInput.so.6 libqt63dinput6 #MINVER#
  _ZNK9Qt3DInput9QKeyEvent10metaObjectEv@Base 6.2.1
  (optional=templinst)_ZNSt8_Rb_treeI7QStringSt4pairIKS0_8QVariantESt10_Select1stIS4_ESt4lessIS0_ESaIS4_EE16_M_insert_uniqueIS4_EES1_ISt17_Rb_tree_iteratorIS4_EbEOT_@Base 6.2.1
  (optional=templinst)_ZNSt8_Rb_treeI7QStringSt4pairIKS0_8QVariantESt10_Select1stIS4_ESt4lessIS0_ESaIS4_EE24_M_get_insert_unique_posERS2_@Base 6.2.1
- (optional=templinst|arch=amd64)_ZNSt8_Rb_treeI7QStringSt4pairIKS0_8QVariantESt10_Select1stIS4_ESt4lessIS0_ESaIS4_EE29_M_get_insert_hint_unique_posESt23_Rb_tree_const_iteratorIS4_ERS2_@Base 6.2.2
+ (optional=templinst|arch=amd64 arm64)_ZNSt8_Rb_treeI7QStringSt4pairIKS0_8QVariantESt10_Select1stIS4_ESt4lessIS0_ESaIS4_EE29_M_get_insert_hint_unique_posESt23_Rb_tree_const_iteratorIS4_ERS2_@Base 6.2.2
  _ZTIN9Qt3DInput11QInputChordE@Base 6.2.1
  _ZTIN9Qt3DInput11QMouseEventE@Base 6.2.1
  _ZTIN9Qt3DInput11QWheelEventE@Base 6.2.1

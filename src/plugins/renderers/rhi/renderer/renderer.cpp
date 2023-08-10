@@ -1,42 +1,6 @@
-/****************************************************************************
-**
-** Copyright (C) 2020 Klaralvdalens Datakonsult AB (KDAB).
-** Copyright (C) 2016 The Qt Company Ltd and/or its subsidiary(-ies).
-** Contact: https://www.qt.io/licensing/
-**
-** This file is part of the Qt3D module of the Qt Toolkit.
-**
-** $QT_BEGIN_LICENSE:LGPL$
-** Commercial License Usage
-** Licensees holding valid commercial Qt licenses may use this file in
-** accordance with the commercial license agreement provided with the
-** Software or, alternatively, in accordance with the terms contained in
-** a written agreement between you and The Qt Company. For licensing terms
-** and conditions see https://www.qt.io/terms-conditions. For further
-** information use the contact form at https://www.qt.io/contact-us.
-**
-** GNU Lesser General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU Lesser
-** General Public License version 3 as published by the Free Software
-** Foundation and appearing in the file LICENSE.LGPL3 included in the
-** packaging of this file. Please review the following information to
-** ensure the GNU Lesser General Public License version 3 requirements
-** will be met: https://www.gnu.org/licenses/lgpl-3.0.html.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 2.0 or (at your option) the GNU General
-** Public license version 3 or any later version approved by the KDE Free
-** Qt Foundation. The licenses are as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL2 and LICENSE.GPL3
-** included in the packaging of this file. Please review the following
-** information to ensure the GNU General Public License requirements will
-** be met: https://www.gnu.org/licenses/gpl-2.0.html and
-** https://www.gnu.org/licenses/gpl-3.0.html.
-**
-** $QT_END_LICENSE$
-**
-****************************************************************************/
+// Copyright (C) 2020 Klaralvdalens Datakonsult AB (KDAB).
+// Copyright (C) 2016 The Qt Company Ltd and/or its subsidiary(-ies).
+// SPDX-License-Identifier: LicenseRef-Qt-Commercial OR LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-only
 
 #include "renderer_p.h"
 #include "rhirendertarget_p.h"
@@ -266,7 +230,7 @@ Renderer::Renderer()
               JobTypes::DirtyShaderGathering)),
       m_ownedContext(false),
       m_RHIResourceManagers(nullptr),
-      m_commandExecuter(new Qt3DRender::Debug::CommandExecuter(this)),
+      m_commandExecuter(new Qt3DRender::DebugRhi::CommandExecuter(this)),
       m_shouldSwapBuffers(true)
 {
     std::fill_n(m_textureTransform, 4, 0.f);
@@ -1184,11 +1148,11 @@ void Renderer::createRenderTarget(RenderTarget *target)
     for (const Attachment &attachment : pack.attachments()) {
         RHITexture *tex = texman->lookupResource(attachment.m_textureUuid);
         if (tex && tex->getRhiTexture()) {
-
             auto rhiTex = tex->getRhiTexture();
             if (!rhiTex->flags().testFlag(QRhiTexture::RenderTarget) ||
                 !rhiTex->flags().testFlag(QRhiTexture::UsedAsTransferSource)) {
                 // UsedAsTransferSource is required if we ever want to read back from the texture
+                rhiTex->destroy();
                 rhiTex->setFlags(rhiTex->flags() | QRhiTexture::RenderTarget|QRhiTexture::UsedAsTransferSource);
                 rhiTex->create();
             }
@@ -1422,11 +1386,11 @@ Renderer::prepareCommandsSubmission(const std::vector<RenderView *> &renderViews
     // Note: we cannot do it in the loop above as we want to be sure that all
     // the VAO which reference the geometry/attributes are properly updated
     RHI_UNIMPLEMENTED;
-    for (Attribute *attribute : qAsConst(m_dirtyAttributes))
+    for (Attribute *attribute : std::as_const(m_dirtyAttributes))
         attribute->unsetDirty();
     m_dirtyAttributes.clear();
 
-    for (Geometry *geometry : qAsConst(m_dirtyGeometry))
+    for (Geometry *geometry : std::as_const(m_dirtyGeometry))
         geometry->unsetDirty();
     m_dirtyGeometry.clear();
 
@@ -1619,7 +1583,6 @@ void Renderer::sendTextureChangesToFrontend(Qt3DCore::QAspectManager *manager)
 
             QAbstractTexturePrivate *dTexture =
                     static_cast<QAbstractTexturePrivate *>(QNodePrivate::get(texture));
-
             dTexture->setStatus(properties.status);
             dTexture->setHandleType(pair.first.handleType);
             dTexture->setHandle(pair.first.handle);
@@ -1834,6 +1797,12 @@ void Renderer::updateResources()
         }
     }
 
+    std::vector<RHITexture *> updatedRHITextures;
+
+    // Create/Update textures. We record the update info to later fill
+    // m_updatedTextureProperties once we are use the RHITextures have been
+    // fully created (as creating the RenderTargets below could change existing
+    // RHITextures)
     {
         const std::vector<HTexture> activeTextureHandles = Qt3DCore::moveAndClear(m_dirtyTextures);
         for (const HTexture &handle : activeTextureHandles) {
@@ -1852,31 +1821,29 @@ void Renderer::updateResources()
         // RHITexture
         if (m_submissionContext != nullptr) {
             RHITextureManager *rhiTextureManager = m_RHIResourceManagers->rhiTextureManager();
-            const std::vector<HRHITexture> &glTextureHandles = rhiTextureManager->activeHandles();
+            const std::vector<HRHITexture> &rhiTextureHandles = rhiTextureManager->activeHandles();
             // Upload texture data
-            for (const HRHITexture &glTextureHandle : glTextureHandles) {
+            for (const HRHITexture &rhiTextureHandle : rhiTextureHandles) {
                 RHI_UNIMPLEMENTED;
-                RHITexture *glTexture = rhiTextureManager->data(glTextureHandle);
+                RHITexture *rhiTexture = rhiTextureManager->data(rhiTextureHandle);
 
-                // We create/update the actual GL texture using the GL context at this point
+                // We create/update the actual RHI texture using the RHI context at this point
                 const RHITexture::TextureUpdateInfo info =
-                        glTexture->createOrUpdateRhiTexture(m_submissionContext.data());
+                        rhiTexture->createOrUpdateRhiTexture(m_submissionContext.data());
 
-                // RHITexture creation provides us width/height/format ... information
-                // for textures which had not initially specified these information
-                // (TargetAutomatic...) Gather these information and store them to be distributed by
-                // a change next frame
-                const QNodeIdVector referenceTextureIds = {
-                    rhiTextureManager->texNodeIdForRHITexture.value(glTexture)
-                };
-                // Store properties and referenceTextureIds
                 if (info.wasUpdated) {
+                    // RHITexture creation provides us width/height/format ... information
+                    // for textures which had not initially specified these information
+                    // (TargetAutomatic...) Gather these information and store them to be distributed by
+                    // a change next frame
+                    const QNodeIdVector referenceTextureIds = { rhiTextureManager->texNodeIdForRHITexture.value(rhiTexture) };
+                    // Store properties and referenceTextureIds
                     Texture::TextureUpdateInfo updateInfo;
                     updateInfo.properties = info.properties;
-                    updateInfo.handleType = QAbstractTexture::OpenGLTextureId;
-                    //                    updateInfo.handle = info.texture ?
-                    //                    QVariant(info.texture->textureId()) : QVariant();
+                    // Record texture updates to notify frontend (we are sure at this stage
+                    // that the internal QRHITexture won't be updated further for this frame
                     m_updatedTextureProperties.push_back({ updateInfo, referenceTextureIds });
+                    updatedRHITextures.push_back(rhiTexture);
                 }
             }
         }
@@ -1890,6 +1857,10 @@ void Renderer::updateResources()
     // -> attachments added/removed
     // -> attachments textures updated (new dimensions, format ...)
     // -> destroy pipelines associated with dirty renderTargets
+
+    // Note: we might end up recreating some of the internal textures when
+    // creating the RenderTarget as those might have been created above without
+    // the proper RenderTarget/TransformSource flags
     {
         RHIRenderTargetManager *rhiRenderTargetManager = m_RHIResourceManagers->rhiRenderTargetManager();
         RenderTargetManager *renderTargetManager = m_nodesManager->renderTargetManager();
@@ -1927,6 +1898,22 @@ void Renderer::updateResources()
                 // Create RenderTarget
                 createRenderTarget(hTarget.data());
             }
+        }
+    }
+
+
+    // Note: we can only retrieve the internal QRhiResource handle to set on
+    // the frontend nodes after we are sure we are no going to modify the
+    // QRhiTextures (which happens when we create the Textures or the
+    // RenderTargets)
+    {
+        for (size_t i = 0, m = m_updatedTextureProperties.size(); i < m; ++i) {
+            auto &updateInfoPair = m_updatedTextureProperties[i];
+            RHITexture *rhiTexture = updatedRHITextures[i];
+            QRhiTexture *qRhiTexture = rhiTexture->getRhiTexture();
+            Texture::TextureUpdateInfo &updateInfo = updateInfoPair.first;
+            updateInfo.handleType = QAbstractTexture::RHITextureId;
+            updateInfo.handle = qRhiTexture ? QVariant(qRhiTexture->nativeTexture().object) : QVariant();
         }
     }
 
@@ -2199,9 +2186,11 @@ void Renderer::jobsDone(Qt3DCore::QAspectManager *manager)
     // called in main thread once all jobs are done running
 
     // sync captured renders to frontend
+    QMutexLocker lock(&m_pendingRenderCaptureSendRequestsMutex);
     const std::vector<Qt3DCore::QNodeId> pendingCaptureIds =
             Qt3DCore::moveAndClear(m_pendingRenderCaptureSendRequests);
-    for (const Qt3DCore::QNodeId &id : qAsConst(pendingCaptureIds)) {
+    lock.unlock();
+    for (const Qt3DCore::QNodeId &id : std::as_const(pendingCaptureIds)) {
         auto *backend = static_cast<Qt3DRender::Render::RenderCapture *>(
                 m_nodesManager->frameGraphManager()->lookupNode(id));
         backend->syncRenderCapturesToFrontend(manager);
@@ -2759,7 +2748,7 @@ bool Renderer::executeCommandsSubmission(const RHIPassInfo &passInfo)
             const Qt3DCore::QNodeId renderCaptureId = rv->renderCaptureNodeId();
             if (!renderCaptureId.isNull()) {
                 const QRenderCaptureRequest request = rv->renderCaptureRequest();
-                QRhiRenderTarget *rhiTarget = nullptr;
+                QRhiRenderTarget *rhiTarget = m_submissionContext->defaultRenderTarget();
                 RHIRenderTarget *target = nullptr;
 
                 if (rv->renderTargetId()) {
@@ -2774,20 +2763,21 @@ bool Renderer::executeCommandsSubmission(const RHIPassInfo &passInfo)
                 QRect rect(QPoint(0, 0), size);
                 if (!request.rect.isEmpty())
                     rect = rect.intersected(request.rect);
-                QImage image;
                 if (!rect.isEmpty()) {
                     // Bind fbo as read framebuffer
                     QRhiReadbackResult *readBackResult = new QRhiReadbackResult;
                     readBackResult->completed = [this, readBackResult, renderCaptureId, request] () {
                         const QImage::Format fmt = QImage::Format_RGBA8888_Premultiplied; // fits QRhiTexture::RGBA8
                         const uchar *p = reinterpret_cast<const uchar *>(readBackResult->data.constData());
-                        const QImage image(p, readBackResult->pixelSize.width(), readBackResult->pixelSize.height(), fmt);
+                        const QImage image(p, readBackResult->pixelSize.width(), readBackResult->pixelSize.height(), fmt, [] (void *ptr) {
+                            delete static_cast<QRhiReadbackResult *>(ptr);
+                        }, readBackResult);
 
                         Render::RenderCapture *renderCapture = static_cast<Render::RenderCapture*>(m_nodesManager->frameGraphManager()->lookupNode(renderCaptureId));
                         renderCapture->addRenderCapture(request.captureId, image);
+                        QMutexLocker lock(&m_pendingRenderCaptureSendRequestsMutex);
                         if (!Qt3DCore::contains(m_pendingRenderCaptureSendRequests, renderCaptureId))
                             m_pendingRenderCaptureSendRequests.push_back(renderCaptureId);
-                        delete readBackResult;
                     };
 
                     QRhiReadbackDescription readbackDesc;

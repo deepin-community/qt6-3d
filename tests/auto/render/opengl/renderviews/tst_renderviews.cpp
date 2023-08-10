@@ -1,30 +1,5 @@
-/****************************************************************************
-**
-** Copyright (C) 2015 Klaralvdalens Datakonsult AB (KDAB).
-** Contact: https://www.qt.io/licensing/
-**
-** This file is part of the Qt3D module of the Qt Toolkit.
-**
-** $QT_BEGIN_LICENSE:GPL-EXCEPT$
-** Commercial License Usage
-** Licensees holding valid commercial Qt licenses may use this file in
-** accordance with the commercial license agreement provided with the
-** Software or, alternatively, in accordance with the terms contained in
-** a written agreement between you and The Qt Company. For licensing terms
-** and conditions see https://www.qt.io/terms-conditions. For further
-** information use the contact form at https://www.qt.io/contact-us.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3 as published by the Free Software
-** Foundation with exceptions as appearing in the file LICENSE.GPL3-EXCEPT
-** included in the packaging of this file. Please review the following
-** information to ensure the GNU General Public License requirements will
-** be met: https://www.gnu.org/licenses/gpl-3.0.html.
-**
-** $QT_END_LICENSE$
-**
-****************************************************************************/
+// Copyright (C) 2015 Klaralvdalens Datakonsult AB (KDAB).
+// SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only WITH Qt-GPL-exception-1.0
 
 #include <QtTest/QTest>
 #include <qbackendnodetester.h>
@@ -292,6 +267,68 @@ private Q_SLOTS:
                 << QList<QShaderProgram *> { shader1, shader1, shader1, shader2, shader2, shader2 }
                 << QList<ShaderParameterPack> { pack1, pack1, pack1, pack1, pack1, pack1 }
                 << QList<ShaderParameterPack> { pack1, minifiedPack1, minifiedPack1, pack1, minifiedPack1, minifiedPack1 };
+    }
+
+    void checkShaderParameterPackStoresSingleUBOPerBlockIndex()
+    {
+        // GIVEN
+        ShaderParameterPack pack;
+        auto nodeId1 = Qt3DCore::QNodeId::createId();
+        auto nodeId2 = Qt3DCore::QNodeId::createId();
+
+        BlockToUBO ubo1 { 1, nodeId1, false, {}};
+        BlockToUBO ubo2 { 1, nodeId2, false, {}};
+
+        // WHEN
+        pack.setUniformBuffer(ubo1);
+        pack.setUniformBuffer(ubo2);
+
+        // THEN
+        QCOMPARE(pack.uniformBuffers().size(), 1);
+        QCOMPARE(pack.uniformBuffers().front().m_blockIndex, 1);
+        QCOMPARE(pack.uniformBuffers().front().m_bufferID, nodeId2);
+
+        // WHEN
+        BlockToUBO ubo3 { 2, nodeId2, false, {}};
+        pack.setUniformBuffer(ubo3);
+
+        // THEN
+        QCOMPARE(pack.uniformBuffers().size(), 2);
+        QCOMPARE(pack.uniformBuffers().front().m_blockIndex, 1);
+        QCOMPARE(pack.uniformBuffers().front().m_bufferID, nodeId2);
+        QCOMPARE(pack.uniformBuffers().back().m_blockIndex, 2);
+        QCOMPARE(pack.uniformBuffers().back().m_bufferID, nodeId2);
+    }
+
+    void checkShaderParameterPackStoresSingleSSBOPerBlockIndex()
+    {
+        // GIVEN
+        ShaderParameterPack pack;
+        auto nodeId1 = Qt3DCore::QNodeId::createId();
+        auto nodeId2 = Qt3DCore::QNodeId::createId();
+
+        BlockToSSBO ssbo1 { 1, 0, nodeId1};
+        BlockToSSBO ssbo2 { 1, 0, nodeId2};
+
+        // WHEN
+        pack.setShaderStorageBuffer(ssbo1);
+        pack.setShaderStorageBuffer(ssbo2);
+
+        // THEN
+        QCOMPARE(pack.shaderStorageBuffers().size(), 1);
+        QCOMPARE(pack.shaderStorageBuffers().front().m_blockIndex, 1);
+        QCOMPARE(pack.shaderStorageBuffers().front().m_bufferID, nodeId2);
+
+        // WHEN
+        BlockToSSBO ssbo3 { 2, 1, nodeId2};
+        pack.setShaderStorageBuffer(ssbo3);
+
+        // THEN
+        QCOMPARE(pack.shaderStorageBuffers().size(), 2);
+        QCOMPARE(pack.shaderStorageBuffers().front().m_blockIndex, 1);
+        QCOMPARE(pack.shaderStorageBuffers().front().m_bufferID, nodeId2);
+        QCOMPARE(pack.shaderStorageBuffers().back().m_blockIndex, 2);
+        QCOMPARE(pack.shaderStorageBuffers().back().m_bufferID, nodeId2);
     }
 
     void checkRenderViewUniformMinification()

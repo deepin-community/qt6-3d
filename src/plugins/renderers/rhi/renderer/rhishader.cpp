@@ -1,41 +1,5 @@
-/****************************************************************************
-**
-** Copyright (C) 2020 Klaralvdalens Datakonsult AB (KDAB).
-** Contact: https://www.qt.io/licensing/
-**
-** This file is part of the Qt3D module of the Qt Toolkit.
-**
-** $QT_BEGIN_LICENSE:LGPL$
-** Commercial License Usage
-** Licensees holding valid commercial Qt licenses may use this file in
-** accordance with the commercial license agreement provided with the
-** Software or, alternatively, in accordance with the terms contained in
-** a written agreement between you and The Qt Company. For licensing terms
-** and conditions see https://www.qt.io/terms-conditions. For further
-** information use the contact form at https://www.qt.io/contact-us.
-**
-** GNU Lesser General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU Lesser
-** General Public License version 3 as published by the Free Software
-** Foundation and appearing in the file LICENSE.LGPL3 included in the
-** packaging of this file. Please review the following information to
-** ensure the GNU Lesser General Public License version 3 requirements
-** will be met: https://www.gnu.org/licenses/lgpl-3.0.html.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 2.0 or (at your option) the GNU General
-** Public license version 3 or any later version approved by the KDE Free
-** Qt Foundation. The licenses are as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL2 and LICENSE.GPL3
-** included in the packaging of this file. Please review the following
-** information to ensure the GNU General Public License requirements will
-** be met: https://www.gnu.org/licenses/gpl-2.0.html and
-** https://www.gnu.org/licenses/gpl-3.0.html.
-**
-** $QT_END_LICENSE$
-**
-****************************************************************************/
+// Copyright (C) 2020 Klaralvdalens Datakonsult AB (KDAB).
+// SPDX-License-Identifier: LicenseRef-Qt-Commercial OR LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-only
 
 #include "rhishader_p.h"
 #include <QMutexLocker>
@@ -332,7 +296,14 @@ void RHIShader::recordAllUniforms(UBO_Member &uboMember,
         // We iterate through all the [l][n][m] by building [0][0][0] and incrementing
         forEachArrayAccessor(member.arrayDims, [&](const QString &str) {
             // "foo.bar[1][2]"
-            m_unqualifiedUniformNames << (fullMemberName + str);
+            const QString unqualifiedMemberName = (fullMemberName + str);
+            m_unqualifiedUniformNames << unqualifiedMemberName;
+
+            // Record as an individual uniform
+            m_uniformsNames.push_back(unqualifiedMemberName);
+            const int nameId = StringToInt::lookupId(unqualifiedMemberName);
+            m_uniformsNamesIds.push_back(nameId);
+
             // Question : does it make sense to also record foo[0], foo[0][0], etc...
             // if there are e.g. 3 dimensions ?
         });
@@ -344,20 +315,29 @@ void RHIShader::recordAllUniforms(UBO_Member &uboMember,
             m_structNamesIds.push_back(StringToInt::lookupId(m_structNames.back()));
         });
 
-        // Record the struct members
-        for (const QShaderDescription::BlockVariable& bv : member.structMembers) {
-            forEachArrayAccessor(member.arrayDims, [&] (const QString& str) {
+        // Record the array times the struct members => entry[i].struct_member
+        forEachArrayAccessor(member.arrayDims, [&] (const QString& str) {
+            UBO_Member arrayMember {StringToInt::lookupId(fullMemberName + str), {}, {}};
+            // Record all struct member into the array member[i]
+            for (const QShaderDescription::BlockVariable& bv : member.structMembers) {
                 //recordAllUniforms("baz", "foo.bar[1][2].")
                 const QString structMemberNamePrefix = fullMemberName + str + QLatin1Char('.');
                 UBO_Member innerMember {StringToInt::lookupId(structMemberNamePrefix), bv, {}};
                 recordAllUniforms(innerMember, structMemberNamePrefix);
-                uboMember.structMembers.push_back(innerMember);
-            });
-        }
+                arrayMember.structMembers.push_back(innerMember);
+            }
+            // When dealing with an array of structs, we treat structMembers as arrayMembers
+            uboMember.structMembers.push_back(arrayMember);
+        });
     } else {
         // Final member (not array or struct)
         // Replace nameId with final nameId name
         uboMember.nameId = StringToInt::lookupId(fullMemberName);
+
+        // Record as an individual uniform
+        m_uniformsNames.push_back(fullMemberName);
+        const int nameId = StringToInt::lookupId(fullMemberName);
+        m_uniformsNamesIds.push_back(nameId);
     }
 }
 
@@ -454,7 +434,7 @@ void RHIShader::introspect()
         std::vector<UBO_Member> uboMembers;
         uboMembers.reserve(ubo.members.size());
 
-        for (const QShaderDescription::BlockVariable &member : qAsConst(ubo.members)) {
+        for (const QShaderDescription::BlockVariable &member : std::as_const(ubo.members)) {
             m_uniformsNames.push_back(member.name);
             const int nameId = StringToInt::lookupId(member.name);
             m_uniformsNamesIds.push_back(nameId);
@@ -492,7 +472,7 @@ QHash<QString, ShaderUniform> RHIShader::activeUniformsForUniformBlock(int block
 
 ShaderUniformBlock RHIShader::uniformBlockForBlockIndex(int blockIndex) const noexcept
 {
-    for (int i = 0, m = m_uniformBlocks.size(); i < m; ++i) {
+    for (size_t i = 0, m = m_uniformBlocks.size(); i < m; ++i) {
         if (m_uniformBlocks[i].m_index == blockIndex) {
             return m_uniformBlocks[i];
         }
@@ -502,7 +482,7 @@ ShaderUniformBlock RHIShader::uniformBlockForBlockIndex(int blockIndex) const no
 
 ShaderUniformBlock RHIShader::uniformBlockForBlockNameId(int blockNameId) const noexcept
 {
-    for (int i = 0, m = m_uniformBlocks.size(); i < m; ++i) {
+    for (size_t i = 0, m = m_uniformBlocks.size(); i < m; ++i) {
         if (m_uniformBlocks[i].m_nameId == blockNameId) {
             return m_uniformBlocks[i];
         }
@@ -512,7 +492,7 @@ ShaderUniformBlock RHIShader::uniformBlockForBlockNameId(int blockNameId) const 
 
 ShaderUniformBlock RHIShader::uniformBlockForBlockName(const QString &blockName) const noexcept
 {
-    for (int i = 0, m = m_uniformBlocks.size(); i < m; ++i) {
+    for (size_t i = 0, m = m_uniformBlocks.size(); i < m; ++i) {
         if (m_uniformBlocks[i].m_name == blockName) {
             return m_uniformBlocks[i];
         }
@@ -539,7 +519,7 @@ ShaderUniformBlock RHIShader::uniformBlockForInstanceNameId(int instanceNameId) 
 
 ShaderStorageBlock RHIShader::storageBlockForBlockIndex(int blockIndex) const noexcept
 {
-    for (int i = 0, m = m_shaderStorageBlockNames.size(); i < m; ++i) {
+    for (size_t i = 0, m = m_shaderStorageBlockNames.size(); i < m; ++i) {
         if (m_shaderStorageBlocks[i].m_index == blockIndex)
             return m_shaderStorageBlocks[i];
     }
@@ -548,7 +528,7 @@ ShaderStorageBlock RHIShader::storageBlockForBlockIndex(int blockIndex) const no
 
 ShaderStorageBlock RHIShader::storageBlockForBlockNameId(int blockNameId) const noexcept
 {
-    for (int i = 0, m = m_shaderStorageBlockNames.size(); i < m; ++i) {
+    for (size_t i = 0, m = m_shaderStorageBlockNames.size(); i < m; ++i) {
         if (m_shaderStorageBlocks[i].m_nameId == blockNameId)
             return m_shaderStorageBlocks[i];
     }
@@ -557,7 +537,7 @@ ShaderStorageBlock RHIShader::storageBlockForBlockNameId(int blockNameId) const 
 
 ShaderStorageBlock RHIShader::storageBlockForBlockName(const QString &blockName) const noexcept
 {
-    for (int i = 0, m = m_shaderStorageBlockNames.size(); i < m; ++i) {
+    for (size_t i = 0, m = m_shaderStorageBlockNames.size(); i < m; ++i) {
         if (m_shaderStorageBlocks[i].m_name == blockName)
             return m_shaderStorageBlocks[i];
     }
@@ -612,7 +592,7 @@ void RHIShader::initializeAttributes(const std::vector<ShaderAttribute> &attribu
     m_attributes = attributesDescription;
     m_attributesNames.resize(attributesDescription.size());
     m_attributeNamesIds.resize(attributesDescription.size());
-    for (int i = 0, m = attributesDescription.size(); i < m; i++) {
+    for (size_t i = 0, m = attributesDescription.size(); i < m; i++) {
         m_attributesNames[i] = attributesDescription[i].m_name;
         m_attributes[i].m_nameId = StringToInt::lookupId(m_attributesNames[i]);
         m_attributeNamesIds[i] = m_attributes[i].m_nameId;
@@ -625,7 +605,7 @@ void RHIShader::initializeSamplers(const std::vector<ShaderAttribute> &samplersD
     m_samplers = samplersDescription;
     m_samplerNames.resize(samplersDescription.size());
     m_samplerIds.resize(samplersDescription.size());
-    for (int i = 0, m = samplersDescription.size(); i < m; i++) {
+    for (size_t i = 0, m = samplersDescription.size(); i < m; i++) {
         m_samplerNames[i] = samplersDescription[i].m_name;
         m_samplers[i].m_nameId = StringToInt::lookupId(m_samplerNames[i]);
         m_samplerIds[i] = m_samplers[i].m_nameId;
@@ -638,7 +618,7 @@ void RHIShader::initializeImages(const std::vector<ShaderAttribute> &imagesDescr
     m_images = imagesDescription;
     m_imageNames.resize(imagesDescription.size());
     m_imageIds.resize(imagesDescription.size());
-    for (int i = 0, m = imagesDescription.size(); i < m; i++) {
+    for (size_t i = 0, m = imagesDescription.size(); i < m; i++) {
         m_imageNames[i] = imagesDescription[i].m_name;
         m_images[i].m_nameId = StringToInt::lookupId(m_imageNames[i]);
         m_imageIds[i] = m_images[i].m_nameId;
@@ -651,7 +631,7 @@ void RHIShader::initializeUniformBlocks(const std::vector<ShaderUniformBlock> &u
     m_uniformBlocks = uniformBlockDescription;
     m_uniformBlockNames.resize(uniformBlockDescription.size());
     m_uniformBlockNamesIds.resize(uniformBlockDescription.size());
-    for (int i = 0, m = uniformBlockDescription.size(); i < m; ++i) {
+    for (size_t i = 0, m = uniformBlockDescription.size(); i < m; ++i) {
         m_uniformBlockNames[i] = m_uniformBlocks[i].m_name;
         m_uniformBlockNamesIds[i] = StringToInt::lookupId(m_uniformBlockNames[i]);
         m_uniformBlocks[i].m_nameId = m_uniformBlockNamesIds[i];
@@ -662,7 +642,7 @@ void RHIShader::initializeUniformBlocks(const std::vector<ShaderUniformBlock> &u
         const std::vector<ShaderUniform>::const_iterator uniformsEnd = m_uniforms.cend();
 
         std::vector<QString>::const_iterator uniformNamesIt = m_uniformsNames.cbegin();
-        const std::vector<QString>::const_iterator uniformNamesEnd = m_attributesNames.cend();
+        const std::vector<QString>::const_iterator uniformNamesEnd = m_uniformsNames.cend();
 
         QHash<QString, ShaderUniform> activeUniformsInBlock;
 
@@ -692,7 +672,7 @@ void RHIShader::initializeShaderStorageBlocks(
     m_shaderStorageBlockNames.resize(shaderStorageBlockDescription.size());
     m_shaderStorageBlockNamesIds.resize(shaderStorageBlockDescription.size());
 
-    for (int i = 0, m = shaderStorageBlockDescription.size(); i < m; ++i) {
+    for (size_t i = 0, m = shaderStorageBlockDescription.size(); i < m; ++i) {
         m_shaderStorageBlockNames[i] = m_shaderStorageBlocks[i].m_name;
         m_shaderStorageBlockNamesIds[i] = StringToInt::lookupId(m_shaderStorageBlockNames[i]);
         m_shaderStorageBlocks[i].m_nameId = m_shaderStorageBlockNamesIds[i];

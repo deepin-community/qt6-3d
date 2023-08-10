@@ -1,30 +1,5 @@
-/****************************************************************************
-**
-** Copyright (C) 2016 Paul Lemire <paul.lemire350@gmail.com>
-** Contact: https://www.qt.io/licensing/
-**
-** This file is part of the Qt3D module of the Qt Toolkit.
-**
-** $QT_BEGIN_LICENSE:GPL-EXCEPT$
-** Commercial License Usage
-** Licensees holding valid commercial Qt licenses may use this file in
-** accordance with the commercial license agreement provided with the
-** Software or, alternatively, in accordance with the terms contained in
-** a written agreement between you and The Qt Company. For licensing terms
-** and conditions see https://www.qt.io/terms-conditions. For further
-** information use the contact form at https://www.qt.io/contact-us.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3 as published by the Free Software
-** Foundation with exceptions as appearing in the file LICENSE.GPL3-EXCEPT
-** included in the packaging of this file. Please review the following
-** information to ensure the GNU General Public License requirements will
-** be met: https://www.gnu.org/licenses/gpl-3.0.html.
-**
-** $QT_END_LICENSE$
-**
-****************************************************************************/
+// Copyright (C) 2016 Paul Lemire <paul.lemire350@gmail.com>
+// SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only WITH Qt-GPL-exception-1.0
 
 
 #include <QtTest/QTest>
@@ -77,7 +52,7 @@ private Q_SLOTS:
             // THEN
             QVERIFY(spy.isValid());
             QCOMPARE(cameraLens.projectionType(), newValue);
-            QCOMPARE(spy.count(), 1);
+            QCOMPARE(spy.size(), 1);
 
             // WHEN
             spy.clear();
@@ -85,7 +60,7 @@ private Q_SLOTS:
 
             // THEN
             QCOMPARE(cameraLens.projectionType(), newValue);
-            QCOMPARE(spy.count(), 0);
+            QCOMPARE(spy.size(), 0);
         }
         {
             // WHEN
@@ -96,7 +71,7 @@ private Q_SLOTS:
             // THEN
             QVERIFY(spy.isValid());
             QCOMPARE(cameraLens.nearPlane(), newValue);
-            QCOMPARE(spy.count(), 1);
+            QCOMPARE(spy.size(), 1);
 
             // WHEN
             spy.clear();
@@ -104,7 +79,7 @@ private Q_SLOTS:
 
             // THEN
             QCOMPARE(cameraLens.nearPlane(), newValue);
-            QCOMPARE(spy.count(), 0);
+            QCOMPARE(spy.size(), 0);
         }
         {
             // WHEN
@@ -115,7 +90,7 @@ private Q_SLOTS:
             // THEN
             QVERIFY(spy.isValid());
             QCOMPARE(cameraLens.farPlane(), newValue);
-            QCOMPARE(spy.count(), 1);
+            QCOMPARE(spy.size(), 1);
 
             // WHEN
             spy.clear();
@@ -123,7 +98,7 @@ private Q_SLOTS:
 
             // THEN
             QCOMPARE(cameraLens.farPlane(), newValue);
-            QCOMPARE(spy.count(), 0);
+            QCOMPARE(spy.size(), 0);
         }
         {
             // WHEN
@@ -134,7 +109,7 @@ private Q_SLOTS:
             // THEN
             QVERIFY(spy.isValid());
             QCOMPARE(cameraLens.fieldOfView(), newValue);
-            QCOMPARE(spy.count(), 1);
+            QCOMPARE(spy.size(), 1);
 
             // WHEN
             spy.clear();
@@ -142,7 +117,7 @@ private Q_SLOTS:
 
             // THEN
             QCOMPARE(cameraLens.fieldOfView(), newValue);
-            QCOMPARE(spy.count(), 0);
+            QCOMPARE(spy.size(), 0);
         }
         {
             // WHEN
@@ -153,7 +128,7 @@ private Q_SLOTS:
             // THEN
             QVERIFY(spy.isValid());
             QCOMPARE(cameraLens.aspectRatio(), newValue);
-            QCOMPARE(spy.count(), 1);
+            QCOMPARE(spy.size(), 1);
 
             // WHEN
             spy.clear();
@@ -161,7 +136,7 @@ private Q_SLOTS:
 
             // THEN
             QCOMPARE(cameraLens.aspectRatio(), newValue);
-            QCOMPARE(spy.count(), 0);
+            QCOMPARE(spy.size(), 0);
         }
         {
             // WHEN
@@ -172,7 +147,7 @@ private Q_SLOTS:
             // THEN
             QVERIFY(spy.isValid());
             QCOMPARE(cameraLens.left(), newValue);
-            QCOMPARE(spy.count(), 1);
+            QCOMPARE(spy.size(), 1);
 
             // WHEN
             spy.clear();
@@ -180,7 +155,7 @@ private Q_SLOTS:
 
             // THEN
             QCOMPARE(cameraLens.left(), newValue);
-            QCOMPARE(spy.count(), 0);
+            QCOMPARE(spy.size(), 0);
         }
         {
             // WHEN
@@ -191,7 +166,7 @@ private Q_SLOTS:
             // THEN
             QVERIFY(spy.isValid());
             QCOMPARE(cameraLens.right(), newValue);
-            QCOMPARE(spy.count(), 1);
+            QCOMPARE(spy.size(), 1);
 
             // WHEN
             spy.clear();
@@ -199,7 +174,7 @@ private Q_SLOTS:
 
             // THEN
             QCOMPARE(cameraLens.right(), newValue);
-            QCOMPARE(spy.count(), 0);
+            QCOMPARE(spy.size(), 0);
         }
         {
             // WHEN
@@ -210,7 +185,7 @@ private Q_SLOTS:
             // THEN
             QVERIFY(spy.isValid());
             QCOMPARE(cameraLens.bottom(), newValue);
-            QCOMPARE(spy.count(), 1);
+            QCOMPARE(spy.size(), 1);
 
             // WHEN
             spy.clear();
@@ -218,7 +193,7 @@ private Q_SLOTS:
 
             // THEN
             QCOMPARE(cameraLens.bottom(), newValue);
-            QCOMPARE(spy.count(), 0);
+            QCOMPARE(spy.size(), 0);
         }
         {
             // WHEN
@@ -229,7 +204,7 @@ private Q_SLOTS:
             // THEN
             QVERIFY(spy.isValid());
             QCOMPARE(cameraLens.top(), newValue);
-            QCOMPARE(spy.count(), 1);
+            QCOMPARE(spy.size(), 1);
 
             // WHEN
             spy.clear();
@@ -237,7 +212,7 @@ private Q_SLOTS:
 
             // THEN
             QCOMPARE(cameraLens.top(), newValue);
-            QCOMPARE(spy.count(), 0);
+            QCOMPARE(spy.size(), 0);
         }
         {
             // WHEN
@@ -248,7 +223,7 @@ private Q_SLOTS:
             // THEN
             QVERIFY(spy.isValid());
             QCOMPARE(cameraLens.exposure(), newValue);
-            QCOMPARE(spy.count(), 1);
+            QCOMPARE(spy.size(), 1);
             QCOMPARE(spy.takeFirst().first().toFloat(), -2.0f);
 
             // WHEN
@@ -257,7 +232,7 @@ private Q_SLOTS:
 
             // THEN
             QCOMPARE(cameraLens.exposure(), newValue);
-            QCOMPARE(spy.count(), 0);
+            QCOMPARE(spy.size(), 0);
         }
         {
             // WHEN
@@ -270,7 +245,7 @@ private Q_SLOTS:
             QVERIFY(spy.isValid());
             QCOMPARE(cameraLens.projectionMatrix(), newValue);
             QCOMPARE(cameraLens.projectionType(), Qt3DRender::QCameraLens::CustomProjection);
-            QCOMPARE(spy.count(), 1);
+            QCOMPARE(spy.size(), 1);
 
             // WHEN
             spy.clear();
@@ -278,7 +253,7 @@ private Q_SLOTS:
 
             // THEN
             QCOMPARE(cameraLens.projectionMatrix(), newValue);
-            QCOMPARE(spy.count(), 0);
+            QCOMPARE(spy.size(), 0);
         }
     }
 
@@ -294,7 +269,7 @@ private Q_SLOTS:
 
             // THEN
             QVERIFY(spy.isValid());
-            QCOMPARE(spy.count(), 8); // Triggered for each property being set + 1
+            QCOMPARE(spy.size(), 8); // Triggered for each property being set + 1
             QCOMPARE(cameraLens.projectionType(), Qt3DRender::QCameraLens::OrthographicProjection);
             QCOMPARE(cameraLens.nearPlane(), 0.5f);
             QCOMPARE(cameraLens.farPlane(), 50.0f);
@@ -317,7 +292,7 @@ private Q_SLOTS:
 
             // THEN
             QVERIFY(spy.isValid());
-            QCOMPARE(spy.count(), 5); // Triggered for each property being set (- projectionTye which is the default value) + 1
+            QCOMPARE(spy.size(), 5); // Triggered for each property being set (- projectionTye which is the default value) + 1
             QCOMPARE(cameraLens.projectionType(), Qt3DRender::QCameraLens::PerspectiveProjection);
             QCOMPARE(cameraLens.nearPlane(), 0.5f);
             QCOMPARE(cameraLens.farPlane(), 50.0f);
@@ -338,7 +313,7 @@ private Q_SLOTS:
 
             // THEN
             QVERIFY(spy.isValid());
-            QCOMPARE(spy.count(), 8); // Triggered for each property being set + 1
+            QCOMPARE(spy.size(), 8); // Triggered for each property being set + 1
             QCOMPARE(cameraLens.projectionType(), Qt3DRender::QCameraLens::FrustumProjection);
             QCOMPARE(cameraLens.nearPlane(), 0.5f);
             QCOMPARE(cameraLens.farPlane(), 50.0f);

@@ -1,52 +1,5 @@
-/****************************************************************************
-**
-** Copyright (C) 2017 Klaralvdalens Datakonsult AB (KDAB).
-** Contact: https://www.qt.io/licensing/
-**
-** This file is part of the Qt3D module of the Qt Toolkit.
-**
-** $QT_BEGIN_LICENSE:BSD$
-** Commercial License Usage
-** Licensees holding valid commercial Qt licenses may use this file in
-** accordance with the commercial license agreement provided with the
-** Software or, alternatively, in accordance with the terms contained in
-** a written agreement between you and The Qt Company. For licensing terms
-** and conditions see https://www.qt.io/terms-conditions. For further
-** information use the contact form at https://www.qt.io/contact-us.
-**
-** BSD License Usage
-** Alternatively, you may use this file under the terms of the BSD license
-** as follows:
-**
-** "Redistribution and use in source and binary forms, with or without
-** modification, are permitted provided that the following conditions are
-** met:
-**   * Redistributions of source code must retain the above copyright
-**     notice, this list of conditions and the following disclaimer.
-**   * Redistributions in binary form must reproduce the above copyright
-**     notice, this list of conditions and the following disclaimer in
-**     the documentation and/or other materials provided with the
-**     distribution.
-**   * Neither the name of The Qt Company Ltd nor the names of its
-**     contributors may be used to endorse or promote products derived
-**     from this software without specific prior written permission.
-**
-**
-** THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-** "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-** LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-** A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-** OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-** SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-** LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-** DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-** THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-** (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-** OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE."
-**
-** $QT_END_LICENSE$
-**
-****************************************************************************/
+// Copyright (C) 2017 Klaralvdalens Datakonsult AB (KDAB).
+// SPDX-License-Identifier: LicenseRef-Qt-Commercial OR BSD-3-Clause
 
 #include "qextrudedtextgeometry.h"
 #include "qextrudedtextgeometry_p.h"
@@ -130,7 +83,7 @@ TriangulationData triangulate(const QString &text, const QFont &font)
     result.indices.resize(result.indices.size() + size_t(triangles.indices.size()));
     memcpy(&result.indices[prevNumIndices], triangles.indices.data(), size_t(triangles.indices.size()) * sizeof(IndexType));
     for (size_t i = prevNumIndices, m = result.indices.size(); i < m; ++i)
-        result.indices[i] += result.vertices.size();
+        result.indices[i] += IndexType(result.vertices.size());
 
     // Append new triangles to result.vertices
     result.vertices.reserve(size_t(triangles.vertices.size()) / 2);
@@ -307,7 +260,7 @@ void QExtrudedTextGeometryPrivate::update()
 
     TriangulationData data = triangulate(m_text, m_font);
 
-    const size_t numVertices = data.vertices.size();
+    const IndexType numVertices = IndexType(data.vertices.size());
     const size_t numIndices = data.indices.size();
 
     struct Vertex {
@@ -327,7 +280,8 @@ void QExtrudedTextGeometryPrivate::update()
         vertices.push_back({ QVector3D(v.x(), v.y(), m_depth), // vertex
                              QVector3D(0.0f, 0.0f, 1.0f) }); // normal
 
-    for (size_t i = 0, verticesIndex = vertices.size(); i < data.outlines.size(); ++i) {
+    int verticesIndex = int(vertices.size());
+    for (size_t i = 0; i < data.outlines.size(); ++i) {
         const int begin = data.outlines[i].begin;
         const int end = data.outlines[i].end;
         const int verticesIndexBegin = verticesIndex;
@@ -380,12 +334,12 @@ void QExtrudedTextGeometryPrivate::update()
         memcpy(data.data(), vertices.data(), vertices.size() * sizeof(Vertex));
 
         m_vertexBuffer->setData(data);
-        m_positionAttribute->setCount(vertices.size());
-        m_normalAttribute->setCount(vertices.size());
+        m_positionAttribute->setCount(int(vertices.size()));
+        m_normalAttribute->setCount(int(vertices.size()));
     }
 
     // resize for following insertions
-    const int indicesOffset = indices.size();
+    const int indicesOffset = int(indices.size());
     indices.resize(indices.size() + numIndices * 2);
 
     // copy values for back faces
@@ -405,7 +359,7 @@ void QExtrudedTextGeometryPrivate::update()
         memcpy(data.data(), indices.data(), indices.size() * sizeof(IndexType));
 
         m_indexBuffer->setData(data);
-        m_indexAttribute->setCount(indices.size());
+        m_indexAttribute->setCount(uint(indices.size()));
     }
 }
 
@@ -512,3 +466,5 @@ Qt3DCore::QAttribute *QExtrudedTextGeometry::indexAttribute() const
 } // Qt3DExtras
 
 QT_END_NAMESPACE
+
+#include "moc_qextrudedtextgeometry.cpp"

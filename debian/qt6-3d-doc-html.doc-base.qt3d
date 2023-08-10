@@ -1,0 +1,9 @@
+Document: qt6-3d-manual
+Title: Qt 6 3D
+Author: The Qt Company Ltd
+Abstract: This is the HTML documentation for Qt 6 3D
+Section: Programming/C++
+
+Format: HTML
+Index: /usr/share/doc/qt6-3d-doc-html/html/qt3d/qt3d-index.html
+Files: /usr/share/doc/qt6-3d-doc-html/html/qt3d/*.html

@@ -1,30 +1,5 @@
-/****************************************************************************
-**
-** Copyright (C) 2016 Paul Lemire <paul.lemire350@gmail.com>
-** Contact: https://www.qt.io/licensing/
-**
-** This file is part of the Qt3D module of the Qt Toolkit.
-**
-** $QT_BEGIN_LICENSE:GPL-EXCEPT$
-** Commercial License Usage
-** Licensees holding valid commercial Qt licenses may use this file in
-** accordance with the commercial license agreement provided with the
-** Software or, alternatively, in accordance with the terms contained in
-** a written agreement between you and The Qt Company. For licensing terms
-** and conditions see https://www.qt.io/terms-conditions. For further
-** information use the contact form at https://www.qt.io/contact-us.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3 as published by the Free Software
-** Foundation with exceptions as appearing in the file LICENSE.GPL3-EXCEPT
-** included in the packaging of this file. Please review the following
-** information to ensure the GNU General Public License requirements will
-** be met: https://www.gnu.org/licenses/gpl-3.0.html.
-**
-** $QT_END_LICENSE$
-**
-****************************************************************************/
+// Copyright (C) 2016 Paul Lemire <paul.lemire350@gmail.com>
+// SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only WITH Qt-GPL-exception-1.0
 
 
 #include <QtTest/QTest>
@@ -140,7 +115,7 @@ private Q_SLOTS:
             QCOMPARE(backendTechnique.renderPasses().first(), pass.id());
             QCOMPARE(backendTechnique.isCompatibleWithRenderer(), false);
             const std::vector<Qt3DCore::QNodeId> dirtyTechniques = nodeManagers.techniqueManager()->takeDirtyTechniques();
-            QCOMPARE(dirtyTechniques.size(), 1);
+            QCOMPARE(dirtyTechniques.size(), 1U);
             QCOMPARE(dirtyTechniques.front(), backendTechnique.peerId());
             QVERIFY(renderer.dirtyBits() & Qt3DRender::Render::AbstractRenderer::TechniquesDirty);
         }
@@ -198,12 +173,12 @@ private Q_SLOTS:
             QCOMPARE(backendTechnique.isEnabled(), newValue);
             QVERIFY(renderer.dirtyBits() & Qt3DRender::Render::AbstractRenderer::TechniquesDirty);
             renderer.clearDirtyBits(Qt3DRender::Render::AbstractRenderer::AllDirty);
-            QCOMPARE(nodeManagers.techniqueManager()->takeDirtyTechniques().size(), 1);
+            QCOMPARE(nodeManagers.techniqueManager()->takeDirtyTechniques().size(), 1U);
         }
         {
             // WHEN
             backendTechnique.setCompatibleWithRenderer(true);
-            QCOMPARE(nodeManagers.techniqueManager()->takeDirtyTechniques().size(), 0);
+            QCOMPARE(nodeManagers.techniqueManager()->takeDirtyTechniques().size(), 0U);
 
             technique.graphicsApiFilter()->setMajorVersion(4);
             technique.graphicsApiFilter()->setMinorVersion(5);
@@ -218,7 +193,7 @@ private Q_SLOTS:
             QCOMPARE(backendTechnique.isCompatibleWithRenderer(), false);
 
             const std::vector<Qt3DCore::QNodeId> dirtyTechniques = nodeManagers.techniqueManager()->takeDirtyTechniques();
-            QCOMPARE(dirtyTechniques.size(), 1);
+            QCOMPARE(dirtyTechniques.size(), 1U);
             QCOMPARE(dirtyTechniques.front(), backendTechnique.peerId());
 
             QVERIFY(renderer.dirtyBits() & Qt3DRender::Render::AbstractRenderer::TechniquesDirty);

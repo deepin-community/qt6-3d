@@ -1,41 +1,5 @@
-/****************************************************************************
-**
-** Copyright (C) 2017 Klaralvdalens Datakonsult AB (KDAB).
-** Contact: http://www.qt-project.org/legal
-**
-** This file is part of the Qt3D module of the Qt Toolkit.
-**
-** $QT_BEGIN_LICENSE:LGPL$
-** Commercial License Usage
-** Licensees holding valid commercial Qt licenses may use this file in
-** accordance with the commercial license agreement provided with the
-** Software or, alternatively, in accordance with the terms contained in
-** a written agreement between you and The Qt Company. For licensing terms
-** and conditions see https://www.qt.io/terms-conditions. For further
-** information use the contact form at https://www.qt.io/contact-us.
-**
-** GNU Lesser General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU Lesser
-** General Public License version 3 as published by the Free Software
-** Foundation and appearing in the file LICENSE.LGPL3 included in the
-** packaging of this file. Please review the following information to
-** ensure the GNU Lesser General Public License version 3 requirements
-** will be met: https://www.gnu.org/licenses/lgpl-3.0.html.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 2.0 or (at your option) the GNU General
-** Public license version 3 or any later version approved by the KDE Free
-** Qt Foundation. The licenses are as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL2 and LICENSE.GPL3
-** included in the packaging of this file. Please review the following
-** information to ensure the GNU General Public License requirements will
-** be met: https://www.gnu.org/licenses/gpl-2.0.html and
-** https://www.gnu.org/licenses/gpl-3.0.html.
-**
-** $QT_END_LICENSE$
-**
-****************************************************************************/
+// Copyright (C) 2017 Klaralvdalens Datakonsult AB (KDAB).
+// SPDX-License-Identifier: LicenseRef-Qt-Commercial OR LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-only
 
 #include "animationutils_p.h"
 #include <Qt3DAnimation/private/handler_p.h>
@@ -208,7 +172,7 @@ ComponentIndices channelComponentsToIndicesHelper(const Channel &channel,
             continue;
         }
 
-        char channelSuffix = componentName.at(componentName.length() - 1).toLatin1();
+        char channelSuffix = componentName.at(componentName.size() - 1).toLatin1();
         channelSuffixes.push_back(channelSuffix);
     }
 
@@ -253,14 +217,14 @@ ClipResults evaluateClipAtLocalTime(AnimationClip *clip, float localTime)
 
             if (!canSlerp) {
                 // Interpolate per component
-                for (const auto &channelComponent : qAsConst(channel.channelComponents)) {
+                for (const auto &channelComponent : std::as_const(channel.channelComponents)) {
                     const int lowerKeyframeBound = channelComponent.fcurve.lowerKeyframeBound(localTime);
                     channelResults[i++] = channelComponent.fcurve.evaluateAtTime(localTime, lowerKeyframeBound);
                 }
             } else {
                 // There's only one keyframe. We cant compute omega. Interpolate per component
                 if (channel.channelComponents[0].fcurve.keyframeCount() == 1) {
-                    for (const auto &channelComponent : qAsConst(channel.channelComponents))
+                    for (const auto &channelComponent : std::as_const(channel.channelComponents))
                         channelResults[i++] = channelComponent.fcurve.keyframe(0).value;
                 } else {
                     auto quaternionFromChannel = [channel](const int keyframe) {
@@ -287,7 +251,7 @@ ClipResults evaluateClipAtLocalTime(AnimationClip *clip, float localTime)
                         const auto sinHalfTheta = std::sqrt(1.0f - std::pow(cosHalfTheta,2.0f));
                         if (std::abs(sinHalfTheta) < ::slerpThreshold) {
                             auto initial_i = i;
-                            for (const auto &channelComponent : qAsConst(channel.channelComponents))
+                            for (const auto &channelComponent : std::as_const(channel.channelComponents))
                                 channelResults[i++] = channelComponent.fcurve.evaluateAtTime(localTime, lowerKeyframeBound);
 
                             // Normalize the resulting quaternion
@@ -301,7 +265,7 @@ ClipResults evaluateClipAtLocalTime(AnimationClip *clip, float localTime)
                             const auto reverseQ1 = cosHalfTheta < 0 ? -1.0f : 1.0f;
                             cosHalfTheta *= reverseQ1;
                             const auto halfTheta = std::acos(cosHalfTheta);
-                            for (const auto &channelComponent : qAsConst(channel.channelComponents))
+                            for (const auto &channelComponent : std::as_const(channel.channelComponents))
                                 channelResults[i++] = channelComponent.fcurve.evaluateAtTimeAsSlerp(localTime,
                                                                                                     lowerKeyframeBound,
                                                                                                     halfTheta,
@@ -315,7 +279,7 @@ ClipResults evaluateClipAtLocalTime(AnimationClip *clip, float localTime)
             // If the channel is not a Rotation, apply linear interpolation per channel component
             // TODO How do we handle other interpolations. For exammple, color interpolation
             // in a linear perceptual way or other non linear spaces?
-            for (const auto &channelComponent : qAsConst(channel.channelComponents)) {
+            for (const auto &channelComponent : std::as_const(channel.channelComponents)) {
                 const int lowerKeyframeBound = channelComponent.fcurve.lowerKeyframeBound(localTime);
                 channelResults[i++] = channelComponent.fcurve.evaluateAtTime(localTime, lowerKeyframeBound);
             }
@@ -766,7 +730,7 @@ ClipFormat generateClipFormatIndices(const QVector<ChannelNameAndType> &targetCh
     f.formattedComponentIndices.resize(channelCount);
     f.sourceClipMask.resize(channelCount);
     int indexCount = 0;
-    for (const auto &targetIndexVec : qAsConst(targetIndices))
+    for (const auto &targetIndexVec : std::as_const(targetIndices))
         indexCount += targetIndexVec.size();
     ComponentIndices &sourceIndices = f.sourceClipIndices;
     sourceIndices.resize(indexCount);

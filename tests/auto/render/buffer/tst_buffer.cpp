@@ -1,30 +1,5 @@
-/****************************************************************************
-**
-** Copyright (C) 2015 Klaralvdalens Datakonsult AB (KDAB).
-** Contact: https://www.qt.io/licensing/
-**
-** This file is part of the Qt3D module of the Qt Toolkit.
-**
-** $QT_BEGIN_LICENSE:GPL-EXCEPT$
-** Commercial License Usage
-** Licensees holding valid commercial Qt licenses may use this file in
-** accordance with the commercial license agreement provided with the
-** Software or, alternatively, in accordance with the terms contained in
-** a written agreement between you and The Qt Company. For licensing terms
-** and conditions see https://www.qt.io/terms-conditions. For further
-** information use the contact form at https://www.qt.io/contact-us.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3 as published by the Free Software
-** Foundation with exceptions as appearing in the file LICENSE.GPL3-EXCEPT
-** included in the packaging of this file. Please review the following
-** information to ensure the GNU General Public License requirements will
-** be met: https://www.gnu.org/licenses/gpl-3.0.html.
-**
-** $QT_END_LICENSE$
-**
-****************************************************************************/
+// Copyright (C) 2015 Klaralvdalens Datakonsult AB (KDAB).
+// SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only WITH Qt-GPL-exception-1.0
 
 #include <QtTest/QTest>
 #include <qbackendnodetester.h>
@@ -62,7 +37,7 @@ private Q_SLOTS:
         QCOMPARE(renderBuffer.isDirty(), true);
         QCOMPARE(renderBuffer.usage(), buffer.usage());
         QCOMPARE(renderBuffer.data(), buffer.data());
-        QCOMPARE(renderBuffer.pendingBufferUpdates().size(), 1);
+        QCOMPARE(renderBuffer.pendingBufferUpdates().size(), 1U);
         QCOMPARE(renderBuffer.pendingBufferUpdates().front().offset, -1);
     }
 
@@ -145,7 +120,7 @@ private Q_SLOTS:
         simulateInitializationSync(&frontendBuffer, &backendBuffer);
 
         // THEN
-        QCOMPARE(backendBuffer.pendingBufferUpdates().size(), 1);
+        QCOMPARE(backendBuffer.pendingBufferUpdates().size(), 1U);
         Qt3DCore::QBufferUpdate fullUpdate = backendBuffer.pendingBufferUpdates().front();
         QCOMPARE(fullUpdate.offset, -1);
         QVERIFY(fullUpdate.data.isEmpty());
@@ -159,7 +134,7 @@ private Q_SLOTS:
 
         // THEN
         QCOMPARE(frontendBuffer.data(), QByteArray("100456789\0"));
-        QCOMPARE(backendBuffer.pendingBufferUpdates().size(), 1);
+        QCOMPARE(backendBuffer.pendingBufferUpdates().size(), 1U);
         fullUpdate = backendBuffer.pendingBufferUpdates().front();
         QCOMPARE(fullUpdate.offset, 1);
         QCOMPARE(fullUpdate.data, QByteArray("00\0"));
@@ -214,7 +189,7 @@ private Q_SLOTS:
         // THEN
         QCOMPARE(backendBuffer.data(), QByteArrayLiteral("LS9SL"));
         QVERIFY(backendBuffer.isDirty());
-        QCOMPARE(backendBuffer.pendingBufferUpdates().size(), 1);
+        QCOMPARE(backendBuffer.pendingBufferUpdates().size(), 1U);
         QCOMPARE(backendBuffer.pendingBufferUpdates().front().offset, -1);
 
         backendBuffer.pendingBufferUpdates().clear();
@@ -314,7 +289,7 @@ private Q_SLOTS:
         renderBuffer.syncFromFrontEnd(&buffer, false);
 
         // THEN
-        QCOMPARE(renderBuffer.pendingBufferUpdates().size(), 2);
+        QCOMPARE(renderBuffer.pendingBufferUpdates().size(), 2U);
         QCOMPARE(renderBuffer.pendingBufferUpdates().front().offset, 0);
         QCOMPARE(renderBuffer.pendingBufferUpdates().front().data, QByteArray("012"));
         QCOMPARE(renderBuffer.pendingBufferUpdates().back().offset, 3);

@@ -1,4 +1,4 @@
-# SymbolsHelper-Confirmed: 6.2.2 amd64 arm64 armel armhf i386 ia64 mips64el mipsel ppc64el riscv64
+# SymbolsHelper-Confirmed: 6.4.0 amd64
 libQt63DCore.so.6 libqt63dcore6 #MINVER#
 * Build-Depends-Package: qt6-3d-dev
  _ZGVZN9QMetaType21registerConverterImplI5QListIPN8Qt3DCore5QNodeEE9QIterableI13QMetaSequenceEEEbSt8functionIFbPKvPvEES_S_E10unregister@Base 6.2.1
@@ -956,7 +956,6 @@ libQt63DCore.so.6 libqt63dcore6 #MINVER#
  _ZNK8Qt3DCore9QGeometry9minExtentEv@Base 6.2.1
  _ZNK8Qt3DCore9QSkeleton10metaObjectEv@Base 6.2.1
  _ZNK8Qt3DCore9QSkeleton9rootJointEv@Base 6.2.1
- (optional=templinst)_ZNSt6vectorIN8Qt3DCore27BoundingVolumeComputeResultESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_@Base 6.2.1
  _ZTIN8Qt3DCore10QAspectJobE@Base 6.2.1
  _ZTIN8Qt3DCore10QAttributeE@Base 6.2.1
  _ZTIN8Qt3DCore10QComponentE@Base 6.2.1
@@ -969,7 +968,6 @@ libQt63DCore.so.6 libqt63dcore6 #MINVER#
  _ZTIN8Qt3DCore13QAspectEngineE@Base 6.2.1
  _ZTIN8Qt3DCore13QCoreSettingsE@Base 6.2.1
  _ZTIN8Qt3DCore13QGeometryViewE@Base 6.2.1
- _ZTIN8Qt3DCore13QJointPrivateE@Base 6.2.1
  _ZTIN8Qt3DCore13QThreadPoolerE@Base 6.2.1
  _ZTIN8Qt3DCore14QAspectManagerE@Base 6.2.1
  _ZTIN8Qt3DCore14QBufferPrivateE@Base 6.2.1
@@ -979,11 +977,9 @@ libQt63DCore.so.6 libqt63dcore6 #MINVER#
  _ZTIN8Qt3DCore15QBoundingVolumeE@Base 6.2.1
  _ZTIN8Qt3DCore15QSkeletonLoaderE@Base 6.2.1
  _ZTIN8Qt3DCore16QAbstractFunctorE@Base 6.2.1
- _ZTIN8Qt3DCore16QArmaturePrivateE@Base 6.2.1
  _ZTIN8Qt3DCore16QDownloadRequestE@Base 6.2.1
  _ZTIN8Qt3DCore16QGeometryFactoryE@Base 6.2.1
  _ZTIN8Qt3DCore16QGeometryPrivateE@Base 6.2.1
- _ZTIN8Qt3DCore16QSkeletonPrivateE@Base 6.2.1
  _ZTIN8Qt3DCore17QAbstractSkeletonE@Base 6.2.1
  _ZTIN8Qt3DCore17QAspectJobManagerE@Base 6.2.1
  _ZTIN8Qt3DCore17QAspectJobPrivateE@Base 6.2.1
@@ -996,12 +992,10 @@ libQt63DCore.so.6 libqt63dcore6 #MINVER#
  _ZTIN8Qt3DCore19QEventFilterServiceE@Base 6.2.1
  _ZTIN8Qt3DCore20QAbstractNodeFactoryE@Base 6.2.1
  _ZTIN8Qt3DCore20QAspectEnginePrivateE@Base 6.2.1
- _ZTIN8Qt3DCore20QCoreSettingsPrivateE@Base 6.2.1
  _ZTIN8Qt3DCore20QGeometryViewPrivateE@Base 6.2.1
  _ZTIN8Qt3DCore22QAbstractAspectPrivateE@Base 6.2.1
  _ZTIN8Qt3DCore22QBoundingVolumePrivateE@Base 6.2.1
  _ZTIN8Qt3DCore22QDownloadHelperServiceE@Base 6.2.1
- _ZTIN8Qt3DCore22QSkeletonLoaderPrivateE@Base 6.2.1
  _ZTIN8Qt3DCore24QAbstractServiceProviderE@Base 6.2.1
  _ZTIN8Qt3DCore24QAbstractSkeletonPrivateE@Base 6.2.1
  _ZTIN8Qt3DCore25PropertyChangeHandlerBaseE@Base 6.2.1
@@ -1103,7 +1097,6 @@ libQt63DCore.so.6 libqt63dcore6 #MINVER#
  _ZTVN8Qt3DCore13QAspectEngineE@Base 6.2.1
  _ZTVN8Qt3DCore13QCoreSettingsE@Base 6.2.1
  _ZTVN8Qt3DCore13QGeometryViewE@Base 6.2.1
- _ZTVN8Qt3DCore13QJointPrivateE@Base 6.2.1
  _ZTVN8Qt3DCore13QThreadPoolerE@Base 6.2.1
  _ZTVN8Qt3DCore14QAspectManagerE@Base 6.2.1
  _ZTVN8Qt3DCore14QBufferPrivateE@Base 6.2.1
@@ -1113,11 +1106,9 @@ libQt63DCore.so.6 libqt63dcore6 #MINVER#
  _ZTVN8Qt3DCore15QBoundingVolumeE@Base 6.2.1
  _ZTVN8Qt3DCore15QSkeletonLoaderE@Base 6.2.1
  _ZTVN8Qt3DCore16QAbstractFunctorE@Base 6.2.1
- _ZTVN8Qt3DCore16QArmaturePrivateE@Base 6.2.1
  _ZTVN8Qt3DCore16QDownloadRequestE@Base 6.2.1
  _ZTVN8Qt3DCore16QGeometryFactoryE@Base 6.2.1
  _ZTVN8Qt3DCore16QGeometryPrivateE@Base 6.2.1
- _ZTVN8Qt3DCore16QSkeletonPrivateE@Base 6.2.1
  _ZTVN8Qt3DCore17QAbstractSkeletonE@Base 6.2.1
  _ZTVN8Qt3DCore17QAspectJobManagerE@Base 6.2.1
  _ZTVN8Qt3DCore17QAspectJobPrivateE@Base 6.2.1
@@ -1130,14 +1121,11 @@ libQt63DCore.so.6 libqt63dcore6 #MINVER#
  _ZTVN8Qt3DCore19QEventFilterServiceE@Base 6.2.1
  _ZTVN8Qt3DCore20QAbstractNodeFactoryE@Base 6.2.1
  _ZTVN8Qt3DCore20QAspectEnginePrivateE@Base 6.2.1
- _ZTVN8Qt3DCore20QCoreSettingsPrivateE@Base 6.2.1
  _ZTVN8Qt3DCore20QGeometryViewPrivateE@Base 6.2.1
  _ZTVN8Qt3DCore22QAbstractAspectPrivateE@Base 6.2.1
  _ZTVN8Qt3DCore22QBoundingVolumePrivateE@Base 6.2.1
  _ZTVN8Qt3DCore22QDownloadHelperServiceE@Base 6.2.1
- _ZTVN8Qt3DCore22QSkeletonLoaderPrivateE@Base 6.2.1
  _ZTVN8Qt3DCore24QAbstractServiceProviderE@Base 6.2.1
- _ZTVN8Qt3DCore24QAbstractSkeletonPrivateE@Base 6.2.1
  _ZTVN8Qt3DCore25PropertyChangeHandlerBaseE@Base 6.2.1
  _ZTVN8Qt3DCore25QAbstractAspectJobManagerE@Base 6.2.1
  _ZTVN8Qt3DCore25QOpenGLInformationServiceE@Base 6.2.1
@@ -1158,40 +1146,6 @@ libQt63DCore.so.6 libqt63dcore6 #MINVER#
  _ZTVN8Qt3DCore9QSkeletonE@Base 6.2.1
  (optional=templinst)_ZZN9QMetaType21registerConverterImplI5QListIPN8Qt3DCore5QNodeEE9QIterableI13QMetaSequenceEEEbSt8functionIFbPKvPvEES_S_E10unregister@Base 6.2.1
  (optional=templinst)_ZZN9QMetaType23registerMutableViewImplI5QListIPN8Qt3DCore5QNodeEE9QIterableI13QMetaSequenceEEEbSt8functionIFbPvSA_EES_S_E10unregister@Base 6.2.1
- (optional=templinst)_ZZN9QtPrivate16QMetaTypeForTypeI10QByteArrayE10getCopyCtrEvENUlPKNS_18QMetaTypeInterfaceEPvPKvE_4_FUNES5_S6_S8_@Base 6.2.1
- (optional=templinst)_ZZN9QtPrivate16QMetaTypeForTypeI10QByteArrayE10getMoveCtrEvENUlPKNS_18QMetaTypeInterfaceEPvS6_E_4_FUNES5_S6_S6_@Base 6.2.1
- (optional=templinst)_ZZN9QtPrivate16QMetaTypeForTypeI10QByteArrayE13getDefaultCtrEvENUlPKNS_18QMetaTypeInterfaceEPvE_4_FUNES5_S6_@Base 6.2.1
- (optional=templinst)_ZZN9QtPrivate16QMetaTypeForTypeI10QByteArrayE7getDtorEvENUlPKNS_18QMetaTypeInterfaceEPvE_4_FUNES5_S6_@Base 6.2.1
- (optional=templinst)_ZZN9QtPrivate16QMetaTypeForTypeI4QUrlE10getCopyCtrEvENUlPKNS_18QMetaTypeInterfaceEPvPKvE_4_FUNES5_S6_S8_@Base 6.2.1
- (optional=templinst)_ZZN9QtPrivate16QMetaTypeForTypeI4QUrlE10getMoveCtrEvENUlPKNS_18QMetaTypeInterfaceEPvS6_E_4_FUNES5_S6_S6_@Base 6.2.1
- (optional=templinst)_ZZN9QtPrivate16QMetaTypeForTypeI4QUrlE13getDefaultCtrEvENUlPKNS_18QMetaTypeInterfaceEPvE_4_FUNES5_S6_@Base 6.2.1
- (optional=templinst)_ZZN9QtPrivate16QMetaTypeForTypeI4QUrlE7getDtorEvENUlPKNS_18QMetaTypeInterfaceEPvE_4_FUNES5_S6_@Base 6.2.1
- (optional=templinst)_ZZN9QtPrivate16QMetaTypeForTypeI7QStringE10getCopyCtrEvENUlPKNS_18QMetaTypeInterfaceEPvPKvE_4_FUNES5_S6_S8_@Base 6.2.1
- (optional=templinst)_ZZN9QtPrivate16QMetaTypeForTypeI7QStringE10getMoveCtrEvENUlPKNS_18QMetaTypeInterfaceEPvS6_E_4_FUNES5_S6_S6_@Base 6.2.1
- (optional=templinst)_ZZN9QtPrivate16QMetaTypeForTypeI7QStringE13getDefaultCtrEvENUlPKNS_18QMetaTypeInterfaceEPvE_4_FUNES5_S6_@Base 6.2.1
- (optional=templinst)_ZZN9QtPrivate16QMetaTypeForTypeI7QStringE7getDtorEvENUlPKNS_18QMetaTypeInterfaceEPvE_4_FUNES5_S6_@Base 6.2.1
- (optional=templinst)_ZZN9QtPrivate16QMetaTypeForTypeI8QVariantE10getCopyCtrEvENUlPKNS_18QMetaTypeInterfaceEPvPKvE_4_FUNES5_S6_S8_@Base 6.2.1
- (optional=templinst)_ZZN9QtPrivate16QMetaTypeForTypeI8QVariantE10getMoveCtrEvENUlPKNS_18QMetaTypeInterfaceEPvS6_E_4_FUNES5_S6_S6_@Base 6.2.1
- (optional=templinst)_ZZN9QtPrivate16QMetaTypeForTypeI8QVariantE13getDefaultCtrEvENUlPKNS_18QMetaTypeInterfaceEPvE_4_FUNES5_S6_@Base 6.2.1
- (optional=templinst)_ZZN9QtPrivate16QMetaTypeForTypeI8QVariantE7getDtorEvENUlPKNS_18QMetaTypeInterfaceEPvE_4_FUNES5_S6_@Base 6.2.1
- (optional=templinst)_ZZN9QtPrivate16QMetaTypeForTypeIP7QObjectE10getCopyCtrEvENUlPKNS_18QMetaTypeInterfaceEPvPKvE_4_FUNES6_S7_S9_@Base 6.2.1
- (optional=templinst)_ZZN9QtPrivate16QMetaTypeForTypeIP7QObjectE10getMoveCtrEvENUlPKNS_18QMetaTypeInterfaceEPvS7_E_4_FUNES6_S7_S7_@Base 6.2.1
- (optional=templinst)_ZZN9QtPrivate16QMetaTypeForTypeIP7QObjectE13getDefaultCtrEvENUlPKNS_18QMetaTypeInterfaceEPvE_4_FUNES6_S7_@Base 6.2.1
- (optional=templinst)_ZZN9QtPrivate16QMetaTypeForTypeIbE10getCopyCtrEvENUlPKNS_18QMetaTypeInterfaceEPvPKvE_4_FUNES4_S5_S7_@Base 6.2.1
- (optional=templinst)_ZZN9QtPrivate16QMetaTypeForTypeIbE10getMoveCtrEvENUlPKNS_18QMetaTypeInterfaceEPvS5_E_4_FUNES4_S5_S5_@Base 6.2.1
- (optional=templinst)_ZZN9QtPrivate16QMetaTypeForTypeIbE13getDefaultCtrEvENUlPKNS_18QMetaTypeInterfaceEPvE_4_FUNES4_S5_@Base 6.2.1
- (optional=templinst)_ZZN9QtPrivate16QMetaTypeForTypeIfE10getCopyCtrEvENUlPKNS_18QMetaTypeInterfaceEPvPKvE_4_FUNES4_S5_S7_@Base 6.2.1
- (optional=templinst)_ZZN9QtPrivate16QMetaTypeForTypeIfE10getMoveCtrEvENUlPKNS_18QMetaTypeInterfaceEPvS5_E_4_FUNES4_S5_S5_@Base 6.2.1
- (optional=templinst)_ZZN9QtPrivate16QMetaTypeForTypeIfE13getDefaultCtrEvENUlPKNS_18QMetaTypeInterfaceEPvE_4_FUNES4_S5_@Base 6.2.1
- (optional=templinst)_ZZN9QtPrivate16QMetaTypeForTypeIiE10getCopyCtrEvENUlPKNS_18QMetaTypeInterfaceEPvPKvE_4_FUNES4_S5_S7_@Base 6.2.1
- (optional=templinst)_ZZN9QtPrivate16QMetaTypeForTypeIiE10getMoveCtrEvENUlPKNS_18QMetaTypeInterfaceEPvS5_E_4_FUNES4_S5_S5_@Base 6.2.1
- (optional=templinst)_ZZN9QtPrivate16QMetaTypeForTypeIiE13getDefaultCtrEvENUlPKNS_18QMetaTypeInterfaceEPvE_4_FUNES4_S5_@Base 6.2.1
- (optional=templinst)_ZZN9QtPrivate16QMetaTypeForTypeIjE10getCopyCtrEvENUlPKNS_18QMetaTypeInterfaceEPvPKvE_4_FUNES4_S5_S7_@Base 6.2.1
- (optional=templinst)_ZZN9QtPrivate16QMetaTypeForTypeIjE10getMoveCtrEvENUlPKNS_18QMetaTypeInterfaceEPvS5_E_4_FUNES4_S5_S5_@Base 6.2.1
- (optional=templinst)_ZZN9QtPrivate16QMetaTypeForTypeIjE13getDefaultCtrEvENUlPKNS_18QMetaTypeInterfaceEPvE_4_FUNES4_S5_@Base 6.2.1
- (optional=templinst)_ZZN9QtPrivate16QMetaTypeForTypeIxE10getCopyCtrEvENUlPKNS_18QMetaTypeInterfaceEPvPKvE_4_FUNES4_S5_S7_@Base 6.2.1
- (optional=templinst)_ZZN9QtPrivate16QMetaTypeForTypeIxE10getMoveCtrEvENUlPKNS_18QMetaTypeInterfaceEPvS5_E_4_FUNES4_S5_S5_@Base 6.2.1
- (optional=templinst)_ZZN9QtPrivate16QMetaTypeForTypeIxE13getDefaultCtrEvENUlPKNS_18QMetaTypeInterfaceEPvE_4_FUNES4_S5_@Base 6.2.1
  (c++)"non-virtual thunk to Qt3DCore::QAbstractAspectPrivate::frameDone()@Base" 6.2.1
  (c++)"non-virtual thunk to Qt3DCore::QAbstractAspectPrivate::jobsDone()@Base" 6.2.1
  (c++)"non-virtual thunk to Qt3DCore::QAbstractAspectPrivate::jobsToExecute(long long)@Base" 6.2.1

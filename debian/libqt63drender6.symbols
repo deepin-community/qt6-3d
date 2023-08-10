@@ -1,4 +1,4 @@
-# SymbolsHelper-Confirmed: 6.2.4 amd64
+# SymbolsHelper-Confirmed: 6.4.0 amd64
 libQt63DRender.so.6 libqt63drender6 #MINVER#
 * Build-Depends-Package: qt6-3d-dev
  _ZGVZN9QMetaType21registerConverterImplI5QListIN10Qt3DRender11QSortPolicy8SortTypeEE9QIterableI13QMetaSequenceEEEbSt8functionIFbPKvPvEES_S_E10unregister@Base 6.2.1
@@ -1531,6 +1531,7 @@ libQt63DRender.so.6 libqt63drender6 #MINVER#
  _ZN10Qt3DRender20QTextureCubeMapArrayD0Ev@Base 6.2.1
  _ZN10Qt3DRender20QTextureCubeMapArrayD1Ev@Base 6.2.1
  _ZN10Qt3DRender20QTextureCubeMapArrayD2Ev@Base 6.2.1
+ (arch=linux-any)_ZN10Qt3DRender20staticVulkanInstanceEv@Base 6.3.1
  _ZN10Qt3DRender21GraphicsApiFilterDataC1Ev@Base 6.2.1
  _ZN10Qt3DRender21GraphicsApiFilterDataC2Ev@Base 6.2.1
  _ZN10Qt3DRender21QAbstractLightPrivateC1ENS_14QAbstractLight4TypeE@Base 6.2.1
@@ -2560,8 +2561,6 @@ libQt63DRender.so.6 libqt63drender6 #MINVER#
  _ZN10Qt3DRender6Render9FilterKeyD0Ev@Base 6.2.1
  _ZN10Qt3DRender6Render9FilterKeyD1Ev@Base 6.2.1
  _ZN10Qt3DRender6Render9FilterKeyD2Ev@Base 6.2.1
- _ZN10Qt3DRender6Render9FilterKeyeqERKS1_@Base 6.2.1
- _ZN10Qt3DRender6Render9FilterKeyneERKS1_@Base 6.2.1
  _ZN10Qt3DRender6Render9FrontFace16updatePropertiesEPKNS_12QRenderStateE@Base 6.2.1
  _ZN10Qt3DRender6Render9LineWidth16updatePropertiesEPKNS_12QRenderStateE@Base 6.2.1
  _ZN10Qt3DRender6Render9Parameter16syncFromFrontEndEPKN8Qt3DCore5QNodeEb@Base 6.2.1
@@ -3468,11 +3467,10 @@ libQt63DRender.so.6 libqt63drender6 #MINVER#
  (arch=amd64)_ZNK10Qt3DRender6Render6Sphere11transformedERKN8Qt3DCore13Matrix4x4_SSEE@Base 6.2.2
  _ZNK10Qt3DRender6Render6Sphere2idEv@Base 6.2.1
  _ZNK10Qt3DRender6Render6Sphere4typeEv@Base 6.2.1
- _ZNK10Qt3DRender6Render6Sphere6centerEv@Base 6.2.1
- _ZNK10Qt3DRender6Render6Sphere6radiusEv@Base 6.2.1
  _ZNK10Qt3DRender6Render7Texture7isValidEPNS0_19TextureImageManagerE@Base 6.2.1
  _ZNK10Qt3DRender6Render8Material10parametersEv@Base 6.2.1
  _ZNK10Qt3DRender6Render8Material6effectEv@Base 6.2.1
+ _ZNK10Qt3DRender6Render9FilterKey6equalsERKS1_@Base 6.4.0
  _ZNK10Qt3DRender6Render9Parameter4nameEv@Base 6.2.1
  _ZNK10Qt3DRender6Render9RayCaster10filterModeEv@Base 6.2.1
  _ZNK10Qt3DRender6Render9RayCaster4typeEv@Base 6.2.1
@@ -3530,32 +3528,9 @@ libQt63DRender.so.6 libqt63drender6 #MINVER#
  _ZNK10Qt3DRender9QViewport10metaObjectEv@Base 6.2.1
  _ZNK10Qt3DRender9QViewport14normalizedRectEv@Base 6.2.1
  _ZNK10Qt3DRender9QViewport5gammaEv@Base 6.2.1
- (optional=templinst)_ZNKSt10_HashtableIiSt4pairIKiSt6vectorISt5tupleIJiiPKN10Qt3DRender6Render10ShaderData13PropertyValueEEESaISA_EEESaISD_ENSt8__detail10_Select1stESt8equal_toIiESt4hashIiENSF_18_Mod_range_hashingENSF_20_Default_ranged_hashENSF_20_Prime_rehash_policyENSF_17_Hashtable_traitsILb0ELb0ELb1EEEE4findERS1_@Base 6.2.1
- (optional=templinst)_ZNSt10_HashtableIiSt4pairIKiSt6vectorISt5tupleIJiiPKN10Qt3DRender6Render10ShaderData13PropertyValueEEESaISA_EEESaISD_ENSt8__detail10_Select1stESt8equal_toIiESt4hashIiENSF_18_Mod_range_hashingENSF_20_Default_ranged_hashENSF_20_Prime_rehash_policyENSF_17_Hashtable_traitsILb0ELb0ELb1EEEE5clearEv@Base 6.2.1
- (optional=templinst|subst)_ZNSt6vectorI10QByteArraySaIS0_EE17_M_default_appendE{size_t}@Base 6.2.1
- (optional=templinst)_ZNSt6vectorI7QStringSaIS0_EE17_M_realloc_insertIJRKS0_EEEvN9__gnu_cxx17__normal_iteratorIPS0_S2_EEDpOT_@Base 6.2.1
- (optional=templinst)_ZNSt6vectorIN10Qt3DRender10RayCasting21QCollisionQueryResult3HitESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_@Base 6.2.1
  (optional=templinst|arch=!amd64)_ZNSt6vectorIN10Qt3DRender10RayCasting21QCollisionQueryResult3HitESaIS3_EE17_M_realloc_insertIJRN8Qt3DCore7QNodeIdERK9QVector3DRfSC_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_@Base 6.2.2
- (optional=templinst|arch=amd64)_ZNSt6vectorIN10Qt3DRender10RayCasting21QCollisionQueryResult3HitESaIS3_EE17_M_realloc_insertIJRN8Qt3DCore7QNodeIdERKNS7_12Vector3D_SSEERfSC_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_@Base 6.2.2
- (optional=templinst)_ZNSt6vectorIN10Qt3DRender10RayCasting21QCollisionQueryResult3HitESaIS3_EE6insertEN9__gnu_cxx17__normal_iteratorIPKS3_S5_EERS8_@Base 6.2.1
- (optional=templinst)_ZNSt6vectorIN10Qt3DRender10RayCasting21QCollisionQueryResult3HitESaIS3_EEaSERKS5_@Base 6.2.1
  (optional=templinst|arch=arm64 mipsel)_ZNSt6vectorIN10Qt3DRender10RayCasting6QRay3DESaIS2_EE17_M_realloc_insertIJ9QVector3DS6_fEEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_@Base 6.2.2
- (optional=templinst)_ZNSt6vectorIN10Qt3DRender10RayCasting6QRay3DESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_@Base 6.2.1
- (optional=templinst)_ZNSt6vectorIN10Qt3DRender18QTextureDataUpdateESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_@Base 6.2.1
- (optional=templinst)_ZNSt6vectorIN10Qt3DRender6Render10AttachmentESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_@Base 6.2.1
- (optional=templinst)_ZNSt6vectorIN10Qt3DRender6Render11LightSourceESaIS2_EE17_M_realloc_insertIJS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_@Base 6.2.1
- (optional=templinst)_ZNSt6vectorIN10Qt3DRender6Render12StateVariantESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_@Base 6.2.1
- (optional=templinst)_ZNSt6vectorIPN10Qt3DRender6Render10ShaderDataESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_@Base 6.2.1
- (optional=templinst)_ZNSt6vectorIPN10Qt3DRender6Render13LevelOfDetailESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_@Base 6.2.1
- (optional=templinst)_ZNSt6vectorIPN10Qt3DRender6Render16EnvironmentLightESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_@Base 6.2.1
- (optional=templinst)_ZNSt6vectorIPN10Qt3DRender6Render5LightESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_@Base 6.2.1
- (optional=templinst)_ZNSt6vectorIPN10Qt3DRender6Render9RayCasterESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_@Base 6.2.1
- (optional=templinst)_ZNSt6vectorIPN10Qt3DRender6Render9TechniqueESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_@Base 6.2.1
- (optional=templinst)_ZNSt6vectorISt4pairIP7QObjectSt10unique_ptrI11QMouseEventSt14default_deleteIS4_EEESaIS8_EE17_M_realloc_insertIJRS2_S7_EEEvN9__gnu_cxx17__normal_iteratorIPS8_SA_EEDpOT_@Base 6.2.1
- (optional=templinst)_ZNSt6vectorISt5tupleIJiiPKN10Qt3DRender6Render10ShaderData13PropertyValueEEESaIS7_EE17_M_realloc_insertIJS7_EEEvN9__gnu_cxx17__normal_iteratorIPS7_S9_EEDpOT_@Base 6.2.1
- (optional=templinst)_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_@Base 6.2.1
- (optional=templinst|subst)_ZNSt6vectorIiSaIiEE7reserveE{size_t}@Base 6.2.1
- (optional=templinst)_ZNSt8__detail9_Map_baseIiSt4pairIKiSt6vectorISt5tupleIJiiPKN10Qt3DRender6Render10ShaderData13PropertyValueEEESaISB_EEESaISE_ENS_10_Select1stESt8equal_toIiESt4hashIiENS_18_Mod_range_hashingENS_20_Default_ranged_hashENS_20_Prime_rehash_policyENS_17_Hashtable_traitsILb0ELb0ELb1EEELb1EEixEOi@Base 6.2.1
+ _ZSt19piecewise_construct@Base 6.4.0
  _ZTIFSt6vectorIN10Qt3DRender10RayCasting21QCollisionQueryResult3HitESaIS3_EERS5_RKS5_E@Base 6.2.1
  _ZTIN10Qt3DRender10QAlphaTestE@Base 6.2.1
  _ZTIN10Qt3DRender10QClipPlaneE@Base 6.2.1
@@ -3599,7 +3574,6 @@ libQt63DRender.so.6 libqt63drender6 #MINVER#
  _ZTIN10Qt3DRender12QStencilTestE@Base 6.2.1
  _ZTIN10Qt3DRender13QClearBuffersE@Base 6.2.1
  _ZTIN10Qt3DRender13QDebugOverlayE@Base 6.2.1
- _ZTIN10Qt3DRender13QLayerPrivateE@Base 6.2.1
  _ZTIN10Qt3DRender13QObjectPickerE@Base 6.2.1
  _ZTIN10Qt3DRender13QPickingProxyE@Base 6.2.1
  _ZTIN10Qt3DRender13QRenderAspectE@Base 6.2.1
@@ -3609,8 +3583,6 @@ libQt63DRender.so.6 libqt63drender6 #MINVER#
  _ZTIN10Qt3DRender14QAlphaCoverageE@Base 6.2.1
  _ZTIN10Qt3DRender14QBlendEquationE@Base 6.2.1
  _ZTIN10Qt3DRender14QBufferCaptureE@Base 6.2.1
- _ZTIN10Qt3DRender14QCameraPrivateE@Base 6.2.1
- _ZTIN10Qt3DRender14QEffectPrivateE@Base 6.2.1
  _ZTIN10Qt3DRender14QLevelOfDetailE@Base 6.2.1
  _ZTIN10Qt3DRender14QMemoryBarrierE@Base 6.2.1
  _ZTIN10Qt3DRender14QPickLineEventE@Base 6.2.1
@@ -3634,100 +3606,64 @@ libQt63DRender.so.6 libqt63drender6 #MINVER#
  _ZTIN10Qt3DRender15QTextureCubeMapE@Base 6.2.1
  _ZTIN10Qt3DRender16QAbstractTextureE@Base 6.2.1
  _ZTIN10Qt3DRender16QBlitFramebufferE@Base 6.2.1
- _ZTIN10Qt3DRender16QCullFacePrivateE@Base 6.2.1
  _ZTIN10Qt3DRender16QDispatchComputeE@Base 6.2.1
  _ZTIN10Qt3DRender16QMaterialPrivateE@Base 6.2.1
  _ZTIN10Qt3DRender16QPickingSettingsE@Base 6.2.1
  _ZTIN10Qt3DRender16QProximityFilterE@Base 6.2.1
  _ZTIN10Qt3DRender16QScreenRayCasterE@Base 6.2.1
  _ZTIN10Qt3DRender16QSeamlessCubemapE@Base 6.2.1
- _ZTIN10Qt3DRender16QSetFencePrivateE@Base 6.2.1
  _ZTIN10Qt3DRender16QSharedGLTextureE@Base 6.2.1
  _ZTIN10Qt3DRender16QTechniqueFilterE@Base 6.2.1
  _ZTIN10Qt3DRender16QTextureWrapModeE@Base 6.2.1
- _ZTIN10Qt3DRender17QClipPlanePrivateE@Base 6.2.1
- _ZTIN10Qt3DRender17QColorMaskPrivateE@Base 6.2.1
- _ZTIN10Qt3DRender17QDepthTestPrivateE@Base 6.2.1
  _ZTIN10Qt3DRender17QDirectionalLightE@Base 6.2.1
  _ZTIN10Qt3DRender17QEnvironmentLightE@Base 6.2.1
- _ZTIN10Qt3DRender17QFilterKeyPrivateE@Base 6.2.1
- _ZTIN10Qt3DRender17QFrontFacePrivateE@Base 6.2.1
  _ZTIN10Qt3DRender17QGeometryRendererE@Base 6.2.1
  _ZTIN10Qt3DRender17QParameterPrivateE@Base 6.2.1
  _ZTIN10Qt3DRender17QPickEventPrivateE@Base 6.2.1
- _ZTIN10Qt3DRender17QPointSizePrivateE@Base 6.2.1
  _ZTIN10Qt3DRender17QRenderPassFilterE@Base 6.2.1
- _ZTIN10Qt3DRender17QSpotLightPrivateE@Base 6.2.1
  _ZTIN10Qt3DRender17QStencilOperationE@Base 6.2.1
  _ZTIN10Qt3DRender17QTextureGeneratorE@Base 6.2.1
  _ZTIN10Qt3DRender17QTextureRectangleE@Base 6.2.1
  _ZTIN10Qt3DRender18QAbstractRayCasterE@Base 6.2.1
- _ZTIN10Qt3DRender18QCameraLensPrivateE@Base 6.2.1
- _ZTIN10Qt3DRender18QDepthRangePrivateE@Base 6.2.1
  _ZTIN10Qt3DRender18QGraphicsApiFilterE@Base 6.2.1
  _ZTIN10Qt3DRender18QPickTriangleEventE@Base 6.2.1
- _ZTIN10Qt3DRender18QPointLightPrivateE@Base 6.2.1
- _ZTIN10Qt3DRender18QRasterModePrivateE@Base 6.2.1
  _ZTIN10Qt3DRender18QSceneExportPluginE@Base 6.2.1
  _ZTIN10Qt3DRender18QSceneImportPluginE@Base 6.2.1
- _ZTIN10Qt3DRender18QShaderDataPrivateE@Base 6.2.1
  _ZTIN10Qt3DRender19QRenderCapabilitiesE@Base 6.2.1
  _ZTIN10Qt3DRender19QRenderCaptureReplyE@Base 6.2.1
  _ZTIN10Qt3DRender19QRenderStatePrivateE@Base 6.2.1
  _ZTIN10Qt3DRender19QRenderTargetOutputE@Base 6.2.1
- _ZTIN10Qt3DRender19QSceneLoaderPrivateE@Base 6.2.1
- _ZTIN10Qt3DRender19QScissorTestPrivateE@Base 6.2.1
- _ZTIN10Qt3DRender19QStencilMaskPrivateE@Base 6.2.1
- _ZTIN10Qt3DRender19QStencilTestPrivateE@Base 6.2.1
  _ZTIN10Qt3DRender20QLevelOfDetailSwitchE@Base 6.2.1
- _ZTIN10Qt3DRender20QObjectPickerPrivateE@Base 6.2.1
  _ZTIN10Qt3DRender20QPaintedTextureImageE@Base 6.2.1
  _ZTIN10Qt3DRender20QPickingProxyPrivateE@Base 6.2.1
  _ZTIN10Qt3DRender20QRenderAspectPrivateE@Base 6.2.1
- _ZTIN10Qt3DRender20QRenderTargetPrivateE@Base 6.2.1
  _ZTIN10Qt3DRender20QTextureCubeMapArrayE@Base 6.2.1
- _ZTIN10Qt3DRender20QTextureImagePrivateE@Base 6.2.1
  _ZTIN10Qt3DRender21QAbstractLightPrivateE@Base 6.2.1
  _ZTIN10Qt3DRender21QAbstractTextureImageE@Base 6.2.1
- _ZTIN10Qt3DRender21QBlendEquationPrivateE@Base 6.2.1
  _ZTIN10Qt3DRender21QLevelOfDetailPrivateE@Base 6.2.1
- _ZTIN10Qt3DRender21QPolygonOffsetPrivateE@Base 6.2.1
  _ZTIN10Qt3DRender21QRenderTargetSelectorE@Base 6.2.1
  _ZTIN10Qt3DRender21QShaderProgramBuilderE@Base 6.2.1
- _ZTIN10Qt3DRender21QShaderProgramPrivateE@Base 6.2.1
  _ZTIN10Qt3DRender21QStencilTestArgumentsE@Base 6.2.1
  _ZTIN10Qt3DRender21QTexture2DMultisampleE@Base 6.2.1
  _ZTIN10Qt3DRender21QTextureLoaderPrivateE@Base 6.2.1
- _ZTIN10Qt3DRender22QComputeCommandPrivateE@Base 6.2.1
  _ZTIN10Qt3DRender22QFrameGraphNodePrivateE@Base 6.2.1
  _ZTIN10Qt3DRender22QGeometryLoaderFactoryE@Base 6.2.1
- _ZTIN10Qt3DRender22QRenderSettingsPrivateE@Base 6.2.1
  _ZTIN10Qt3DRender22QRenderSurfaceSelectorE@Base 6.2.1
  _ZTIN10Qt3DRender23PropertyReaderInterfaceE@Base 6.2.1
  _ZTIN10Qt3DRender23QAbstractTexturePrivateE@Base 6.2.1
  _ZTIN10Qt3DRender23QBlendEquationArgumentsE@Base 6.2.1
- _ZTIN10Qt3DRender23QPickingSettingsPrivateE@Base 6.2.1
- _ZTIN10Qt3DRender23QTechniqueFilterPrivateE@Base 6.2.1
- _ZTIN10Qt3DRender24QDirectionalLightPrivateE@Base 6.2.1
  _ZTIN10Qt3DRender24QEnvironmentLightPrivateE@Base 6.2.1
  _ZTIN10Qt3DRender24QGeometryRendererPrivateE@Base 6.2.1
  _ZTIN10Qt3DRender24QMultiSampleAntiAliasingE@Base 6.2.1
  _ZTIN10Qt3DRender24QStencilOperationPrivateE@Base 6.2.1
  _ZTIN10Qt3DRender25QAbstractRayCasterPrivateE@Base 6.2.1
- _ZTIN10Qt3DRender25QGraphicsApiFilterPrivateE@Base 6.2.1
- _ZTIN10Qt3DRender25QPickTriangleEventPrivateE@Base 6.2.1
- _ZTIN10Qt3DRender26QRenderCapabilitiesPrivateE@Base 6.2.1
- _ZTIN10Qt3DRender26QRenderTargetOutputPrivateE@Base 6.2.1
  _ZTIN10Qt3DRender26QStencilOperationArgumentsE@Base 6.2.1
  _ZTIN10Qt3DRender26QTexture2DMultisampleArrayE@Base 6.2.1
  _ZTIN10Qt3DRender26QTextureImageDataGeneratorE@Base 6.2.1
  _ZTIN10Qt3DRender27QLevelOfDetailSwitchPrivateE@Base 6.2.1
  _ZTIN10Qt3DRender27QPaintedTextureImagePrivateE@Base 6.2.1
  _ZTIN10Qt3DRender28QAbstractTextureImagePrivateE@Base 6.2.1
- _ZTIN10Qt3DRender28QShaderProgramBuilderPrivateE@Base 6.2.1
- _ZTIN10Qt3DRender28QStencilTestArgumentsPrivateE@Base 6.2.1
  _ZTIN10Qt3DRender29QRenderSurfaceSelectorPrivateE@Base 6.2.1
- _ZTIN10Qt3DRender30QBlendEquationArgumentsPrivateE@Base 6.2.1
  _ZTIN10Qt3DRender33QStencilOperationArgumentsPrivateE@Base 6.2.1
  _ZTIN10Qt3DRender5QMeshE@Base 6.2.1
  _ZTIN10Qt3DRender6QLayerE@Base 6.2.1
@@ -3751,9 +3687,7 @@ libQt63DRender.so.6 libqt63drender6 #MINVER#
  _ZTIN10Qt3DRender6Render12StateSetNodeE@Base 6.2.1
  _ZTIN10Qt3DRender6Render12TextureImageE@Base 6.2.1
  _ZTIN10Qt3DRender6Render12ViewportNodeE@Base 6.2.1
- _ZTIN10Qt3DRender6Render13AlphaCoverageE@Base 6.2.1
  _ZTIN10Qt3DRender6Render13BlendEquationE@Base 6.2.1
- _ZTIN10Qt3DRender6Render13BufferCaptureE@Base 6.2.1
  _ZTIN10Qt3DRender6Render13LevelOfDetailE@Base 6.2.1
  _ZTIN10Qt3DRender6Render13LightGathererE@Base 6.2.1
  _ZTIN10Qt3DRender6Render13MemoryBarrierE@Base 6.2.1
@@ -3776,7 +3710,6 @@ libQt63DRender.so.6 libqt63drender6 #MINVER#
  _ZTIN10Qt3DRender6Render15QRendererPluginE@Base 6.2.1
  _ZTIN10Qt3DRender6Render15RenderStateImplE@Base 6.2.1
  _ZTIN10Qt3DRender6Render15RenderStateNodeE@Base 6.2.1
- _ZTIN10Qt3DRender6Render15SeamlessCubemapE@Base 6.2.1
  _ZTIN10Qt3DRender6Render15TechniqueFilterE@Base 6.2.1
  _ZTIN10Qt3DRender6Render16EnvironmentLightE@Base 6.2.1
  _ZTIN10Qt3DRender6Render16GeometryRendererE@Base 6.2.1
@@ -3831,7 +3764,6 @@ libQt63DRender.so.6 libqt63drender6 #MINVER#
  _ZTIN10Qt3DRender6Render9ClipPlaneE@Base 6.2.1
  _ZTIN10Qt3DRender6Render9ColorMaskE@Base 6.2.1
  _ZTIN10Qt3DRender6Render9DepthTestE@Base 6.2.1
- _ZTIN10Qt3DRender6Render9DitheringE@Base 6.2.1
  _ZTIN10Qt3DRender6Render9FilterKeyE@Base 6.2.1
  _ZTIN10Qt3DRender6Render9FrontFaceE@Base 6.2.1
  _ZTIN10Qt3DRender6Render9LineWidthE@Base 6.2.1
@@ -4208,7 +4140,6 @@ libQt63DRender.so.6 libqt63drender6 #MINVER#
  _ZTVN10Qt3DRender12QStencilTestE@Base 6.2.1
  _ZTVN10Qt3DRender13QClearBuffersE@Base 6.2.1
  _ZTVN10Qt3DRender13QDebugOverlayE@Base 6.2.1
- _ZTVN10Qt3DRender13QLayerPrivateE@Base 6.2.1
  _ZTVN10Qt3DRender13QObjectPickerE@Base 6.2.1
  _ZTVN10Qt3DRender13QPickingProxyE@Base 6.2.1
  _ZTVN10Qt3DRender13QRenderAspectE@Base 6.2.1
@@ -4218,8 +4149,6 @@ libQt63DRender.so.6 libqt63drender6 #MINVER#
  _ZTVN10Qt3DRender14QAlphaCoverageE@Base 6.2.1
  _ZTVN10Qt3DRender14QBlendEquationE@Base 6.2.1
  _ZTVN10Qt3DRender14QBufferCaptureE@Base 6.2.1
- _ZTVN10Qt3DRender14QCameraPrivateE@Base 6.2.1
- _ZTVN10Qt3DRender14QEffectPrivateE@Base 6.2.1
  _ZTVN10Qt3DRender14QLevelOfDetailE@Base 6.2.1
  _ZTVN10Qt3DRender14QMemoryBarrierE@Base 6.2.1
  _ZTVN10Qt3DRender14QPickLineEventE@Base 6.2.1
@@ -4243,100 +4172,61 @@ libQt63DRender.so.6 libqt63drender6 #MINVER#
  _ZTVN10Qt3DRender15QTextureCubeMapE@Base 6.2.1
  _ZTVN10Qt3DRender16QAbstractTextureE@Base 6.2.1
  _ZTVN10Qt3DRender16QBlitFramebufferE@Base 6.2.1
- _ZTVN10Qt3DRender16QCullFacePrivateE@Base 6.2.1
  _ZTVN10Qt3DRender16QDispatchComputeE@Base 6.2.1
  _ZTVN10Qt3DRender16QMaterialPrivateE@Base 6.2.1
  _ZTVN10Qt3DRender16QPickingSettingsE@Base 6.2.1
  _ZTVN10Qt3DRender16QProximityFilterE@Base 6.2.1
  _ZTVN10Qt3DRender16QScreenRayCasterE@Base 6.2.1
  _ZTVN10Qt3DRender16QSeamlessCubemapE@Base 6.2.1
- _ZTVN10Qt3DRender16QSetFencePrivateE@Base 6.2.1
  _ZTVN10Qt3DRender16QSharedGLTextureE@Base 6.2.1
  _ZTVN10Qt3DRender16QTechniqueFilterE@Base 6.2.1
  _ZTVN10Qt3DRender16QTextureWrapModeE@Base 6.2.1
- _ZTVN10Qt3DRender17QClipPlanePrivateE@Base 6.2.1
- _ZTVN10Qt3DRender17QColorMaskPrivateE@Base 6.2.1
- _ZTVN10Qt3DRender17QDepthTestPrivateE@Base 6.2.1
  _ZTVN10Qt3DRender17QDirectionalLightE@Base 6.2.1
  _ZTVN10Qt3DRender17QEnvironmentLightE@Base 6.2.1
- _ZTVN10Qt3DRender17QFilterKeyPrivateE@Base 6.2.1
- _ZTVN10Qt3DRender17QFrontFacePrivateE@Base 6.2.1
  _ZTVN10Qt3DRender17QGeometryRendererE@Base 6.2.1
  _ZTVN10Qt3DRender17QParameterPrivateE@Base 6.2.1
- _ZTVN10Qt3DRender17QPickEventPrivateE@Base 6.2.1
- _ZTVN10Qt3DRender17QPointSizePrivateE@Base 6.2.1
  _ZTVN10Qt3DRender17QRenderPassFilterE@Base 6.2.1
- _ZTVN10Qt3DRender17QSpotLightPrivateE@Base 6.2.1
  _ZTVN10Qt3DRender17QStencilOperationE@Base 6.2.1
  _ZTVN10Qt3DRender17QTextureGeneratorE@Base 6.2.1
  _ZTVN10Qt3DRender17QTextureRectangleE@Base 6.2.1
  _ZTVN10Qt3DRender18QAbstractRayCasterE@Base 6.2.1
- _ZTVN10Qt3DRender18QCameraLensPrivateE@Base 6.2.1
- _ZTVN10Qt3DRender18QDepthRangePrivateE@Base 6.2.1
  _ZTVN10Qt3DRender18QGraphicsApiFilterE@Base 6.2.1
  _ZTVN10Qt3DRender18QPickTriangleEventE@Base 6.2.1
- _ZTVN10Qt3DRender18QPointLightPrivateE@Base 6.2.1
- _ZTVN10Qt3DRender18QRasterModePrivateE@Base 6.2.1
  _ZTVN10Qt3DRender18QSceneExportPluginE@Base 6.2.1
  _ZTVN10Qt3DRender18QSceneImportPluginE@Base 6.2.1
- _ZTVN10Qt3DRender18QShaderDataPrivateE@Base 6.2.1
  _ZTVN10Qt3DRender19QRenderCapabilitiesE@Base 6.2.1
  _ZTVN10Qt3DRender19QRenderCaptureReplyE@Base 6.2.1
  _ZTVN10Qt3DRender19QRenderStatePrivateE@Base 6.2.1
  _ZTVN10Qt3DRender19QRenderTargetOutputE@Base 6.2.1
- _ZTVN10Qt3DRender19QSceneLoaderPrivateE@Base 6.2.1
- _ZTVN10Qt3DRender19QScissorTestPrivateE@Base 6.2.1
- _ZTVN10Qt3DRender19QStencilMaskPrivateE@Base 6.2.1
- _ZTVN10Qt3DRender19QStencilTestPrivateE@Base 6.2.1
  _ZTVN10Qt3DRender20QLevelOfDetailSwitchE@Base 6.2.1
- _ZTVN10Qt3DRender20QObjectPickerPrivateE@Base 6.2.1
  _ZTVN10Qt3DRender20QPaintedTextureImageE@Base 6.2.1
  _ZTVN10Qt3DRender20QPickingProxyPrivateE@Base 6.2.1
  _ZTVN10Qt3DRender20QRenderAspectPrivateE@Base 6.2.1
- _ZTVN10Qt3DRender20QRenderTargetPrivateE@Base 6.2.1
  _ZTVN10Qt3DRender20QTextureCubeMapArrayE@Base 6.2.1
- _ZTVN10Qt3DRender20QTextureImagePrivateE@Base 6.2.1
  _ZTVN10Qt3DRender21QAbstractLightPrivateE@Base 6.2.1
  _ZTVN10Qt3DRender21QAbstractTextureImageE@Base 6.2.1
- _ZTVN10Qt3DRender21QBlendEquationPrivateE@Base 6.2.1
  _ZTVN10Qt3DRender21QLevelOfDetailPrivateE@Base 6.2.1
- _ZTVN10Qt3DRender21QPolygonOffsetPrivateE@Base 6.2.1
  _ZTVN10Qt3DRender21QRenderTargetSelectorE@Base 6.2.1
  _ZTVN10Qt3DRender21QShaderProgramBuilderE@Base 6.2.1
- _ZTVN10Qt3DRender21QShaderProgramPrivateE@Base 6.2.1
  _ZTVN10Qt3DRender21QStencilTestArgumentsE@Base 6.2.1
  _ZTVN10Qt3DRender21QTexture2DMultisampleE@Base 6.2.1
  _ZTVN10Qt3DRender21QTextureLoaderPrivateE@Base 6.2.1
- _ZTVN10Qt3DRender22QComputeCommandPrivateE@Base 6.2.1
- _ZTVN10Qt3DRender22QFrameGraphNodePrivateE@Base 6.2.1
  _ZTVN10Qt3DRender22QGeometryLoaderFactoryE@Base 6.2.1
- _ZTVN10Qt3DRender22QRenderSettingsPrivateE@Base 6.2.1
  _ZTVN10Qt3DRender22QRenderSurfaceSelectorE@Base 6.2.1
  _ZTVN10Qt3DRender23PropertyReaderInterfaceE@Base 6.2.1
- _ZTVN10Qt3DRender23QAbstractTexturePrivateE@Base 6.2.1
  _ZTVN10Qt3DRender23QBlendEquationArgumentsE@Base 6.2.1
- _ZTVN10Qt3DRender23QPickingSettingsPrivateE@Base 6.2.1
- _ZTVN10Qt3DRender23QTechniqueFilterPrivateE@Base 6.2.1
- _ZTVN10Qt3DRender24QDirectionalLightPrivateE@Base 6.2.1
  _ZTVN10Qt3DRender24QEnvironmentLightPrivateE@Base 6.2.1
  _ZTVN10Qt3DRender24QGeometryRendererPrivateE@Base 6.2.1
  _ZTVN10Qt3DRender24QMultiSampleAntiAliasingE@Base 6.2.1
  _ZTVN10Qt3DRender24QStencilOperationPrivateE@Base 6.2.1
  _ZTVN10Qt3DRender25QAbstractRayCasterPrivateE@Base 6.2.1
- _ZTVN10Qt3DRender25QGraphicsApiFilterPrivateE@Base 6.2.1
- _ZTVN10Qt3DRender25QPickTriangleEventPrivateE@Base 6.2.1
- _ZTVN10Qt3DRender26QRenderCapabilitiesPrivateE@Base 6.2.1
- _ZTVN10Qt3DRender26QRenderTargetOutputPrivateE@Base 6.2.1
  _ZTVN10Qt3DRender26QStencilOperationArgumentsE@Base 6.2.1
  _ZTVN10Qt3DRender26QTexture2DMultisampleArrayE@Base 6.2.1
  _ZTVN10Qt3DRender26QTextureImageDataGeneratorE@Base 6.2.1
  _ZTVN10Qt3DRender27QLevelOfDetailSwitchPrivateE@Base 6.2.1
  _ZTVN10Qt3DRender27QPaintedTextureImagePrivateE@Base 6.2.1
  _ZTVN10Qt3DRender28QAbstractTextureImagePrivateE@Base 6.2.1
- _ZTVN10Qt3DRender28QShaderProgramBuilderPrivateE@Base 6.2.1
- _ZTVN10Qt3DRender28QStencilTestArgumentsPrivateE@Base 6.2.1
  _ZTVN10Qt3DRender29QRenderSurfaceSelectorPrivateE@Base 6.2.1
- _ZTVN10Qt3DRender30QBlendEquationArgumentsPrivateE@Base 6.2.1
  _ZTVN10Qt3DRender33QStencilOperationArgumentsPrivateE@Base 6.2.1
  _ZTVN10Qt3DRender5QMeshE@Base 6.2.1
  _ZTVN10Qt3DRender6QLayerE@Base 6.2.1
@@ -4360,9 +4250,7 @@ libQt63DRender.so.6 libqt63drender6 #MINVER#
  _ZTVN10Qt3DRender6Render12StateSetNodeE@Base 6.2.1
  _ZTVN10Qt3DRender6Render12TextureImageE@Base 6.2.1
  _ZTVN10Qt3DRender6Render12ViewportNodeE@Base 6.2.1
- _ZTVN10Qt3DRender6Render13AlphaCoverageE@Base 6.2.1
  _ZTVN10Qt3DRender6Render13BlendEquationE@Base 6.2.1
- _ZTVN10Qt3DRender6Render13BufferCaptureE@Base 6.2.1
  _ZTVN10Qt3DRender6Render13LevelOfDetailE@Base 6.2.1
  _ZTVN10Qt3DRender6Render13LightGathererE@Base 6.2.1
  _ZTVN10Qt3DRender6Render13MemoryBarrierE@Base 6.2.1
@@ -4385,7 +4273,6 @@ libQt63DRender.so.6 libqt63drender6 #MINVER#
  _ZTVN10Qt3DRender6Render15QRendererPluginE@Base 6.2.1
  _ZTVN10Qt3DRender6Render15RenderStateImplE@Base 6.2.1
  _ZTVN10Qt3DRender6Render15RenderStateNodeE@Base 6.2.1
- _ZTVN10Qt3DRender6Render15SeamlessCubemapE@Base 6.2.1
  _ZTVN10Qt3DRender6Render15TechniqueFilterE@Base 6.2.1
  _ZTVN10Qt3DRender6Render16EnvironmentLightE@Base 6.2.1
  _ZTVN10Qt3DRender6Render16GeometryRendererE@Base 6.2.1
@@ -4440,7 +4327,6 @@ libQt63DRender.so.6 libqt63drender6 #MINVER#
  _ZTVN10Qt3DRender6Render9ClipPlaneE@Base 6.2.1
  _ZTVN10Qt3DRender6Render9ColorMaskE@Base 6.2.1
  _ZTVN10Qt3DRender6Render9DepthTestE@Base 6.2.1
- _ZTVN10Qt3DRender6Render9DitheringE@Base 6.2.1
  _ZTVN10Qt3DRender6Render9FilterKeyE@Base 6.2.1
  _ZTVN10Qt3DRender6Render9FrontFaceE@Base 6.2.1
  _ZTVN10Qt3DRender6Render9LineWidthE@Base 6.2.1
@@ -4467,66 +4353,6 @@ libQt63DRender.so.6 libqt63drender6 #MINVER#
  (optional=templinst)_ZZN9QMetaType23registerMutableViewImplI5QListIPN10Qt3DRender11QShaderDataEE9QIterableI13QMetaSequenceEEEbSt8functionIFbPvSA_EES_S_E10unregister@Base 6.2.1
  (optional=templinst)_ZZN9QMetaType23registerMutableViewImplI5QListIdE9QIterableI13QMetaSequenceEEEbSt8functionIFbPvS7_EES_S_E10unregister@Base 6.2.1
  (optional=templinst)_ZZN9QMetaType23registerMutableViewImplI5QListIiE9QIterableI13QMetaSequenceEEEbSt8functionIFbPvS7_EES_S_E10unregister@Base 6.2.1
- (optional=templinst)_ZZN9QtPrivate16QMetaTypeForTypeI10QByteArrayE10getCopyCtrEvENUlPKNS_18QMetaTypeInterfaceEPvPKvE_4_FUNES5_S6_S8_@Base 6.2.1
- (optional=templinst)_ZZN9QtPrivate16QMetaTypeForTypeI10QByteArrayE10getMoveCtrEvENUlPKNS_18QMetaTypeInterfaceEPvS6_E_4_FUNES5_S6_S6_@Base 6.2.1
- (optional=templinst)_ZZN9QtPrivate16QMetaTypeForTypeI10QByteArrayE13getDefaultCtrEvENUlPKNS_18QMetaTypeInterfaceEPvE_4_FUNES5_S6_@Base 6.2.1
- (optional=templinst)_ZZN9QtPrivate16QMetaTypeForTypeI10QByteArrayE7getDtorEvENUlPKNS_18QMetaTypeInterfaceEPvE_4_FUNES5_S6_@Base 6.2.1
- (optional=templinst)_ZZN9QtPrivate16QMetaTypeForTypeI4QUrlE10getCopyCtrEvENUlPKNS_18QMetaTypeInterfaceEPvPKvE_4_FUNES5_S6_S8_@Base 6.2.1
- (optional=templinst)_ZZN9QtPrivate16QMetaTypeForTypeI4QUrlE10getMoveCtrEvENUlPKNS_18QMetaTypeInterfaceEPvS6_E_4_FUNES5_S6_S6_@Base 6.2.1
- (optional=templinst)_ZZN9QtPrivate16QMetaTypeForTypeI4QUrlE13getDefaultCtrEvENUlPKNS_18QMetaTypeInterfaceEPvE_4_FUNES5_S6_@Base 6.2.1
- (optional=templinst)_ZZN9QtPrivate16QMetaTypeForTypeI4QUrlE7getDtorEvENUlPKNS_18QMetaTypeInterfaceEPvE_4_FUNES5_S6_@Base 6.2.1
- (optional=templinst)_ZZN9QtPrivate16QMetaTypeForTypeI5QListI7QStringEE10getCopyCtrEvENUlPKNS_18QMetaTypeInterfaceEPvPKvE_4_FUNES7_S8_SA_@Base 6.2.1
- (optional=templinst)_ZZN9QtPrivate16QMetaTypeForTypeI5QListI7QStringEE10getMoveCtrEvENUlPKNS_18QMetaTypeInterfaceEPvS8_E_4_FUNES7_S8_S8_@Base 6.2.1
- (optional=templinst)_ZZN9QtPrivate16QMetaTypeForTypeI5QListI7QStringEE13getDefaultCtrEvENUlPKNS_18QMetaTypeInterfaceEPvE_4_FUNES7_S8_@Base 6.2.1
- (optional=templinst)_ZZN9QtPrivate16QMetaTypeForTypeI5QListI7QStringEE7getDtorEvENUlPKNS_18QMetaTypeInterfaceEPvE_4_FUNES7_S8_@Base 6.2.1
- (optional=templinst)_ZZN9QtPrivate16QMetaTypeForTypeI5QListI8QVariantEE10getCopyCtrEvENUlPKNS_18QMetaTypeInterfaceEPvPKvE_4_FUNES7_S8_SA_@Base 6.2.1
- (optional=templinst)_ZZN9QtPrivate16QMetaTypeForTypeI5QListI8QVariantEE10getMoveCtrEvENUlPKNS_18QMetaTypeInterfaceEPvS8_E_4_FUNES7_S8_S8_@Base 6.2.1
- (optional=templinst)_ZZN9QtPrivate16QMetaTypeForTypeI5QListI8QVariantEE13getDefaultCtrEvENUlPKNS_18QMetaTypeInterfaceEPvE_4_FUNES7_S8_@Base 6.2.1
- (optional=templinst)_ZZN9QtPrivate16QMetaTypeForTypeI5QListI8QVariantEE7getDtorEvENUlPKNS_18QMetaTypeInterfaceEPvE_4_FUNES7_S8_@Base 6.2.1
- (optional=templinst)_ZZN9QtPrivate16QMetaTypeForTypeI5QRectE10getCopyCtrEvENUlPKNS_18QMetaTypeInterfaceEPvPKvE_4_FUNES5_S6_S8_@Base 6.2.1
- (optional=templinst)_ZZN9QtPrivate16QMetaTypeForTypeI5QRectE10getMoveCtrEvENUlPKNS_18QMetaTypeInterfaceEPvS6_E_4_FUNES5_S6_S6_@Base 6.2.1
- (optional=templinst)_ZZN9QtPrivate16QMetaTypeForTypeI5QRectE13getDefaultCtrEvENUlPKNS_18QMetaTypeInterfaceEPvE_4_FUNES5_S6_@Base 6.2.1
- (optional=templinst)_ZZN9QtPrivate16QMetaTypeForTypeI5QSizeE10getCopyCtrEvENUlPKNS_18QMetaTypeInterfaceEPvPKvE_4_FUNES5_S6_S8_@Base 6.2.1
- (optional=templinst)_ZZN9QtPrivate16QMetaTypeForTypeI5QSizeE10getMoveCtrEvENUlPKNS_18QMetaTypeInterfaceEPvS6_E_4_FUNES5_S6_S6_@Base 6.2.1
- (optional=templinst)_ZZN9QtPrivate16QMetaTypeForTypeI5QSizeE13getDefaultCtrEvENUlPKNS_18QMetaTypeInterfaceEPvE_4_FUNES5_S6_@Base 6.2.1
- (optional=templinst)_ZZN9QtPrivate16QMetaTypeForTypeI6QPointE10getCopyCtrEvENUlPKNS_18QMetaTypeInterfaceEPvPKvE_4_FUNES5_S6_S8_@Base 6.2.1
- (optional=templinst)_ZZN9QtPrivate16QMetaTypeForTypeI6QPointE10getMoveCtrEvENUlPKNS_18QMetaTypeInterfaceEPvS6_E_4_FUNES5_S6_S6_@Base 6.2.1
- (optional=templinst)_ZZN9QtPrivate16QMetaTypeForTypeI6QPointE13getDefaultCtrEvENUlPKNS_18QMetaTypeInterfaceEPvE_4_FUNES5_S6_@Base 6.2.1
- (optional=templinst)_ZZN9QtPrivate16QMetaTypeForTypeI6QRectFE10getCopyCtrEvENUlPKNS_18QMetaTypeInterfaceEPvPKvE_4_FUNES5_S6_S8_@Base 6.2.1
- (optional=templinst)_ZZN9QtPrivate16QMetaTypeForTypeI6QRectFE10getMoveCtrEvENUlPKNS_18QMetaTypeInterfaceEPvS6_E_4_FUNES5_S6_S6_@Base 6.2.1
- (optional=templinst)_ZZN9QtPrivate16QMetaTypeForTypeI6QRectFE13getDefaultCtrEvENUlPKNS_18QMetaTypeInterfaceEPvE_4_FUNES5_S6_@Base 6.2.1
- (optional=templinst)_ZZN9QtPrivate16QMetaTypeForTypeI7QPointFE10getCopyCtrEvENUlPKNS_18QMetaTypeInterfaceEPvPKvE_4_FUNES5_S6_S8_@Base 6.2.1
- (optional=templinst)_ZZN9QtPrivate16QMetaTypeForTypeI7QPointFE10getMoveCtrEvENUlPKNS_18QMetaTypeInterfaceEPvS6_E_4_FUNES5_S6_S6_@Base 6.2.1
- (optional=templinst)_ZZN9QtPrivate16QMetaTypeForTypeI7QPointFE13getDefaultCtrEvENUlPKNS_18QMetaTypeInterfaceEPvE_4_FUNES5_S6_@Base 6.2.1
- (optional=templinst)_ZZN9QtPrivate16QMetaTypeForTypeI7QStringE10getCopyCtrEvENUlPKNS_18QMetaTypeInterfaceEPvPKvE_4_FUNES5_S6_S8_@Base 6.2.1
- (optional=templinst)_ZZN9QtPrivate16QMetaTypeForTypeI7QStringE10getMoveCtrEvENUlPKNS_18QMetaTypeInterfaceEPvS6_E_4_FUNES5_S6_S6_@Base 6.2.1
- (optional=templinst)_ZZN9QtPrivate16QMetaTypeForTypeI7QStringE13getDefaultCtrEvENUlPKNS_18QMetaTypeInterfaceEPvE_4_FUNES5_S6_@Base 6.2.1
- (optional=templinst)_ZZN9QtPrivate16QMetaTypeForTypeI7QStringE7getDtorEvENUlPKNS_18QMetaTypeInterfaceEPvE_4_FUNES5_S6_@Base 6.2.1
- (optional=templinst)_ZZN9QtPrivate16QMetaTypeForTypeI8QVariantE10getCopyCtrEvENUlPKNS_18QMetaTypeInterfaceEPvPKvE_4_FUNES5_S6_S8_@Base 6.2.1
- (optional=templinst)_ZZN9QtPrivate16QMetaTypeForTypeI8QVariantE10getMoveCtrEvENUlPKNS_18QMetaTypeInterfaceEPvS6_E_4_FUNES5_S6_S6_@Base 6.2.1
- (optional=templinst)_ZZN9QtPrivate16QMetaTypeForTypeI8QVariantE13getDefaultCtrEvENUlPKNS_18QMetaTypeInterfaceEPvE_4_FUNES5_S6_@Base 6.2.1
- (optional=templinst)_ZZN9QtPrivate16QMetaTypeForTypeI8QVariantE7getDtorEvENUlPKNS_18QMetaTypeInterfaceEPvE_4_FUNES5_S6_@Base 6.2.1
- (optional=templinst)_ZZN9QtPrivate16QMetaTypeForTypeIP7QObjectE10getCopyCtrEvENUlPKNS_18QMetaTypeInterfaceEPvPKvE_4_FUNES6_S7_S9_@Base 6.2.1
- (optional=templinst)_ZZN9QtPrivate16QMetaTypeForTypeIP7QObjectE10getMoveCtrEvENUlPKNS_18QMetaTypeInterfaceEPvS7_E_4_FUNES6_S7_S7_@Base 6.2.1
- (optional=templinst)_ZZN9QtPrivate16QMetaTypeForTypeIP7QObjectE13getDefaultCtrEvENUlPKNS_18QMetaTypeInterfaceEPvE_4_FUNES6_S7_@Base 6.2.1
- (optional=templinst)_ZZN9QtPrivate16QMetaTypeForTypeIbE10getCopyCtrEvENUlPKNS_18QMetaTypeInterfaceEPvPKvE_4_FUNES4_S5_S7_@Base 6.2.1
- (optional=templinst)_ZZN9QtPrivate16QMetaTypeForTypeIbE10getMoveCtrEvENUlPKNS_18QMetaTypeInterfaceEPvS5_E_4_FUNES4_S5_S5_@Base 6.2.1
- (optional=templinst)_ZZN9QtPrivate16QMetaTypeForTypeIbE13getDefaultCtrEvENUlPKNS_18QMetaTypeInterfaceEPvE_4_FUNES4_S5_@Base 6.2.1
- (optional=templinst)_ZZN9QtPrivate16QMetaTypeForTypeIdE10getCopyCtrEvENUlPKNS_18QMetaTypeInterfaceEPvPKvE_4_FUNES4_S5_S7_@Base 6.2.1
- (optional=templinst)_ZZN9QtPrivate16QMetaTypeForTypeIdE10getMoveCtrEvENUlPKNS_18QMetaTypeInterfaceEPvS5_E_4_FUNES4_S5_S5_@Base 6.2.1
- (optional=templinst)_ZZN9QtPrivate16QMetaTypeForTypeIdE13getDefaultCtrEvENUlPKNS_18QMetaTypeInterfaceEPvE_4_FUNES4_S5_@Base 6.2.1
- (optional=templinst)_ZZN9QtPrivate16QMetaTypeForTypeIfE10getCopyCtrEvENUlPKNS_18QMetaTypeInterfaceEPvPKvE_4_FUNES4_S5_S7_@Base 6.2.1
- (optional=templinst)_ZZN9QtPrivate16QMetaTypeForTypeIfE10getMoveCtrEvENUlPKNS_18QMetaTypeInterfaceEPvS5_E_4_FUNES4_S5_S5_@Base 6.2.1
- (optional=templinst)_ZZN9QtPrivate16QMetaTypeForTypeIfE13getDefaultCtrEvENUlPKNS_18QMetaTypeInterfaceEPvE_4_FUNES4_S5_@Base 6.2.1
- (optional=templinst)_ZZN9QtPrivate16QMetaTypeForTypeIiE10getCopyCtrEvENUlPKNS_18QMetaTypeInterfaceEPvPKvE_4_FUNES4_S5_S7_@Base 6.2.1
- (optional=templinst)_ZZN9QtPrivate16QMetaTypeForTypeIiE10getMoveCtrEvENUlPKNS_18QMetaTypeInterfaceEPvS5_E_4_FUNES4_S5_S5_@Base 6.2.1
- (optional=templinst)_ZZN9QtPrivate16QMetaTypeForTypeIiE13getDefaultCtrEvENUlPKNS_18QMetaTypeInterfaceEPvE_4_FUNES4_S5_@Base 6.2.1
- (optional=templinst)_ZZN9QtPrivate16QMetaTypeForTypeIjE10getCopyCtrEvENUlPKNS_18QMetaTypeInterfaceEPvPKvE_4_FUNES4_S5_S7_@Base 6.2.1
- (optional=templinst)_ZZN9QtPrivate16QMetaTypeForTypeIjE10getMoveCtrEvENUlPKNS_18QMetaTypeInterfaceEPvS5_E_4_FUNES4_S5_S5_@Base 6.2.1
- (optional=templinst)_ZZN9QtPrivate16QMetaTypeForTypeIjE13getDefaultCtrEvENUlPKNS_18QMetaTypeInterfaceEPvE_4_FUNES4_S5_@Base 6.2.1
- (optional=templinst)_ZZN9QtPrivate16QMetaTypeForTypeIyE10getCopyCtrEvENUlPKNS_18QMetaTypeInterfaceEPvPKvE_4_FUNES4_S5_S7_@Base 6.2.1
- (optional=templinst)_ZZN9QtPrivate16QMetaTypeForTypeIyE10getMoveCtrEvENUlPKNS_18QMetaTypeInterfaceEPvS5_E_4_FUNES4_S5_S5_@Base 6.2.1
- (optional=templinst)_ZZN9QtPrivate16QMetaTypeForTypeIyE13getDefaultCtrEvENUlPKNS_18QMetaTypeInterfaceEPvE_4_FUNES4_S5_@Base 6.2.1
  (c++)"non-virtual thunk to Qt3DRender::QGeometryLoaderFactory::~QGeometryLoaderFactory()@Base" 6.2.1
  (c++)"non-virtual thunk to Qt3DRender::QRenderAspectPrivate::frameDone()@Base" 6.2.1
  (c++)"non-virtual thunk to Qt3DRender::QRenderAspectPrivate::jobsDone()@Base" 6.2.1

@@ -1,41 +1,5 @@
-/****************************************************************************
-**
-** Copyright (C) 2015 Paul Lemire paul.lemire350@gmail.com
-** Contact: https://www.qt.io/licensing/
-**
-** This file is part of the Qt3D module of the Qt Toolkit.
-**
-** $QT_BEGIN_LICENSE:LGPL$
-** Commercial License Usage
-** Licensees holding valid commercial Qt licenses may use this file in
-** accordance with the commercial license agreement provided with the
-** Software or, alternatively, in accordance with the terms contained in
-** a written agreement between you and The Qt Company. For licensing terms
-** and conditions see https://www.qt.io/terms-conditions. For further
-** information use the contact form at https://www.qt.io/contact-us.
-**
-** GNU Lesser General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU Lesser
-** General Public License version 3 as published by the Free Software
-** Foundation and appearing in the file LICENSE.LGPL3 included in the
-** packaging of this file. Please review the following information to
-** ensure the GNU Lesser General Public License version 3 requirements
-** will be met: https://www.gnu.org/licenses/lgpl-3.0.html.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 2.0 or (at your option) the GNU General
-** Public license version 3 or any later version approved by the KDE Free
-** Qt Foundation. The licenses are as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL2 and LICENSE.GPL3
-** included in the packaging of this file. Please review the following
-** information to ensure the GNU General Public License requirements will
-** be met: https://www.gnu.org/licenses/gpl-2.0.html and
-** https://www.gnu.org/licenses/gpl-3.0.html.
-**
-** $QT_END_LICENSE$
-**
-****************************************************************************/
+// Copyright (C) 2015 Paul Lemire paul.lemire350@gmail.com
+// SPDX-License-Identifier: LicenseRef-Qt-Commercial OR LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-only
 
 #include "pickboundingvolumejob_p.h"
 #include "qpicktriangleevent.h"
@@ -107,7 +71,7 @@ void PickBoundingVolumeJobPrivate::postFrame(Qt3DCore::QAspectManager *manager)
     QNodeId previousId;
     QObjectPicker *node = nullptr;
 
-    for (auto res: qAsConst(dispatches)) {
+    for (auto res: std::as_const(dispatches)) {
         if (previousId != res.pickerId) {
             node = qobject_cast<QObjectPicker *>(manager->lookupNode(res.pickerId));
             previousId = res.pickerId;
@@ -391,7 +355,7 @@ void PickBoundingVolumeJob::dispatchPickEvents(const QMouseEvent *event,
         // How do we differentiate betwnee an Entity with no GeometryRenderer and one with one, both having
         // an ObjectPicker component when it comes
 
-        for (const QCollisionQueryResult::Hit &hit : qAsConst(sphereHits)) {
+        for (const QCollisionQueryResult::Hit &hit : std::as_const(sphereHits)) {
             Entity *entity = m_manager->renderNodesManager()->lookupResource(hit.m_entityId);
             HObjectPicker objectPickerHandle = entity->componentHandle<ObjectPicker>();
 
@@ -416,7 +380,7 @@ void PickBoundingVolumeJob::dispatchPickEvents(const QMouseEvent *event,
                 // Send the corresponding event
                 Vector3D localIntersection = hit.m_intersection;
                 if (entity && entity->worldTransform())
-                    localIntersection = entity->worldTransform()->inverted() * hit.m_intersection;
+                    localIntersection = entity->worldTransform()->inverted().map(hit.m_intersection);
 
                 QPickEventPtr pickEvent;
 #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
@@ -552,7 +516,7 @@ void PickBoundingVolumeJob::clearPreviouslyHoveredPickers()
 {
     Q_D(PickBoundingVolumeJob);
 
-    for (const HObjectPicker &pickHandle : qAsConst(m_hoveredPickersToClear)) {
+    for (const HObjectPicker &pickHandle : std::as_const(m_hoveredPickersToClear)) {
         ObjectPicker *pick = m_manager->objectPickerManager()->data(pickHandle);
         if (pick)
             d->dispatches.push_back({pick->peerId(), QEvent::Leave, {}, {}});

@@ -1,42 +1,6 @@
-/****************************************************************************
-**
-** Copyright (C) 2014 Klaralvdalens Datakonsult AB (KDAB).
-** Copyright (C) 2016 The Qt Company Ltd and/or its subsidiary(-ies).
-** Contact: https://www.qt.io/licensing/
-**
-** This file is part of the Qt3D module of the Qt Toolkit.
-**
-** $QT_BEGIN_LICENSE:LGPL$
-** Commercial License Usage
-** Licensees holding valid commercial Qt licenses may use this file in
-** accordance with the commercial license agreement provided with the
-** Software or, alternatively, in accordance with the terms contained in
-** a written agreement between you and The Qt Company. For licensing terms
-** and conditions see https://www.qt.io/terms-conditions. For further
-** information use the contact form at https://www.qt.io/contact-us.
-**
-** GNU Lesser General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU Lesser
-** General Public License version 3 as published by the Free Software
-** Foundation and appearing in the file LICENSE.LGPL3 included in the
-** packaging of this file. Please review the following information to
-** ensure the GNU Lesser General Public License version 3 requirements
-** will be met: https://www.gnu.org/licenses/lgpl-3.0.html.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 2.0 or (at your option) the GNU General
-** Public license version 3 or any later version approved by the KDE Free
-** Qt Foundation. The licenses are as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL2 and LICENSE.GPL3
-** included in the packaging of this file. Please review the following
-** information to ensure the GNU General Public License requirements will
-** be met: https://www.gnu.org/licenses/gpl-2.0.html and
-** https://www.gnu.org/licenses/gpl-3.0.html.
-**
-** $QT_END_LICENSE$
-**
-****************************************************************************/
+// Copyright (C) 2014 Klaralvdalens Datakonsult AB (KDAB).
+// Copyright (C) 2016 The Qt Company Ltd and/or its subsidiary(-ies).
+// SPDX-License-Identifier: LicenseRef-Qt-Commercial OR LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-only
 
 #include "renderer_p.h"
 
@@ -1426,6 +1390,9 @@ void Renderer::cleanupTexture(Qt3DCore::QNodeId cleanedUpTextureId)
 // Render Thread
 void Renderer::cleanupShader(const Shader *shader)
 {
+    if (!shader)
+        return;
+
     GLShaderManager *glShaderManager = m_glResourceManagers->glShaderManager();
     GLShader *glShader = glShaderManager->lookupResource(shader->peerId());
 
@@ -1640,6 +1607,7 @@ Renderer::ViewSubmissionResultData Renderer::submitRenderViews(const std::vector
                     static_cast<Render::RenderCapture*>(m_nodesManager->frameGraphManager()->lookupNode(renderView->renderCaptureNodeId()));
             renderCapture->addRenderCapture(request.captureId, image);
             const QNodeId renderCaptureId = renderView->renderCaptureNodeId();
+            QMutexLocker lock(&m_pendingRenderCaptureSendRequestsMutex);
             if (!Qt3DCore::contains(m_pendingRenderCaptureSendRequests, renderCaptureId))
                 m_pendingRenderCaptureSendRequests.push_back(renderView->renderCaptureNodeId());
         }
@@ -1750,7 +1718,9 @@ void Renderer::jobsDone(Qt3DCore::QAspectManager *manager)
     // called in main thread once all jobs are done running
 
     // sync captured renders to frontend
+    QMutexLocker lock(&m_pendingRenderCaptureSendRequestsMutex);
     const std::vector<Qt3DCore::QNodeId> pendingCaptureIds = Qt3DCore::moveAndClear(m_pendingRenderCaptureSendRequests);
+    lock.unlock();
     for (const Qt3DCore::QNodeId &id : pendingCaptureIds) {
         auto *backend = static_cast<Qt3DRender::Render::RenderCapture *>
             (m_nodesManager->frameGraphManager()->lookupNode(id));

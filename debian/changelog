@@ -1,3 +1,16 @@
+qt6-3d (6.6.1+dfsg-1) experimental; urgency=medium
+
+  [ Patrick Franz ]
+  * New upstream release (6.6.1).
+  * Update list of excluded files.
+  * Bump Qt B-Ds to 6.6.1.
+  * Remove redundant patch to exclude examples.
+  * Update list of installed files.
+  * Update symbols from buildlogs.
+  * Remove multiple binary packages.
+
+ -- Patrick Franz <deltaone@debian.org>  Wed, 20 Dec 2023 20:10:10 +0100
+
 qt6-3d (6.4.2+dfsg-6) unstable; urgency=medium
 
   * Team upload.

@@ -91,7 +91,7 @@ QByteArray createTorusIndexData(int requestedRings, int requestedSlices)
 {
     const int slices = requestedSlices + 1;
     int triangles = triangleCount(requestedRings, requestedSlices);
-    int indices = triangles * 3;
+    qsizetype indices = triangles * 3;
     Q_ASSERT(indices < 65536);
     QByteArray indexBytes;
     indexBytes.resize(indices * sizeof(quint16));
@@ -269,7 +269,7 @@ QByteArray QTorusGeometryPrivate::generateIndexData() const
 
 /*!
  * \class Qt3DExtras::QTorusGeometry
-   \ingroup qt3d-extras-geometries
+ * \ingroup qt3d-extras-geometries
  * \inheaderfile Qt3DExtras/QTorusGeometry
  * \inmodule Qt3DExtras
  * \brief The QTorusGeometry class allows creation of a torus in 3D space.

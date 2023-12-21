@@ -1,3 +1,6 @@
+# Copyright (C) 2022 The Qt Company Ltd.
+# SPDX-License-Identifier: BSD-3-Clause
+
 # Generated from render.pro.
 
 if(QT_FEATURE_private_tests)
@@ -105,8 +108,6 @@ if(QT_FEATURE_private_tests)
     add_subdirectory(uniform)
     add_subdirectory(vsyncframeadvanceservice)
     add_subdirectory(waitfence)
-endif()
-if(QT_FEATURE_private_tests AND NOT QT_FEATURE_qt3d_simd_avx2)
     add_subdirectory(qray3d)
     add_subdirectory(raycasting)
     add_subdirectory(triangleboundingvolume)
@@ -140,9 +141,7 @@ if(QT_FEATURE_private_tests AND QT_FEATURE_qt3d_input AND QT_FEATURE_qt3d_opengl
     add_subdirectory(qscene2d)
     add_subdirectory(scene2d)
 endif()
-if(QT_FEATURE_private_tests AND QT_FEATURE_qt3d_opengl_renderer AND QT_FEATURE_qt3d_simd_avx2)
-    add_subdirectory(alignedresourcesmanagers-avx)
-endif()
-if(QT_FEATURE_private_tests AND QT_FEATURE_qt3d_opengl_renderer AND QT_FEATURE_qt3d_simd_sse2 AND NOT QT_FEATURE_qt3d_simd_avx2)
+if(QT_FEATURE_private_tests AND NOT (CMAKE_OSX_ARCHITECTURES MATCHES ";") AND
+        (TEST_architecture_arch STREQUAL i386 OR TEST_architecture_arch STREQUAL x86_64))
     add_subdirectory(alignedresourcesmanagers-sse)
 endif()

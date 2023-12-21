@@ -1,0 +1,3 @@
+# libQt63DQuickRender6 is a private lib installed in a public path
+qml6-module-qt3d-render: package-name-doesnt-match-sonames libQt63DQuickRender6
+qml6-module-qt3d-render: no-symbols-control-file usr/lib/*/libQt63DQuickRender.so.6.*

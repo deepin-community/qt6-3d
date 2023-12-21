@@ -1,0 +1,3 @@
+# libQt63DQuickAnimation6 is a private lib in a public path
+qml6-module-qt3d-animation: package-name-doesnt-match-sonames libQt63DQuickAnimation6
+qml6-module-qt3d-animation: no-symbols-control-file usr/lib/*/libQt63DQuickAnimation.so.6.*

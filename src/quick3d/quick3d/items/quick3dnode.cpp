@@ -25,18 +25,13 @@ Quick3DNode::Quick3DNode(QObject *parent)
 }
 
 /*!
-    \qmlproperty list<QtQml::QtObject> Qt3DCore::Node::data
+    \qmlproperty list<QtQml::QtObject> Qt3D.Core::Node::data
     \qmldefault
 */
 
 QQmlListProperty<QObject> Quick3DNode::data()
 {
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
     using qt_size_type = qsizetype;
-#else
-    using qt_size_type = int;
-#endif
-
     using ListContentType = QObject;
     auto appendFunction = [](QQmlListProperty<ListContentType> *list, ListContentType *obj) {
         if (!obj)
@@ -63,18 +58,13 @@ QQmlListProperty<QObject> Quick3DNode::data()
 }
 
 /*!
-    \qmlproperty list<Node> Qt3DCore::Node::childNodes
+    \qmlproperty list<Node> Qt3D.Core::Node::childNodes
     \readonly
 */
 
 QQmlListProperty<QNode> Quick3DNode::childNodes()
 {
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
     using qt_size_type = qsizetype;
-#else
-    using qt_size_type = int;
-#endif
-
     using ListContentType = QNode;
     auto appendFunction = [](QQmlListProperty<ListContentType> *list, ListContentType *obj) {
         if (!obj)

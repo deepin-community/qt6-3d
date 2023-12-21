@@ -18,14 +18,13 @@
 #include <Qt3DCore/private/vector3d_p.h>
 #include <QtGui/qvector4d.h>
 
-#ifdef QT_COMPILER_SUPPORTS_SSE2
+#ifdef __SSE2__
 
 QT_BEGIN_NAMESPACE
 
 namespace Qt3DCore {
 
 class Matrix4x4_SSE;
-class Matrix4x4_AVX2;
 
 class Vector4D_SSE
 {
@@ -245,8 +244,7 @@ public:
             case 3:
                 return m_vec->w();
             default:
-                Q_UNREACHABLE();
-                return 0.0f;
+                Q_UNREACHABLE_RETURN(0.0f);
             }
         }
         void operator =(float value)
@@ -307,13 +305,6 @@ public:
     }
 
     friend class Matrix4x4_SSE;
-
-#ifdef __AVX2__
-    friend class Matrix4x4_AVX2;
-    friend Vector4D_SSE operator*(const Vector4D_SSE &vector, const Matrix4x4_AVX2 &matrix);
-    friend Vector4D_SSE operator*(const Matrix4x4_AVX2 &matrix, const Vector4D_SSE &vector);
-#endif
-
     friend class Vector3D_SSE;
     friend Vector4D_SSE operator*(const Vector4D_SSE &vector, const Matrix4x4_SSE &matrix);
     friend Vector4D_SSE operator*(const Matrix4x4_SSE  &matrix, const Vector4D_SSE &vector);
@@ -357,6 +348,6 @@ QT_END_NAMESPACE
 
 Q_DECLARE_METATYPE(Qt3DCore::Vector4D_SSE)
 
-#endif // QT_COMPILER_SUPPORTS_SSE2
+#endif // __SSE2__
 
 #endif // QT3DCORE_VECTOR4D_SSE_P_H

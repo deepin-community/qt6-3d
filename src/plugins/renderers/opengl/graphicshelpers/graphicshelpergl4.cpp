@@ -85,7 +85,7 @@ namespace OpenGL {
 
 namespace {
 
-GLbitfield memoryBarrierGLBitfield(QMemoryBarrier::Operations barriers)
+GLbitfield memoryBarrierGL4Bitfield(QMemoryBarrier::Operations barriers)
 {
     GLbitfield bits = 0;
 
@@ -670,8 +670,7 @@ UniformType GraphicsHelperGL4::uniformTypeFromGLType(GLenum type)
 
     default:
         // TO DO: Add support for Doubles and Images
-        Q_UNREACHABLE();
-        return UniformType::Float;
+        Q_UNREACHABLE_RETURN(UniformType::Float);
     }
 }
 
@@ -1307,7 +1306,7 @@ GLint GraphicsHelperGL4::maxClipPlaneCount()
 
 void GraphicsHelperGL4::memoryBarrier(QMemoryBarrier::Operations barriers)
 {
-    m_funcs->glMemoryBarrier(memoryBarrierGLBitfield(barriers));
+    m_funcs->glMemoryBarrier(memoryBarrierGL4Bitfield(barriers));
 }
 
 void GraphicsHelperGL4::enablePrimitiveRestart(int primitiveRestartIndex)

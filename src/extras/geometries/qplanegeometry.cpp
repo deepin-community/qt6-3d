@@ -80,7 +80,7 @@ QByteArray createPlaneIndexData(const QSize &resolution)
 {
     // Create the index data. 2 triangles per rectangular face
     const int faces = 2 * (resolution.width() - 1) * (resolution.height() - 1);
-    const int indices = 3 * faces;
+    const qsizetype indices = 3 * faces;
     Q_ASSERT(indices < std::numeric_limits<quint16>::max());
     QByteArray indexBytes;
     indexBytes.resize(indices * sizeof(quint16));
@@ -176,7 +176,7 @@ QByteArray createPlaneIndexData(const QSize &resolution)
 
 /*!
  * \class Qt3DExtras::QPlaneGeometry
-   \ingroup qt3d-extras-geometries
+ * \ingroup qt3d-extras-geometries
  * \inheaderfile Qt3DExtras/QPlaneGeometry
  * \inmodule Qt3DExtras
  * \brief The QPlaneGeometry class allows creation of a plane in 3D space.

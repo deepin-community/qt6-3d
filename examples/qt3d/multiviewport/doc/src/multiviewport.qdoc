@@ -4,6 +4,7 @@
 /*!
     \example multiviewport
     \title Qt 3D: Multi Viewport QML Example
+    \examplecategory {Data Visualization & 3D}
     \ingroup qt3d-examples-qml
     \brief A QML example that demonstrates rendering a Scenegraph from multiple
     viewports.
@@ -25,9 +26,7 @@
     Using the rules defined in \l {Framegraph Rules}, we construct five
     RenderView objects from the FrameGraph:
 
-    \quotefromfile multiviewport/QuadViewportFrameGraph.qml
-    \skipto Viewport {
-    \printuntil /^\}/
+    \snippet multiviewport/QuadViewportFrameGraph.qml 0
 
     The \e {order is important}. If the ClearBuffers node were to be the last
     instead of the first, this would result in a black screen for the simple

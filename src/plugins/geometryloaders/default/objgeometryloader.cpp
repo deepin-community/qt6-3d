@@ -66,10 +66,19 @@ bool ObjGeometryLoader::doLoad(QIODevice *ioDev, const QString &subMesh)
         if (lineSize > 0 && line[0] != '#') {
             if (line[lineSize - 1] == '\n')
                 --lineSize; // chop newline
+            if (lineSize <= 0)
+                continue;
+
             if (line[lineSize - 1] == '\r')
                 --lineSize; // chop newline also for CRLF format
-            while (line[lineSize - 1] == ' ' || line[lineSize - 1] == '\t')
+            if (lineSize <= 0)
+                continue;
+
+            while (lineSize > 0 && (line[lineSize - 1] == ' ' || line[lineSize - 1] == '\t')) {
                 --lineSize; // chop trailing spaces
+            }
+            if (lineSize <= 0)
+                continue;
 
             const ByteArraySplitter tokens(line, line + lineSize, ' ', Qt::SkipEmptyParts);
 
@@ -175,7 +184,7 @@ bool ObjGeometryLoader::doLoad(QIODevice *ioDev, const QString &subMesh)
 
     // Iterate over the faceIndexMap and pull out pos, texCoord and normal data
     // thereby generating unique vertices of data (by OpenGL definition)
-    const int vertexCount = faceIndexMap.size();
+    const qsizetype vertexCount = faceIndexMap.size();
     const bool hasTexCoords = !texCoords.isEmpty();
     const bool hasNormals = !normals.isEmpty();
 
@@ -200,7 +209,7 @@ bool ObjGeometryLoader::doLoad(QIODevice *ioDev, const QString &subMesh)
     }
 
     // Now iterate over the face indices and lookup the unique vertex index
-    const int indexCount = faceIndexVector.size();
+    const qsizetype indexCount = faceIndexVector.size();
     m_indices.clear();
     m_indices.reserve(indexCount);
     for (const FaceIndices &faceIndices : std::as_const(faceIndexVector)) {

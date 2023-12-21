@@ -26,6 +26,7 @@
 
 #include <QtGui/qguiapplication.h>
 #include <QtGui/qoffscreensurface.h>
+#include <QtQml/private/qqmlglobal_p.h>
 #include <QtQuick/qquickwindow.h>
 #include <QtQuick/qquickrendercontrol.h>
 
@@ -547,8 +548,11 @@ void Scene3DItem::createDummySurface(QWindow *rw, Qt3DRender::QRenderSurfaceSele
  */
 void Scene3DItem::setItemAreaAndDevicePixelRatio(QSize area, qreal devicePixelRatio)
 {
-    Qt3DRender::QRenderSurfaceSelector *surfaceSelector
-            = Qt3DRender::QRenderSurfaceSelectorPrivate::find(entity());
+    Qt3DCore::QEntity *rootEntity = entity();
+    if (!rootEntity) {
+        return;
+    }
+    Qt3DRender::QRenderSurfaceSelector *surfaceSelector = Qt3DRender::QRenderSurfaceSelectorPrivate::find(rootEntity);
     if (surfaceSelector) {
         surfaceSelector->setExternalRenderTargetSize(area);
         surfaceSelector->setSurfacePixelRatio(devicePixelRatio);
@@ -742,9 +746,13 @@ QSGNode *Scene3DItem::updatePaintNode(QSGNode *node, QQuickItem::UpdatePaintNode
             qCWarning(Scene3D) << "Renderer for Scene3DItem has requested a reset due to the item "
                                   "moving to another window";
             QObject::disconnect(m_windowConnection);
+            // We are in the Render thread, and the m_aspectEngineDestroyer lives in the Main
+            // thread, so we must avoid sending ChildRemoved or ChildAdded events to it with a
+            // QObject::setParent(). QCoreApplication::sendEvent() would fail with "Cannot
+            // send events to objects owned by a different thread."
+            QQml_setParent_noEvent(m_aspectEngine, nullptr);
             // Note: AspectEngine can only be deleted once we have set the root
             // entity on the new instance
-            m_aspectEngine->setParent(nullptr);
             m_aspectToDelete = m_aspectEngine;
             m_aspectEngine = nullptr;
         }
@@ -761,6 +769,7 @@ QSGNode *Scene3DItem::updatePaintNode(QSGNode *node, QQuickItem::UpdatePaintNode
             // Needs to belong in the same thread as the item which is the same as
             // the original QAspectEngine
             m_aspectEngineDestroyer->moveToThread(thread());
+            m_aspectEngine->moveToThread(thread());
 
             // To destroy AspectEngine
             m_aspectEngineDestroyer->reset(2);
@@ -845,17 +854,17 @@ QSGNode *Scene3DItem::updatePaintNode(QSGNode *node, QQuickItem::UpdatePaintNode
         }
     }
 
+    // Set whether we want the Renderer to be allowed to render or not
+    const bool skipFrame = !needsRender(renderAspect);
+    renderer->setSkipFrame(skipFrame);
+    renderer->allowRender();
+
     // Let the renderer prepare anything it needs to prior to the rendering
     if (m_wasFrameProcessed)
         renderer->beforeSynchronize();
 
     // Force window->beforeRendering to be triggered
     managerNode->markDirty(QSGNode::DirtyForceUpdate);
-
-    // Set whether we want the Renderer to be allowed to render or not
-    const bool skipFrame = !needsRender(renderAspect);
-    renderer->setSkipFrame(skipFrame);
-    renderer->allowRender();
 
     m_wasSGUpdated = true;
 

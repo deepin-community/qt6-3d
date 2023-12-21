@@ -13,18 +13,17 @@ Build-Depends: cmake (>= 3.24~),
                ninja-build,
                pkg-config,
                pkg-kde-tools,
-               qml6-module-qtquick3d-spatialaudio (>= 6.4.2~),
-               qt6-base-dev (>= 6.4.2+dfsg~),
-               qt6-base-private-dev (>= 6.4.2+dfsg~),
-               qt6-declarative-dev (>= 6.4.2+dfsg~),
-               qt6-declarative-private-dev (>= 6.4.2+dfsg~),
-               qt6-multimedia-dev (>= 6.4.2~),
-               qt6-shadertools-dev (>= 6.4.2~),
+               qt6-base-dev (>= 6.6.1+dfsg~),
+               qt6-base-private-dev (>= 6.6.1+dfsg~),
+               qt6-declarative-dev (>= 6.6.1+dfsg~),
+               qt6-declarative-private-dev (>= 6.6.1+dfsg~),
+               qt6-multimedia-dev (>= 6.6.1~),
+               qt6-shadertools-dev (>= 6.6.1~),
                xauth <!nocheck>,
                xvfb <!nocheck>,
                zlib1g-dev,
-Build-Depends-Indep: qt6-base-dev (>= 6.4~) <!nodoc>,
-                     qt6-documentation-tools (>= 6.4~) <!nodoc>,
+Build-Depends-Indep: qt6-base-dev (>= 6.6~) <!nodoc>,
+                     qt6-documentation-tools (>= 6.6~) <!nodoc>,
 Standards-Version: 4.6.2
 Homepage: https://www.qt.io/developers/
 Vcs-Browser: https://salsa.debian.org/qt-kde-team/qt6/qt6-3d
@@ -54,19 +53,6 @@ Description: Qt 6 3D Quick library
  is its rich set of widgets that provide standard GUI functionality.
  .
  This package contains Qt 6 3D Quick library.
-
-Package: libqt63dquickrender6
-Architecture: any
-Multi-Arch: same
-Pre-Depends: ${misc:Pre-Depends},
-Depends: libqt63dcore6 (= ${binary:Version}),
-         ${misc:Depends},
-         ${shlibs:Depends},
-Description: Qt 6 3D Quick Renderer library
- Qt is a cross-platform C++ application framework. Qt's primary feature
- is its rich set of widgets that provide standard GUI functionality.
- .
- This package contains Qt 6 3D Quick Renderer library.
 
 Package: libqt63dinput6
 Architecture: any
@@ -106,19 +92,6 @@ Description: Qt 6 3D Logic library
  is its rich set of widgets that provide standard GUI functionality.
  .
  This package contains Qt 6 3D Logic library.
-
-Package: libqt63dquickinput6
-Architecture: any
-Multi-Arch: same
-Pre-Depends: ${misc:Pre-Depends},
-Depends: libqt63dcore6 (= ${binary:Version}),
-         ${misc:Depends},
-         ${shlibs:Depends},
-Description: Qt 6 3D Quick Input library
- Qt is a cross-platform C++ application framework. Qt's primary feature
- is its rich set of widgets that provide standard GUI functionality.
- .
- This package contains Qt 6 3D Quick input library.
 
 Package: libqt63dquickextras6
 Architecture: any
@@ -171,19 +144,6 @@ Description: Qt 6 3D Animation library
  is its rich set of widgets that provide standard GUI functionality.
  .
  This package contains the Qt 6 Animation library.
-
-Package: libqt63dquickanimation6
-Architecture: any
-Multi-Arch: same
-Pre-Depends: ${misc:Pre-Depends},
-Depends: libqt63dcore6 (= ${binary:Version}),
-         ${misc:Depends},
-         ${shlibs:Depends},
-Description: Qt 6 3D Quick Animation library
- Qt is a cross-platform C++ application framework. Qt's primary feature
- is its rich set of widgets that provide standard GUI functionality.
- .
- This package contains the Qt 6 Quick Animation library.
 
 Package: qt6-3d-gltfsceneio-plugin
 Architecture: any
@@ -250,6 +210,8 @@ Architecture: any
 Multi-Arch: same
 Pre-Depends: ${misc:Pre-Depends},
 Depends: ${misc:Depends}, ${shlibs:Depends},
+Breaks: libqt63dquickanimation6
+Replaces: libqt63dquickanimation6
 Description: Qt 6 3D Animation QML module
  Qt is a cross-platform C++ application framework. Qt's primary feature
  is its rich set of widgets that provide standard GUI functionality.
@@ -272,6 +234,8 @@ Architecture: any
 Multi-Arch: same
 Pre-Depends: ${misc:Pre-Depends},
 Depends: ${misc:Depends}, ${shlibs:Depends},
+Breaks: libqt63dquickinput6
+Replaces: libqt63dquickinput6
 Description: Qt 6 3D Input QML module
  Qt is a cross-platform C++ application framework. Qt's primary feature
  is its rich set of widgets that provide standard GUI functionality.
@@ -294,6 +258,8 @@ Architecture: any
 Multi-Arch: same
 Pre-Depends: ${misc:Pre-Depends},
 Depends: ${misc:Depends}, ${shlibs:Depends},
+Breaks: libqt63dquickrender6
+Replaces: libqt63dquickrender6
 Description: Qt 6 3D Renderer QML module
  Qt is a cross-platform C++ application framework. Qt's primary feature
  is its rich set of widgets that provide standard GUI functionality.
@@ -332,10 +298,7 @@ Depends: libqt63danimation6 (= ${binary:Version}),
          libqt63dinput6 (= ${binary:Version}),
          libqt63dlogic6 (= ${binary:Version}),
          libqt63dquick6 (= ${binary:Version}),
-         libqt63dquickanimation6 (= ${binary:Version}),
          libqt63dquickextras6 (= ${binary:Version}),
-         libqt63dquickinput6 (= ${binary:Version}),
-         libqt63dquickrender6 (= ${binary:Version}),
          libqt63dquickscene2d6 (= ${binary:Version}),
          libqt63drender6 (= ${binary:Version}),
          qt6-base-dev,

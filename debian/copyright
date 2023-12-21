@@ -1,7 +1,7 @@
 Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: qt3d-everywhere-src
 Source: https://download.qt.io/archive/qt/*/submodules/
-Files-Excluded: examples/qt3d/audio-visualizer-qml
+Files-Excluded: tests/manual/audio-visualizer-qml
 # audio-visualizer-qml: MP3 file under CC BY-ND 2.0
 
 Files: *

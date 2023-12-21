@@ -1050,9 +1050,9 @@ QMaterial *GLTFImporter::commonMaterial(const QJsonObject &jsonObj)
     } else {
         for (QVariantHash::const_iterator it = params.constBegin(), itEnd = params.constEnd(); it != itEnd; ++it)
             mat->setProperty(it.key().toUtf8(), it.value());
-    }
 
-    renameFromJson(jsonObj, mat);
+        renameFromJson(jsonObj, mat);
+    }
 
     return mat;
 }
@@ -1819,11 +1819,7 @@ void GLTFImporter::processJSONMesh(const QString &id, const QJsonObject &json)
                         target->setProperty(propName.constData(), QVariant(size));
                     }
                 } else {
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
                     const QMetaType propType = target->property(propName.constData()).metaType();
-#else
-                    const QMetaType propType(target->property(propName.constData()).type());
-#endif
                     if (propType.id() == QMetaType::Int) {
                         target->setProperty(propName.constData(), QVariant(it.value().toInt()));
                     } else {

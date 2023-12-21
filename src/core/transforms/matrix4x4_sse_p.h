@@ -20,7 +20,9 @@
 #include <private/qsimd_p.h>
 #include <QMatrix4x4>
 
-#ifdef QT_COMPILER_SUPPORTS_SSE2
+#if defined(__AVX2__)
+#include "matrix4x4_avx2_p.h"
+#elif defined(__SSE2__)
 
 QT_BEGIN_NAMESPACE
 
@@ -275,8 +277,7 @@ public:
         case 3:
             return Vector4D(m41(), m42(), m43(), m44());
         default:
-            Q_UNREACHABLE();
-            return Vector4D();
+            Q_UNREACHABLE_RETURN(Vector4D());
         }
     }
 
@@ -297,8 +298,7 @@ public:
             c.m_xyzw = m_col4;
             break;
         default:
-            Q_UNREACHABLE();
-            return Vector4D();
+            Q_UNREACHABLE_RETURN(Vector4D());
         }
         return c;
     }
@@ -466,6 +466,6 @@ QT_END_NAMESPACE
 
 Q_DECLARE_METATYPE(Qt3DCore::Matrix4x4_SSE)
 
-#endif // QT_COMPILER_SUPPORTS_SSE2
+#endif // __SSE2__
 
 #endif // QT3DCORE_MATRIX4X4_SSE_P_H

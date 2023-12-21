@@ -26,7 +26,9 @@
 #include <Qt3DRender/private/managers_p.h>
 #include <Qt3DRender/private/attachmentpack_p.h>
 #include <Qt3DRender/private/stringtoint_p.h>
-#include <Qt3DRender/private/vulkaninstance_p.h>
+#if QT_CONFIG(qt3d_vulkan) && QT_CONFIG(vulkan)
+#  include <Qt3DRender/private/vulkaninstance_p.h>
+#endif
 #include <QGuiApplication>
 #include <texture_p.h>
 #include <rendercommand_p.h>
@@ -39,28 +41,12 @@
 #include <private/qdebug_p.h>
 #include <QSurface>
 #include <QWindow>
-#include <QtShaderTools/private/qshaderbaker_p.h>
+#include <rhi/qrhi.h>
+#include <rhi/qshaderbaker.h>
 
-#ifdef Q_OS_WIN
-#include <QtGui/private/qrhid3d11_p.h>
-#endif
-
-#if defined(Q_OS_MACOS) || defined(Q_OS_IOS)
-#include <QtGui/private/qrhimetal_p.h>
-#endif
-
-#ifndef QT_NO_OPENGL
-#include <QtGui/private/qrhigles2_p.h>
-#endif
-
-#if QT_CONFIG(qt3d_vulkan)
-#include <QtGui/private/qrhivulkan_p.h>
-#endif
 #include <bitset>
 
 QT_BEGIN_NAMESPACE
-
-using namespace Qt3DCore;
 
 namespace Qt3DRender {
 namespace Render {
@@ -463,15 +449,12 @@ static QShader::Stage rhiShaderStage(QShaderProgram::ShaderType type) noexcept
 } // anonymous
 
 SubmissionContext::SubmissionContext()
-    : m_ownsRhiCtx(false),
+    : m_initialized(false),
+      m_ownsRhiCtx(false),
       m_drivenExternally(false),
       m_id(nextFreeContextId()),
-      m_surface(nullptr),
-      m_renderTargetFormat(QAbstractTexture::NoFormat),
       m_material(nullptr),
       m_renderer(nullptr),
-      m_uboTempArray(QByteArray(1024, 0)),
-      m_initialized(false),
       m_rhi(nullptr),
       m_currentSwapChain(nullptr),
       m_currentRenderPassDescriptor(nullptr),
@@ -542,7 +525,7 @@ void SubmissionContext::initialize()
 
     QRhi::Flags rhiFlags = QRhi::EnableDebugMarkers;
 
-#if QT_CONFIG(qt3d_vulkan)
+#if QT_CONFIG(qt3d_vulkan) && QT_CONFIG(vulkan)
     if (requestedApi == Qt3DRender::API::Vulkan) {
         QRhiVulkanInitParams params;
         params.inst = &Qt3DRender::staticVulkanInstance();
@@ -609,8 +592,6 @@ bool SubmissionContext::beginDrawing(QSurface *surface)
 {
     Q_ASSERT(surface);
 
-    m_surface = surface;
-
     Q_ASSERT(isInitialized());
 
     // In the Scene3D case it does not make sense to create SwapChains as we
@@ -625,7 +606,7 @@ bool SubmissionContext::beginDrawing(QSurface *surface)
     QRhiSwapChain *swapChain = swapChainInfo->swapChain;
 
     // Resize swapchain if needed
-    if (m_surface->size() != swapChain->currentPixelSize()) {
+    if (surface->size() != swapChain->currentPixelSize()) {
         bool couldRebuild = swapChain->createOrResize();
         if (!couldRebuild)
             return false;
@@ -801,6 +782,11 @@ void SubmissionContext::releaseResources()
 {
     m_renderBufferHash.clear();
     RHI_UNIMPLEMENTED;
+
+    if (m_currentUpdates) {
+        m_currentUpdates->release();
+        m_currentUpdates = nullptr;
+    }
 
     // Free RHI resources
     {
@@ -1272,7 +1258,7 @@ void SubmissionContext::uploadDataToRHIBuffer(Buffer *buffer, RHIBuffer *b)
         // We have a partial update
         if (update->offset >= 0) {
             // accumulate sequential updates as single one
-            int bufferSize = update->data.size();
+            qsizetype bufferSize = update->data.size();
             auto it2 = it + 1;
             while ((it2 != updates.end()) && (it2->offset - update->offset == bufferSize)) {
                 bufferSize += it2->data.size();
@@ -1354,7 +1340,7 @@ void preprocessRHIShader(std::vector<QByteArray> &shaderCodes)
                            "\\s*,\\s*std140.*)\\)\\s*uniform\\s*([a-zA-Z0-9_]+)"));
 
     auto replaceBinding = [&bindings, &assignedBindings](
-                                  int &offset, QRegularExpressionMatch &match, QString &code,
+                                  qsizetype &offset, QRegularExpressionMatch &match, QString &code,
                                   int indexCapture, int variableCapture) noexcept {
         int index = match.captured(indexCapture).toInt();
         QByteArray variable = match.captured(variableCapture).toUtf8();
@@ -1368,9 +1354,9 @@ void preprocessRHIShader(std::vector<QByteArray> &shaderCodes)
                     return;
                 }
 
-                const int indexStartOffset = match.capturedStart(indexCapture);
-                const int indexEndOffset = match.capturedEnd(indexCapture);
-                const int indexLength = indexEndOffset - indexStartOffset;
+                const qsizetype indexStartOffset = match.capturedStart(indexCapture);
+                const qsizetype indexEndOffset = match.capturedEnd(indexCapture);
+                const qsizetype indexLength = indexEndOffset - indexStartOffset;
                 code.replace(indexStartOffset, indexLength, QByteArray::number(index));
             }
 
@@ -1378,9 +1364,9 @@ void preprocessRHIShader(std::vector<QByteArray> &shaderCodes)
             bindings.emplace(std::move(variable), index);
         } else {
             int indexToUse = it->second;
-            const int indexStartOffset = match.capturedStart(indexCapture);
-            const int indexEndOffset = match.capturedEnd(indexCapture);
-            const int indexLength = indexEndOffset - indexStartOffset;
+            const qsizetype indexStartOffset = match.capturedStart(indexCapture);
+            const qsizetype indexEndOffset = match.capturedEnd(indexCapture);
+            const qsizetype indexLength = indexEndOffset - indexStartOffset;
             code.replace(indexStartOffset, indexLength, QByteArray::number(indexToUse));
         }
         // This may fail in the case where the replaced offset is an incredibly long number,
@@ -1393,7 +1379,7 @@ void preprocessRHIShader(std::vector<QByteArray> &shaderCodes)
         QString shaderString = shaderCode;
 
         // Regex for the sampler variables
-        int offset = 0;
+        qsizetype offset = 0;
         auto match = samplerRegex.match(shaderString, offset);
         while (match.hasMatch()) {
             const int indexCapture = 1;
@@ -1418,26 +1404,45 @@ void preprocessRHIShader(std::vector<QByteArray> &shaderCodes)
     }
 }
 
-int glslVersionForFormat(const QSurfaceFormat &format) noexcept
+QShaderVersion glslVersionForFormat(const QSurfaceFormat &format) noexcept
 {
     const int major = format.majorVersion();
     const int minor = format.minorVersion();
+    const auto type = format.renderableType();
 
-    static const QHash<std::pair<int, int>, int> glVersionToGLSLVersion = {
-        { { 4, 6 }, 460 }, { { 4, 5 }, 450 }, { { 4, 4 }, 440 }, { { 4, 3 }, 430 },
-        { { 4, 2 }, 420 }, { { 4, 1 }, 410 }, { { 4, 0 }, 400 }, { { 3, 3 }, 330 },
-        { { 3, 2 }, 150 }, { { 3, 2 }, 120 }, { { 3, 1 }, 120 },
-    };
+    if (type != QSurfaceFormat::OpenGLES) {
+        static const QHash<std::pair<int, int>, int> glVersionToGLSLVersion = {
+            { { 4, 6 }, 460 }, { { 4, 5 }, 450 }, { { 4, 4 }, 440 }, { { 4, 3 }, 430 },
+            { { 4, 2 }, 420 }, { { 4, 1 }, 410 }, { { 4, 0 }, 400 }, { { 3, 3 }, 330 },
+            { { 3, 2 }, 150 }, { { 3, 2 }, 120 }, { { 3, 1 }, 120 },
+        };
 
-    const auto it = glVersionToGLSLVersion.find({ major, minor });
-    if (it == glVersionToGLSLVersion.end()) {
-        if (major < 3) {
-            return 120;
+        const auto it = glVersionToGLSLVersion.find({ major, minor });
+        if (it == glVersionToGLSLVersion.end()) {
+            if (major < 3) {
+                return 120;
+            } else {
+                return major * 100 + minor * 10;
+            }
         } else {
-            return major * 100 + minor * 10;
+            return *it;
         }
-    } else {
-        return *it;
+    }
+    else {
+        static const QHash<std::pair<int, int>, int> glVersionToGLSLVersion = {
+            { { 3, 2 }, 320 }, { { 3, 1 }, 310 }, { { 3, 0 }, 300 },
+        };
+
+        const auto it = glVersionToGLSLVersion.find({ major, minor });
+        if (it == glVersionToGLSLVersion.end()) {
+            if (major < 3) {
+                return {100, QShaderVersion::GlslEs};
+            } else {
+                return {major * 100 + minor * 10, QShaderVersion::GlslEs};
+            }
+        } else {
+            return {*it, QShaderVersion::GlslEs};
+        }
     }
 }
 }

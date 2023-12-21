@@ -1,3 +1,6 @@
+# Copyright (C) 2022 The Qt Company Ltd.
+# SPDX-License-Identifier: BSD-3-Clause
+
 # Generated from qt3d.pro.
 
 cmake_minimum_required(VERSION 3.16)
@@ -13,8 +16,10 @@ project(Qt3D # special case
 # special case begin
 find_package(Qt6 ${PROJECT_VERSION} CONFIG REQUIRED COMPONENTS BuildInternals Core)
 find_package(Qt6 ${PROJECT_VERSION} QUIET CONFIG OPTIONAL_COMPONENTS
-    Network Concurrent Widgets Qml Quick Gamepad OpenGL Multimedia)
+    Network Concurrent Widgets Qml Quick ShaderTools Gamepad OpenGL Multimedia QuickWidgets)
 # special case end
+
+qt_internal_project_setup()
 
 if(NOT TARGET Qt::Gui)
     message(NOTICE "Skipping the build as the condition \"TARGET Qt::Gui\" is not met.")

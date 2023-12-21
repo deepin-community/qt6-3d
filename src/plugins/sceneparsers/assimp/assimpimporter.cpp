@@ -20,9 +20,8 @@
 #include <Qt3DExtras/qdiffusespecularmapmaterial.h>
 #include <Qt3DExtras/qphongmaterial.h>
 #include <Qt3DExtras/qmorphphongmaterial.h>
-#include <Qt3DExtras/qdiffusemapmaterial.h>
-#include <Qt3DExtras/qdiffusespecularmapmaterial.h>
-#include <Qt3DExtras/qphongmaterial.h>
+#include <Qt3DExtras/qnormaldiffusemapmaterial.h>
+#include <Qt3DExtras/qnormaldiffusespecularmapmaterial.h>
 #include <Qt3DAnimation/qkeyframeanimation.h>
 #include <Qt3DAnimation/qmorphinganimation.h>
 #include <QtCore/QFileInfo>
@@ -69,6 +68,8 @@ const QString ASSIMP_MATERIAL_AMBIENT_TEXTURE = QLatin1String("ambientTex");
 const QString ASSIMP_MATERIAL_SPECULAR_TEXTURE = QLatin1String("specularTexture");
 const QString ASSIMP_MATERIAL_EMISSIVE_TEXTURE = QLatin1String("emissiveTex");
 const QString ASSIMP_MATERIAL_NORMALS_TEXTURE = QLatin1String("normalsTex");
+// Keep the old "normalsTex" parameter name to keep backwards compatibility, add "normalTexture" as a new one
+const QString ASSIMP_MATERIAL_NORMALS_TEXTURE2 = QLatin1String("normalTexture");
 const QString ASSIMP_MATERIAL_OPACITY_TEXTURE = QLatin1String("opacityTex");
 const QString ASSIMP_MATERIAL_REFLECTION_TEXTURE = QLatin1String("reflectionTex");
 const QString ASSIMP_MATERIAL_HEIGHT_TEXTURE = QLatin1String("heightTex");
@@ -115,9 +116,14 @@ inline QString aiStringToQString(const aiString &str)
 QMaterial *createBestApproachingMaterial(const aiMaterial *assimpMaterial)
 {
     aiString path; // unused but necessary
+    const bool hasNormalTexture = (assimpMaterial->GetTexture(aiTextureType_NORMALS, 0, &path) == AI_SUCCESS);
     const bool hasDiffuseTexture = (assimpMaterial->GetTexture(aiTextureType_DIFFUSE, 0, &path) == AI_SUCCESS);
     const bool hasSpecularTexture = (assimpMaterial->GetTexture(aiTextureType_SPECULAR, 0, &path) == AI_SUCCESS);
 
+    if (hasNormalTexture && hasDiffuseTexture && hasSpecularTexture)
+        return QAbstractNodeFactory::createNode<QNormalDiffuseSpecularMapMaterial>("QNormalDiffuseSpecularMapMaterial");
+    if (hasNormalTexture && hasDiffuseTexture)
+        return QAbstractNodeFactory::createNode<QNormalDiffuseMapMaterial>("QNormalDiffuseMapMaterial");
     if (hasDiffuseTexture && hasSpecularTexture)
         return QAbstractNodeFactory::createNode<QDiffuseSpecularMapMaterial>("QDiffuseSpecularMapMaterial");
     if (hasDiffuseTexture)
@@ -786,7 +792,7 @@ QGeometryRenderer *AssimpImporter::loadMesh(uint meshIndex)
         for (uint i = 0; i < mesh->mNumFaces; i++) {
             aiFace face = mesh->mFaces[i];
             Q_ASSERT(face.mNumIndices == 3);
-            for (ushort j = 0; j < face.mNumIndices; j++)
+            for (uint j = 0; j < face.mNumIndices; j++)
                 reinterpret_cast<quint16*>(ibufferContent.data())[i * 3 + j] = face.mIndices[j];
         }
     }
@@ -810,11 +816,7 @@ QGeometryRenderer *AssimpImporter::loadMesh(uint meshIndex)
                 = new Qt3DAnimation::QMorphingAnimation(geometryRenderer);
         QList<QString> names;
 
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
         QList<Qt3DAnimation::QMorphTarget *> targets;
-#else
-        QVector<Qt3DAnimation::QMorphTarget *> targets;
-#endif
         uint voff = 0;
         uint noff = 0;
         uint tanoff = 0;
@@ -1131,11 +1133,7 @@ void AssimpImporter::loadAnimation(uint animationIndex)
         aiMesh *mesh = m_scene->m_aiScene->mMeshes[targetNode->mMeshes[0]];
 
         Qt3DAnimation::QMorphingAnimation *morphingAnimation = new Qt3DAnimation::QMorphingAnimation;
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
         QList<float> positions;
-#else
-        QVector<float> positions;
-#endif
         positions.resize(morphAnim->mNumKeys);
         // set so that weights array is allocated to correct size in morphingAnimation
         morphingAnimation->setTargetPositions(positions);
@@ -1143,11 +1141,7 @@ void AssimpImporter::loadAnimation(uint animationIndex)
             aiMeshMorphKey &key = morphAnim->mKeys[j];
             positions[j] = key.mTime * tickScale;
 
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
             QList<float> weights;
-#else
-            QVector<float> weights;
-#endif
             weights.resize(key.mNumValuesAndWeights);
             for (int k = 0; k < weights.size(); k++) {
                 const unsigned int value = key.mValues[k];
@@ -1286,8 +1280,12 @@ void AssimpImporter::copyMaterialTextures(QMaterial *material, aiMaterial *assim
             tex->setWrapMode(wrapMode);
 
             qCDebug(AssimpImporterLog) << Q_FUNC_INFO << " Loaded Texture " << fullPath;
-            setParameterValue(m_scene->m_textureToParameterName[textureType[i]],
-                    material, QVariant::fromValue(tex));
+            const QString parameterName = m_scene->m_textureToParameterName[textureType[i]];
+            setParameterValue(parameterName, material, QVariant::fromValue(tex));
+
+            if (parameterName == ASSIMP_MATERIAL_NORMALS_TEXTURE) {
+                setParameterValue(ASSIMP_MATERIAL_NORMALS_TEXTURE2, material, QVariant::fromValue(tex));
+            }
         }
     }
 }

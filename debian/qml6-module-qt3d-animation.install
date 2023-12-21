@@ -1,3 +1,4 @@
+usr/lib/${DEB_HOST_MULTIARCH}/libQt63DQuickAnimation.so.*
 usr/lib/${DEB_HOST_MULTIARCH}/qt6/qml/Qt3D/Animation/libquick3danimationplugin.so
 usr/lib/${DEB_HOST_MULTIARCH}/qt6/qml/Qt3D/Animation/plugins.qmltypes
 usr/lib/${DEB_HOST_MULTIARCH}/qt6/qml/Qt3D/Animation/qmldir

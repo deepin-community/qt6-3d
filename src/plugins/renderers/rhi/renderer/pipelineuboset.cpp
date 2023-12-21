@@ -10,7 +10,7 @@
 #include <rhigraphicspipeline_p.h>
 #include <rhiresourcemanagers_p.h>
 #include <submissioncontext_p.h>
-#include <QtGui/private/qrhi_p.h>
+#include <rhi/qrhi.h>
 #include <Qt3DRender/private/nodemanagers_p.h>
 #include <Qt3DRender/private/buffermanager_p.h>
 #include <Qt3DRender/private/stringtoint_p.h>
@@ -597,7 +597,7 @@ void PipelineUBOSet::uploadUBOsForCommand(const RenderCommand &command,
                             uploadUniform(uniforms, ubo,
                                           arrayStructMember,
                                           distanceToCommand,
-                                          i * blockVariable.size / arr0);
+                                          int(i * blockVariable.size / arr0));
                         }
                     }
                 } else { // Array of scalars

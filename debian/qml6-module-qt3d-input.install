@@ -1,3 +1,4 @@
+usr/lib/${DEB_HOST_MULTIARCH}/libQt63DQuickInput.so.*
 usr/lib/${DEB_HOST_MULTIARCH}/qt6/qml/Qt3D/Input/libquick3dinputplugin.so
 usr/lib/${DEB_HOST_MULTIARCH}/qt6/qml/Qt3D/Input/plugins.qmltypes
 usr/lib/${DEB_HOST_MULTIARCH}/qt6/qml/Qt3D/Input/qmldir

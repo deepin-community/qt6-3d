@@ -1,3 +1,10 @@
+qt6-3d (6.6.1+dfsg-1deepin1) experimental; urgency=medium
+
+  * Update symbols from buildlogs.
+    (arch=amd64) Vector3D_SSE related stuff.
+
+ -- Tianyu Chen <sweetyfish@deepin.org>  Tue, 26 Dec 2023 13:42:11 +0800
+
 qt6-3d (6.6.1+dfsg-1) experimental; urgency=medium
 
   [ Patrick Franz ]

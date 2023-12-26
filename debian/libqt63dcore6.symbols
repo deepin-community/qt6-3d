@@ -1,4 +1,4 @@
-# SymbolsHelper-Confirmed: 6.6.1 amd64
+# SymbolsHelper-Confirmed: 6.6.1 amd64 arm64
 libQt63DCore.so.6 libqt63dcore6 #MINVER#
 * Build-Depends-Package: qt6-3d-dev
  Qt_6@Qt_6 6.6.1
@@ -182,8 +182,8 @@ libQt63DCore.so.6 libqt63dcore6 #MINVER#
  _ZN8Qt3DCore12QNodeVisitorD0Ev@Qt_6 6.6.1
  _ZN8Qt3DCore12QNodeVisitorD1Ev@Qt_6 6.6.1
  _ZN8Qt3DCore12QNodeVisitorD2Ev@Qt_6 6.6.1
- _ZN8Qt3DCore12Vector3D_SSEC1ERKNS_12Vector4D_SSEE@Qt_6_PRIVATE_API 6.6.1
- _ZN8Qt3DCore12Vector3D_SSEC2ERKNS_12Vector4D_SSEE@Qt_6_PRIVATE_API 6.6.1
+ (arch=amd64)_ZN8Qt3DCore12Vector3D_SSEC1ERKNS_12Vector4D_SSEE@Qt_6_PRIVATE_API 6.6.1
+ (arch=amd64)_ZN8Qt3DCore12Vector3D_SSEC2ERKNS_12Vector4D_SSEE@Qt_6_PRIVATE_API 6.6.1
  _ZN8Qt3DCore13QAspectEngine10setRunModeENS0_7RunModeE@Qt_6 6.6.1
  _ZN8Qt3DCore13QAspectEngine11qt_metacallEN11QMetaObject4CallEiPPv@Qt_6 6.6.1
  _ZN8Qt3DCore13QAspectEngine11qt_metacastEPKc@Qt_6 6.6.1
@@ -794,9 +794,9 @@ libQt63DCore.so.6 libqt63dcore6 #MINVER#
  _ZN8Qt3DCore9QSkeletonD1Ev@Qt_6 6.6.1
  _ZN8Qt3DCore9QSkeletonD2Ev@Qt_6 6.6.1
  _ZN8Qt3DCorelsE6QDebugNS_7QNodeIdE@Qt_6 6.6.1
- _ZN8Qt3DCorelsE6QDebugRKNS_12Vector3D_SSEE@Qt_6_PRIVATE_API 6.6.1
- _ZN8Qt3DCorelsE6QDebugRKNS_12Vector4D_SSEE@Qt_6_PRIVATE_API 6.6.1
- _ZN8Qt3DCorelsE6QDebugRKNS_13Matrix4x4_SSEE@Qt_6_PRIVATE_API 6.6.1
+ (arch=amd64)_ZN8Qt3DCorelsE6QDebugRKNS_12Vector3D_SSEE@Qt_6_PRIVATE_API 6.6.1
+ (arch=amd64)_ZN8Qt3DCorelsE6QDebugRKNS_12Vector4D_SSEE@Qt_6_PRIVATE_API 6.6.1
+ (arch=amd64)_ZN8Qt3DCorelsE6QDebugRKNS_13Matrix4x4_SSEE@Qt_6_PRIVATE_API 6.6.1
  _ZNK8Qt3DCore10QAspectJob12dependenciesEv@Qt_6 6.6.1
  _ZNK8Qt3DCore10QAttribute10byteOffsetEv@Qt_6 6.6.1
  _ZNK8Qt3DCore10QAttribute10byteStrideEv@Qt_6 6.6.1
@@ -830,8 +830,8 @@ libQt63DCore.so.6 libqt63dcore6 #MINVER#
  _ZNK8Qt3DCore12QNodeVisitor11currentNodeEv@Qt_6 6.6.1
  _ZNK8Qt3DCore12QNodeVisitor4pathEv@Qt_6 6.6.1
  _ZNK8Qt3DCore12QNodeVisitor8rootNodeEv@Qt_6 6.6.1
- _ZNK8Qt3DCore12Vector3D_SSE7projectERKNS_13Matrix4x4_SSEES3_RK5QRect@Qt_6_PRIVATE_API 6.6.1
- _ZNK8Qt3DCore12Vector3D_SSE9unprojectERKNS_13Matrix4x4_SSEES3_RK5QRect@Qt_6_PRIVATE_API 6.6.1
+ (arch=amd64)_ZNK8Qt3DCore12Vector3D_SSE7projectERKNS_13Matrix4x4_SSEES3_RK5QRect@Qt_6_PRIVATE_API 6.6.1
+ (arch=amd64)_ZNK8Qt3DCore12Vector3D_SSE9unprojectERKNS_13Matrix4x4_SSEES3_RK5QRect@Qt_6_PRIVATE_API 6.6.1
  _ZNK8Qt3DCore13QAspectEngine10lookupNodeENS_7QNodeIdE@Qt_6 6.6.1
  _ZNK8Qt3DCore13QAspectEngine10metaObjectEv@Qt_6 6.6.1
  _ZNK8Qt3DCore13QAspectEngine10rootEntityEv@Qt_6 6.6.1

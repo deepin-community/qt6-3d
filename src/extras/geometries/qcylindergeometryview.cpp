@@ -17,13 +17,14 @@
 
 QT_BEGIN_NAMESPACE
 
-using namespace Qt3DCore;
 
 namespace Qt3DExtras {
 
+using namespace Qt3DCore;
+
 /*!
  * \qmltype CylinderGeometryView
- * \instantiates Qt3DExtras::QCylinderGeometryView
+ * \nativetype Qt3DExtras::QCylinderGeometryView
  * \inqmlmodule Qt3D.Extras
  * \brief A cylindrical mesh.
  */
@@ -104,7 +105,7 @@ void QCylinderGeometryView::setLength(float length)
 }
 
 /*!
- * \property QCylinderGeometryView::rings
+ * \property Qt3DExtras::QCylinderGeometryView::rings
  *
  * Holds the number of rings in the mesh.
  */
@@ -114,7 +115,7 @@ int QCylinderGeometryView::rings() const
 }
 
 /*!
- * \property QCylinderGeometryView::slices
+ * \property Qt3DExtras::QCylinderGeometryView::slices
  *
  * Holds the number of slices in the mesh.
  */
@@ -124,7 +125,7 @@ int QCylinderGeometryView::slices() const
 }
 
 /*!
- * \property QCylinderGeometryView::radius
+ * \property Qt3DExtras::QCylinderGeometryView::radius
  *
  * Holds the radius of the cylinder.
  */
@@ -134,7 +135,7 @@ float QCylinderGeometryView::radius() const
 }
 
 /*!
- * \property QCylinderGeometryView::length
+ * \property Qt3DExtras::QCylinderGeometryView::length
  *
  * Holds the length of the cylinder.
  */

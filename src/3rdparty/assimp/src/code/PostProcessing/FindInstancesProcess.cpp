@@ -3,7 +3,7 @@
 Open Asset Import Library (assimp)
 ---------------------------------------------------------------------------
 
-Copyright (c) 2006-2021, assimp team
+Copyright (c) 2006-2024, assimp team
 
 
 
@@ -56,11 +56,6 @@ using namespace Assimp;
 // Constructor to be privately used by Importer
 FindInstancesProcess::FindInstancesProcess()
 :   configSpeedFlag (false)
-{}
-
-// ------------------------------------------------------------------------------------------------
-// Destructor, private as well
-FindInstancesProcess::~FindInstancesProcess()
 {}
 
 // ------------------------------------------------------------------------------------------------
@@ -137,7 +132,7 @@ void FindInstancesProcess::Execute( aiScene* pScene)
             aiMesh* inst = pScene->mMeshes[i];
             hashes[i] = GetMeshHash(inst);
 
-            // Find an appropriate epsilon 
+            // Find an appropriate epsilon
             // to compare position differences against
             float epsilon = ComputePositionEpsilon(inst);
             epsilon *= epsilon;

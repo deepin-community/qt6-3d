@@ -7,9 +7,10 @@
 
 QT_BEGIN_NAMESPACE
 
-using namespace Qt3DCore;
 
 namespace Qt3DRender {
+
+using namespace Qt3DCore;
 
 QAbstractTexturePrivate::QAbstractTexturePrivate()
     : QNodePrivate()
@@ -102,7 +103,7 @@ void QAbstractTexturePrivate::setHandleType(QAbstractTexture::HandleType type)
 
 /*!
     \qmltype AbstractTexture
-    \instantiates Qt3DRender::QAbstractTexture
+    \nativetype Qt3DRender::QAbstractTexture
     \inqmlmodule Qt3D.Render
     \since 5.5
     \brief A base class to be used to provide textures.

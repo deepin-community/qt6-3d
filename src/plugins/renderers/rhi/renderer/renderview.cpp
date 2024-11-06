@@ -1164,6 +1164,13 @@ void RenderView::updateRenderCommand(const EntityRenderCommandDataSubView &subVi
             memcpy(&command.m_commandUBO.inverseModelViewProjectionMatrix,
                    &inverseModelViewProjection, sizeof(Matrix4x4));
             copyNormalMatrix(command.m_commandUBO.modelViewNormalMatrix, modelViewNormalMatrix.constData());
+
+            const Armature *armature = entity->renderComponent<Armature>();
+            if (armature) {
+                const UniformValue &skinningPalette = armature->skinningPaletteUniform();
+                memcpy(&command.m_commandUBO.skinningPalette, skinningPalette.constData<float>(),
+                       qMin<size_t>(skinningPalette.byteSize(), 100 * 16 * sizeof(float)));
+            }
         }
     });
 }
@@ -1172,8 +1179,16 @@ void RenderView::updateMatrices()
 {
     if (m_renderCameraNode && m_renderCameraLens
         && m_renderCameraLens->isEnabled()) {
-        const Matrix4x4 cameraWorld = *(m_renderCameraNode->worldTransform());
-        setViewMatrix(m_renderCameraLens->viewMatrix(cameraWorld));
+        auto transform = m_renderCameraNode->renderComponent<Transform>();
+        if (m_renderCameraNode->isParentLessTransform() && transform && transform->hasViewMatrix()) {
+            // optimization: if the entity is a QCamera and it doesn't have a parent with a transform component,
+            // then we use the frontend version of the viewMatrix to avoid extra calculations that may introduce
+            // rounding errors
+            setViewMatrix(transform->viewMatrix());
+        } else {
+            const Matrix4x4 cameraWorld = *(m_renderCameraNode->worldTransform());
+            setViewMatrix(m_renderCameraLens->viewMatrix(cameraWorld));
+        }
 
         setViewProjectionMatrix(m_renderCameraLens->projection() * viewMatrix());
         // To get the eyePosition of the camera, we need to use the inverse of the
@@ -1376,7 +1391,7 @@ void RenderView::setShaderAndUniforms(RenderCommand *command, ParameterInfoList 
     // only update values of uniforms that have changed
     // If parameters add been added/removed, the command would have been rebuild
     // and the parameter pack would be empty
-    const bool updateUniformsOnly = command->m_parameterPack.submissionUniformIndices().size() > 0;
+    const bool updateUniformsOnly = !command->m_parameterPack.submissionUniformIndices().empty();
 
     if (!updateUniformsOnly) {
         // Builds the QUniformPack, sets shader standard uniforms and store attributes name / glname

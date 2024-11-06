@@ -22,11 +22,13 @@ function(qt3d_extend_target_for_assimp target)
             ${assimpDir}/src/code/AssetLib/Collada/ColladaLoader.cpp ${assimpDir}/src/code/AssetLib/Collada/ColladaLoader.h
             ${assimpDir}/src/code/AssetLib/Collada/ColladaParser.cpp ${assimpDir}/src/code/AssetLib/Collada/ColladaParser.h
             ${assimpDir}/src/code/Common/Assimp.cpp
-            ${assimpDir}/src/code/Common/AssertHandler.cpp ${assimpDir}/src/code/Common/AssertHandler.h
+            ${assimpDir}/src/code/Common/AssertHandler.cpp ${assimpDir}/src/include/assimp/AssertHandler.h
+            ${assimpDir}/src/code/Common/Base64.cpp ${assimpDir}/src/include/assimp/Base64.hpp
             ${assimpDir}/src/code/Common/BaseImporter.cpp
             ${assimpDir}/src/code/Common/BaseProcess.cpp ${assimpDir}/src/code/Common/BaseProcess.h
             ${assimpDir}/src/code/Common/Bitmap.cpp
             ${assimpDir}/src/code/Common/CreateAnimMesh.cpp
+            ${assimpDir}/src/code/Common/Compression.cpp ${assimpDir}/src/code/Common/Compression.h
             ${assimpDir}/src/code/Common/DefaultIOStream.cpp
             ${assimpDir}/src/code/Common/DefaultIOSystem.cpp
             ${assimpDir}/src/code/Common/DefaultLogger.cpp
@@ -36,6 +38,7 @@ function(qt3d_extend_target_for_assimp target)
             ${assimpDir}/src/code/Common/IFF.h
             ${assimpDir}/src/code/Common/Importer.cpp ${assimpDir}/src/code/Common/Importer.h
             ${assimpDir}/src/code/Common/ImporterRegistry.cpp
+            ${assimpDir}/src/code/Common/IOSystem.cpp
             ${assimpDir}/src/code/Common/PolyTools.h
             ${assimpDir}/src/code/Common/PostStepRegistry.cpp
             ${assimpDir}/src/code/Common/RemoveComments.cpp
@@ -74,6 +77,7 @@ function(qt3d_extend_target_for_assimp target)
             ${assimpDir}/src/code/AssetLib/FBX/FBXTokenizer.cpp ${assimpDir}/src/code/AssetLib/FBX/FBXTokenizer.h
             ${assimpDir}/src/code/AssetLib/FBX/FBXUtil.cpp ${assimpDir}/src/code/AssetLib/FBX/FBXUtil.h
             ${assimpDir}/src/code/Material/MaterialSystem.cpp ${assimpDir}/src/code/Material/MaterialSystem.h
+            ${assimpDir}/src/code/Geometry/GeometryUtils.cpp ${assimpDir}/src/code/Geometry/GeometryUtils.h
             ${assimpDir}/src/code/AssetLib/Obj/ObjFileData.h
             ${assimpDir}/src/code/AssetLib/Obj/ObjFileImporter.cpp ${assimpDir}/src/code/AssetLib/Obj/ObjFileImporter.h
             ${assimpDir}/src/code/AssetLib/Obj/ObjFileMtlImporter.cpp ${assimpDir}/src/code/AssetLib/Obj/ObjFileMtlImporter.h
@@ -117,7 +121,6 @@ function(qt3d_extend_target_for_assimp target)
             ${assimpDir}/src/code/AssetLib/glTF2/glTF2Asset.h ${assimpDir}/src/code/AssetLib/glTF2/glTF2Asset.inl
             ${assimpDir}/src/code/AssetLib/glTF2/glTF2AssetWriter.h ${assimpDir}/src/code/AssetLib/glTF2/glTF2AssetWriter.inl
             ${assimpDir}/src/code/AssetLib/glTF2/glTF2Importer.cpp ${assimpDir}/src/code/AssetLib/glTF2/glTF2Importer.h
-            ${assimpDir}/src/contrib/pugixml/contrib/foreach.hpp
             ${assimpDir}/src/contrib/pugixml/src/pugixml.hpp
             ${assimpDir}/src/contrib/poly2tri/poly2tri/common/shapes.cc ${assimpDir}/src/contrib/poly2tri/poly2tri/common/shapes.h
             ${assimpDir}/src/contrib/poly2tri/poly2tri/common/utils.h
@@ -139,7 +142,6 @@ function(qt3d_extend_target_for_assimp target)
             ${assimpDir}/src/include/assimp/DefaultIOStream.h
             ${assimpDir}/src/include/assimp/DefaultIOSystem.h
             ${assimpDir}/src/include/assimp/DefaultLogger.hpp
-            ${assimpDir}/src/include/assimp/Defines.h
             ${assimpDir}/src/include/assimp/Exceptional.h
             ${assimpDir}/src/include/assimp/Exporter.hpp
             ${assimpDir}/src/include/assimp/GenericProperty.h
@@ -221,6 +223,7 @@ function(qt3d_extend_target_for_assimp target)
             ASSIMP_BUILD_NO_EXPORT
             ASSIMP_BUILD_NO_HMP_IMPORTER
             ASSIMP_BUILD_NO_IFC_IMPORTER
+            ASSIMP_BUILD_NO_IQM_IMPORTER
             ASSIMP_BUILD_NO_IRRMESH_IMPORTER
             ASSIMP_BUILD_NO_IRR_IMPORTER
             ASSIMP_BUILD_NO_LIMITBONEWEIGHTS_PROCESS
@@ -248,6 +251,7 @@ function(qt3d_extend_target_for_assimp target)
             ASSIMP_BUILD_NO_SMD_IMPORTER
             ASSIMP_BUILD_NO_STEP_IMPORTER
             ASSIMP_BUILD_NO_TERRAGEN_IMPORTER
+            ASSIMP_BUILD_NO_USD_IMPORTER
             ASSIMP_BUILD_NO_X3D_IMPORTER
             ASSIMP_BUILD_NO_XGL_IMPORTER
             ASSIMP_BUILD_NO_X_IMPORTER
@@ -283,6 +287,8 @@ function(qt3d_extend_target_for_assimp target)
             ${assimpDir}/src/include/assimp/Compiler
             ${assimpDir}/unzip
         NO_UNITY_BUILD
+        ATTRIBUTION_FILE_DIR_PATHS
+            ${assimpDir}
     )
 
     qt_internal_extend_target(${target} CONDITION CMAKE_BUILD_TYPE STREQUAL Debug AND (CMAKE_CROSSCOMPILING OR NOT QT_FEATURE_qt3d_system_assimp) AND (host_build OR NOT QT_FEATURE_qt3d_system_assimp)
@@ -303,6 +309,11 @@ function(qt3d_extend_target_for_assimp target)
     qt_internal_extend_target(${target} CONDITION (CMAKE_CROSSCOMPILING OR NOT QT_FEATURE_qt3d_system_assimp) AND (CMAKE_CROSSCOMPILING OR NOT QT_FEATURE_system_zlib) AND (host_build OR NOT QT_FEATURE_qt3d_system_assimp) AND (host_build OR NOT QT_FEATURE_system_zlib)
         LIBRARIES
             Qt::ZlibPrivate
+    )
+
+    qt_internal_extend_target(${target} CONDITION (EMSCRIPTEN OR ANDROID) AND NOT QT_FEATURE_qt3d_system_assimp
+        DEFINES
+            USE_FILE32API
     )
 
     # special case begin
@@ -342,6 +353,13 @@ function(qt3d_extend_target_for_assimp target)
             _SCL_SECURE_NO_WARNINGS
         COMPILE_OPTIONS
             /bigobj
+    )
+
+    qt_internal_extend_target(${target} CONDITION GCC AND (NOT QT_FEATURE_qt3d_system_assimp) AND (host_build OR NOT QT_FEATURE_qt3d_system_assimp)
+        SOURCES
+            ../../../3rdparty/assimp/src/code/Common/ZipArchiveIOSystem.cpp
+        COMPILE_OPTIONS
+            "-Wno-cast-function-type"
     )
 
     # Silence warnings in 3rdparty code

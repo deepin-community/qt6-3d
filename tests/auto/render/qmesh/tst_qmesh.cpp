@@ -1,5 +1,5 @@
 // Copyright (C) 2016 Paul Lemire <paul.lemire350@gmail.com>
-// SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only WITH Qt-GPL-exception-1.0
+// SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only
 
 // TODO Remove in Qt6
 #include <QtCore/qcompilerdetection.h>
@@ -9,6 +9,7 @@ QT_WARNING_DISABLE_DEPRECATED
 #include <Qt3DRender/qmesh.h>
 #include <Qt3DRender/private/qmesh_p.h>
 #include <Qt3DCore/qaspectengine.h>
+#include <Qt3DCore/private/qaspectengine_p.h>
 #include <QObject>
 #include <QSignalSpy>
 #include <Qt3DCore/private/qscene_p.h>
@@ -89,11 +90,11 @@ private Q_SLOTS:
     {
         // GIVEN
         TestArbiter arbiter;
-        Qt3DRender::QMesh mesh;
-        arbiter.setArbiterOnNode(&mesh);
-
         Qt3DCore::QAspectEngine engine;
-        Qt3DCore::QScene *scene = new Qt3DCore::QScene(&engine);
+        Qt3DCore::QScene *scene = Qt3DCore::QAspectEnginePrivate::get(&engine)->m_scene;
+        Qt3DRender::QMesh mesh;
+
+        arbiter.setArbiterOnNode(&mesh);
         Qt3DCore::QNodePrivate *meshd = Qt3DCore::QNodePrivate::get(&mesh);
         meshd->setScene(scene);
         QCoreApplication::processEvents();
@@ -126,11 +127,11 @@ private Q_SLOTS:
     {
         // GIVEN
         TestArbiter arbiter;
-        Qt3DRender::QMesh mesh;
-        arbiter.setArbiterOnNode(&mesh);
-
         Qt3DCore::QAspectEngine engine;
-        Qt3DCore::QScene *scene = new Qt3DCore::QScene(&engine);
+        Qt3DCore::QScene *scene = Qt3DCore::QAspectEnginePrivate::get(&engine)->m_scene;
+        Qt3DRender::QMesh mesh;
+
+        arbiter.setArbiterOnNode(&mesh);
         Qt3DCore::QNodePrivate *meshd = Qt3DCore::QNodePrivate::get(&mesh);
         meshd->setScene(scene);
         QCoreApplication::processEvents();

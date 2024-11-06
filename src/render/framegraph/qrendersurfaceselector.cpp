@@ -37,7 +37,7 @@ namespace Qt3DRender {
     \qmltype RenderSurfaceSelector
     \inqmlmodule Qt3D.Render
     \since 5.7
-    \instantiates Qt3DRender::QRenderSurfaceSelector
+    \nativetype Qt3DRender::QRenderSurfaceSelector
     \inherits FrameGraphNode
     \brief Provides a way of specifying the render surface.
 
@@ -67,16 +67,16 @@ namespace Qt3DRender {
  */
 
 /*!
-     \property QRenderSurfaceSelector::surface
+     \property Qt3DRender::QRenderSurfaceSelector::surface
      Holds the surface
  */
 
 /*!
-     \property QRenderSurfaceSelector::externalRenderTargetSize
+     \property Qt3DRender::QRenderSurfaceSelector::externalRenderTargetSize
      Holds the size of the external render target.
  */
 
-/*! \property QRenderSurfaceSelector::surfacePixelRatio
+/*! \property Qt3DRender::QRenderSurfaceSelector::surfacePixelRatio
 
     Holds the surfacePixelRatio of the surface.
  */
@@ -214,13 +214,13 @@ void QRenderSurfaceSelector::setSurface(QObject *surfaceObject)
             d->m_surfaceEventFilter->setSurface(window);
 
             if (window) {
-                d->m_widthConn = QObject::connect(window, &QWindow::widthChanged, [=] (int) {
+                d->m_widthConn = QObject::connect(window, &QWindow::widthChanged, this, [d]() {
                     d->update();
                 });
-                d->m_heightConn = QObject::connect(window, &QWindow::heightChanged, [=] (int) {
+                d->m_heightConn = QObject::connect(window, &QWindow::heightChanged, this, [d]() {
                     d->update();
                 });
-                d->m_screenConn = QObject::connect(window, &QWindow::screenChanged, [this] (QScreen *screen) {
+                d->m_screenConn = QObject::connect(window, &QWindow::screenChanged, this, [this] (QScreen *screen) {
                     if (screen && !qFuzzyCompare(surfacePixelRatio(), float(screen->devicePixelRatio())))
                         setSurfacePixelRatio(float(screen->devicePixelRatio()));
                 });

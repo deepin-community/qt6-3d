@@ -20,6 +20,9 @@ namespace Qt3DRender {
     that is attached to render target. In addition to the attachment point, texture
     miplevel, layer and cubemap face can be specified. The texture attached to the
     QRenderTargetOutput must be compatible with the given parameters.
+
+    \note Left and Right attachment points are special values. They do not refer to
+    render target objects to be either of the back buffers used for stereo rendering.
  */
 
 /*!
@@ -29,16 +32,19 @@ namespace Qt3DRender {
     \since 5.7
     \inqmlmodule Qt3D.Render
     \inherits Node
-    \instantiates Qt3DRender::QRenderTargetOutput
+    \nativetype Qt3DRender::QRenderTargetOutput
 
     A RenderTargetOutput specifies the attachment point and parameters for texture
     that is attached to render target. In addition to the attachment point, texture
     miplevel, layer and cubemap face can be specified. The texture attached to the
     RenderTargetOutput must be compatible with the given parameters.
+
+    \note Left and Right attachment points are special values. They do not refer to
+    render target objects, but rather to either of the back buffers used for stereo rendering.
  */
 
 /*!
-    \enum QRenderTargetOutput::AttachmentPoint
+    \enum Qt3DRender::QRenderTargetOutput::AttachmentPoint
 
     This enumeration specifies the values for the attachment point.
 
@@ -61,6 +67,8 @@ namespace Qt3DRender {
     \value Depth Depth attachment point
     \value Stencil Stencil attachment point
     \value DepthStencil DepthStencil attachment point
+    \value Left Back Left Draw Buffer
+    \value Right Back Right Draw Buffer
 */
 
 /*!
@@ -86,6 +94,8 @@ namespace Qt3DRender {
     \li RenderTargetOutput.Depth
     \li RenderTargetOutput.Stencil
     \li RenderTargetOutput.DepthStencil
+    \li RenderTargetOutput.Left
+    \li RenderTargetOutput.Right
     \endlist
 
     \sa Qt3DRender::QRenderTargetOutput::AttachmentPoint
@@ -121,27 +131,29 @@ namespace Qt3DRender {
 */
 
 /*!
-    \property QRenderTargetOutput::attachmentPoint
+    \property Qt3DRender::QRenderTargetOutput::attachmentPoint
     Holds the attachment point of the QRenderTargetOutput.
+
+
 */
 
 /*!
-    \property QRenderTargetOutput::texture
+    \property Qt3DRender::QRenderTargetOutput::texture
     Holds the texture attached to the attachment point.
 */
 
 /*!
-    \property QRenderTargetOutput::mipLevel
+    \property Qt3DRender::QRenderTargetOutput::mipLevel
     Holds the miplevel of the attached texture the rendering is directed to.
 */
 
 /*!
-    \property QRenderTargetOutput::layer
+    \property Qt3DRender::QRenderTargetOutput::layer
     Holds the layer of the attached texture the rendering is directed to.
 */
 
 /*!
-    \property QRenderTargetOutput::face
+    \property Qt3DRender::QRenderTargetOutput::face
     Holds the face of the attached cubemap texture the rendering is directed to.
 */
 

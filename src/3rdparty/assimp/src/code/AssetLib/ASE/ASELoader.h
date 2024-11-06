@@ -2,7 +2,7 @@
 Open Asset Import Library (assimp)
 ----------------------------------------------------------------------
 
-Copyright (c) 2006-2021, assimp team
+Copyright (c) 2006-2024, assimp team
 
 All rights reserved.
 
@@ -62,42 +62,37 @@ namespace Assimp {
 class ASEImporter : public BaseImporter {
 public:
     ASEImporter();
-    ~ASEImporter();
+    ~ASEImporter() override = default;
 
     // -------------------------------------------------------------------
     /** Returns whether the class can handle the format of the given file.
      * See BaseImporter::CanRead() for details.
      */
     bool CanRead( const std::string& pFile, IOSystem* pIOHandler,
-        bool checkSig) const;
+        bool checkSig) const override;
 
 protected:
-
     // -------------------------------------------------------------------
     /** Return importer meta information.
      * See #BaseImporter::GetInfo for the details
      */
-    const aiImporterDesc* GetInfo () const;
-
+    const aiImporterDesc* GetInfo () const override;
 
     // -------------------------------------------------------------------
     /** Imports the given file into the given scene structure.
     * See BaseImporter::InternReadFile() for details
     */
     void InternReadFile( const std::string& pFile, aiScene* pScene,
-        IOSystem* pIOHandler);
-
+        IOSystem* pIOHandler) override;
 
     // -------------------------------------------------------------------
     /** Called prior to ReadFile().
     * The function is a request to the importer to update its configuration
     * basing on the Importer's configuration property list.
     */
-    void SetupProperties(const Importer* pImp);
-
+    void SetupProperties(const Importer* pImp) override;
 
 private:
-
     // -------------------------------------------------------------------
     /** Generate normal vectors basing on smoothing groups
      * (in some cases the normal are already contained in the file)
@@ -105,7 +100,6 @@ private:
      * \return false if the normals have been recomputed
      */
     bool GenerateNormals(ASE::Mesh& mesh);
-
 
     // -------------------------------------------------------------------
     /** Create valid vertex/normal/UV/color/face lists.
@@ -115,13 +109,11 @@ private:
      */
     void BuildUniqueRepresentation(ASE::Mesh& mesh);
 
-
     /** Create one-material-per-mesh meshes ;-)
      * \param mesh Mesh to work with
      *  \param Receives the list of all created meshes
      */
     void ConvertMeshes(ASE::Mesh& mesh, std::vector<aiMesh*>& avOut);
-
 
     // -------------------------------------------------------------------
     /** Convert a material to a aiMaterial object
@@ -129,36 +121,30 @@ private:
      */
     void ConvertMaterial(ASE::Material& mat);
 
-
     // -------------------------------------------------------------------
     /** Setup the final material indices for each mesh
      */
     void BuildMaterialIndices();
-
 
     // -------------------------------------------------------------------
     /** Build the node graph
      */
     void BuildNodes(std::vector<ASE::BaseNode*>& nodes);
 
-
     // -------------------------------------------------------------------
     /** Build output cameras
      */
     void BuildCameras();
-
 
     // -------------------------------------------------------------------
     /** Build output lights
      */
     void BuildLights();
 
-
     // -------------------------------------------------------------------
     /** Build output animations
      */
     void BuildAnimations(const std::vector<ASE::BaseNode*>& nodes);
-
 
     // -------------------------------------------------------------------
     /** Add sub nodes to a node
@@ -167,13 +153,13 @@ private:
      *  \param matrix Current transform
      */
     void AddNodes(const std::vector<ASE::BaseNode*>& nodes,
-        aiNode* pcParent,const char* szName);
+        aiNode* pcParent, const std::string &name);
 
     void AddNodes(const std::vector<ASE::BaseNode*>& nodes,
-        aiNode* pcParent,const char* szName,
+        aiNode* pcParent, const std::string &name,
         const aiMatrix4x4& matrix);
 
-    void AddMeshes(const ASE::BaseNode* snode,aiNode* node);
+    void AddMeshes(const ASE::BaseNode* snode, aiNode* node);
 
     // -------------------------------------------------------------------
     /** Generate a default material and add it to the parser's list
@@ -183,7 +169,6 @@ private:
     void GenerateDefaultMaterial();
 
 protected:
-
     /** Parser instance */
     ASE::Parser* mParser;
 
@@ -202,6 +187,5 @@ protected:
 #endif // ASSIMP_BUILD_NO_3DS_IMPORTER
 
 } // end of namespace Assimp
-
 
 #endif // AI_3DSIMPORTER_H_INC

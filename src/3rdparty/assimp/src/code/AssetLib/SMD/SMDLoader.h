@@ -2,8 +2,7 @@
 Open Asset Import Library (assimp)
 ----------------------------------------------------------------------
 
-Copyright (c) 2006-2021, assimp team
-
+Copyright (c) 2006-2024, assimp team
 
 All rights reserved.
 
@@ -44,23 +43,20 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *  @brief Definition of the Valve SMD file format
  */
 
+#pragma once
 #ifndef AI_SMDLOADER_H_INCLUDED
 #define AI_SMDLOADER_H_INCLUDED
 
-// internal headers
 #include <assimp/BaseImporter.h>
 #include <assimp/ParsingUtils.h>
-
-// public Assimp headers
 #include <assimp/types.h>
 #include <assimp/texture.h>
 #include <assimp/anim.h>
 #include <assimp/material.h>
 
-struct aiNode;
-
-// STL headers
 #include <vector>
+
+struct aiNode;
 
 namespace Assimp {
 namespace SMD {
@@ -69,8 +65,7 @@ namespace SMD {
 /** Data structure for a vertex in a SMD file
 */
 struct Vertex {
-    Vertex() AI_NO_EXCEPT
-    : iParentNode(UINT_MAX) {
+    Vertex() AI_NO_EXCEPT : iParentNode(UINT_MAX) {
         // empty
     }
 
@@ -91,9 +86,8 @@ struct Vertex {
 /** Data structure for a face in a SMD file
 */
 struct Face {
-    Face() AI_NO_EXCEPT
-    : iTexture(0x0)
-    , avVertices{} {
+    Face() AI_NO_EXCEPT :
+            iTexture(0x0) {
         // empty
     }
 
@@ -109,15 +103,8 @@ struct Face {
 */
 struct Bone {
     //! Default constructor
-    Bone() AI_NO_EXCEPT
-    : iParent(UINT_MAX)
-    , bIsUsed(false) {
+    Bone() AI_NO_EXCEPT : iParent(UINT_MAX), bIsUsed(false) {
         // empty
-    }
-
-    //! Destructor
-    ~Bone()
-    {
     }
 
     //! Name of the bone
@@ -129,14 +116,12 @@ struct Bone {
     //! Animation of the bone
     struct Animation {
         //! Public default constructor
-        Animation() AI_NO_EXCEPT
-        : iFirstTimeKey() {
+        Animation() AI_NO_EXCEPT : iFirstTimeKey() {
             asKeys.reserve(20);
         }
 
         //! Data structure for a matrix key
-        struct MatrixKey
-        {
+        struct MatrixKey {
             //! Matrix at this time
             aiMatrix4x4 matrix;
 
@@ -174,46 +159,38 @@ struct Bone {
 // ---------------------------------------------------------------------------
 /** Used to load Half-life 1 and 2 SMD models
 */
-class ASSIMP_API SMDImporter : public BaseImporter
-{
+class ASSIMP_API SMDImporter : public BaseImporter {
 public:
     SMDImporter();
-    ~SMDImporter();
-
-
-public:
+    ~SMDImporter() override = default;
 
     // -------------------------------------------------------------------
     /** Returns whether the class can handle the format of the given file.
      * See BaseImporter::CanRead() for details.
      */
     bool CanRead( const std::string& pFile, IOSystem* pIOHandler,
-        bool checkSig) const;
+        bool checkSig) const override;
 
     // -------------------------------------------------------------------
     /** Called prior to ReadFile().
      * The function is a request to the importer to update its configuration
      * basing on the Importer's configuration property list.
      */
-    void SetupProperties(const Importer* pImp);
+    void SetupProperties(const Importer* pImp) override;
 
 protected:
-
-
     // -------------------------------------------------------------------
     /** Return importer meta information.
      * See #BaseImporter::GetInfo for the details
      */
-    const aiImporterDesc* GetInfo () const;
+    const aiImporterDesc* GetInfo () const override;
 
     // -------------------------------------------------------------------
     /** Imports the given file into the given scene structure.
     * See BaseImporter::InternReadFile() for details
     */
     void InternReadFile( const std::string& pFile, aiScene* pScene,
-        IOSystem* pIOHandler);
-
-protected:
+        IOSystem* pIOHandler) override;
 
     // -------------------------------------------------------------------
     /** Parse the SMD file and create the output scene
@@ -229,7 +206,7 @@ protected:
      * the next section (or to EOF)
     */
     void ParseTrianglesSection(const char* szCurrent,
-        const char** szCurrentOut);
+            const char **szCurrentOut, const char *end);
 
     // -------------------------------------------------------------------
     /** Parse the vertex animation section in VTA files
@@ -239,7 +216,7 @@ protected:
      * the next section (or to EOF)
     */
     void ParseVASection(const char* szCurrent,
-        const char** szCurrentOut);
+            const char **szCurrentOu, const char *end);
 
     // -------------------------------------------------------------------
     /** Parse the nodes section of the SMD file
@@ -249,7 +226,7 @@ protected:
      * the next section (or to EOF)
     */
     void ParseNodesSection(const char* szCurrent,
-        const char** szCurrentOut);
+            const char **szCurrentOut, const char *end);
 
     // -------------------------------------------------------------------
     /** Parse the skeleton section of the SMD file
@@ -259,7 +236,7 @@ protected:
      * the next section (or to EOF)
     */
     void ParseSkeletonSection(const char* szCurrent,
-        const char** szCurrentOut);
+            const char **szCurrentOut, const char *end);
 
     // -------------------------------------------------------------------
     /** Parse a single triangle in the SMD file
@@ -268,8 +245,7 @@ protected:
      * \param szCurrentOut Receives the output cursor position
     */
     void ParseTriangle(const char* szCurrent,
-        const char** szCurrentOut);
-
+            const char **szCurrentOut, const char *end);
 
     // -------------------------------------------------------------------
     /** Parse a single vertex in the SMD file
@@ -279,7 +255,7 @@ protected:
      * \param vertex Vertex to be filled
     */
     void ParseVertex(const char* szCurrent,
-        const char** szCurrentOut, SMD::Vertex& vertex,
+            const char **szCurrentOut, const char *end, SMD::Vertex &vertex,
         bool bVASection = false);
 
     // -------------------------------------------------------------------
@@ -294,32 +270,31 @@ protected:
     /** Parse a line in the skeleton section
      */
     void ParseSkeletonElement(const char* szCurrent,
-        const char** szCurrentOut,int iTime);
+            const char **szCurrentOut, const char *end, int iTime);
 
     // -------------------------------------------------------------------
     /** Parse a line in the nodes section
      */
     void ParseNodeInfo(const char* szCurrent,
-        const char** szCurrentOut);
-
+            const char **szCurrentOut, const char *end);
 
     // -------------------------------------------------------------------
     /** Parse a floating-point value
      */
     bool ParseFloat(const char* szCurrent,
-        const char** szCurrentOut, float& out);
+            const char **szCurrentOut, const char *end, float &out);
 
     // -------------------------------------------------------------------
     /** Parse an unsigned integer. There may be no sign!
      */
     bool ParseUnsignedInt(const char* szCurrent,
-        const char** szCurrentOut, unsigned int& out);
+            const char **szCurrentOut, const char *end, unsigned int &out);
 
     // -------------------------------------------------------------------
     /** Parse a signed integer. Signs (+,-) are handled.
      */
     bool ParseSignedInt(const char* szCurrent,
-        const char** szCurrentOut, int& out);
+            const char **szCurrentOut, const char *end, int &out);
 
     // -------------------------------------------------------------------
     /** Fix invalid time values in the file
@@ -327,7 +302,7 @@ protected:
     void FixTimeValues();
 
     // -------------------------------------------------------------------
-    /** Add all children of a bone as subnodes to a node
+    /** Add all children of a bone as sub-nodes to a node
      * \param pcNode Parent node
      * \param iParent Parent bone index
      */
@@ -352,17 +327,15 @@ protected:
 
 
     // -------------------------------------------------------------------
-    inline bool SkipLine( const char* in, const char** out)
-    {
-        Assimp::SkipLine(in,out);
+    inline bool SkipLine( const char* in, const char** out, const char *end) {
+        Assimp::SkipLine(in, out, end);
         ++iLineNumber;
         return true;
     }
     // -------------------------------------------------------------------
-    inline bool SkipSpacesAndLineEnd( const char* in, const char** out)
-    {
+    inline bool SkipSpacesAndLineEnd(const char *in, const char **out, const char *end) {
         ++iLineNumber;
-        return Assimp::SkipSpacesAndLineEnd(in,out);
+        return Assimp::SkipSpacesAndLineEnd(in, out, end);
     }
 
 private:
@@ -372,6 +345,7 @@ private:
 
     /** Buffer to hold the loaded file */
     std::vector<char> mBuffer;
+    char *mEnd;
 
     /** Output scene to be filled
     */
@@ -405,7 +379,7 @@ private:
      */
     bool bHasUVs;
 
-    /** Current line numer
+    /** Current line number
      */
     unsigned int iLineNumber;
 

@@ -21,7 +21,7 @@ namespace Qt3DInput {
 /*!
     \qmltype Axis
     \inqmlmodule Qt3D.Input
-    \instantiates Qt3DInput::QAxis
+    \nativetype Qt3DInput::QAxis
     \brief QML frontend for the Qt3DInput::QAxis C++ class.
 
     Links a set of AbstractAxisInputs that trigger the same event.
@@ -44,7 +44,7 @@ QAxis::QAxis(Qt3DCore::QNode *parent)
     : Qt3DCore::QNode(*new QAxisPrivate(), parent)
 {
     Q_D(QAxis);
-    connect(this, &QAxis::enabledChanged, [d]() {
+    connect(this, &QAxis::enabledChanged, this, [d]() {
         d->setValue(0.);
     });
 }
@@ -120,7 +120,7 @@ QList<QAbstractAxisInput *> QAxis::inputs() const
 }
 
 /*!
-  \property QAxis::value
+  \property Qt3DInput::QAxis::value
 
   The value of the axis.
  */

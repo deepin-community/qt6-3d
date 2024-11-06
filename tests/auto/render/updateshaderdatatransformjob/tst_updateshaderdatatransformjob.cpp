@@ -1,5 +1,5 @@
 // Copyright (C) 2016 Paul Lemire <paul.lemire350@gmail.com>
-// SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only WITH Qt-GPL-exception-1.0
+// SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only
 
 #include <QtTest/QTest>
 #include <Qt3DRender/private/updateshaderdatatransformjob_p.h>
@@ -197,7 +197,7 @@ private Q_SLOTS:
         // See scene file to find translation
         const Qt3DRender::Render::ShaderData::PropertyValue propertyValue = props[QStringLiteral("eyePosition")];
         QCOMPARE(backendShaderData->getTransformedProperty(&propertyValue, Matrix4x4(camera->viewMatrix())).value<Vector3D>(),
-                 Matrix4x4(camera->viewMatrix()) * (Vector3D(1.0f, 1.0f, 1.0f) + Vector3D(0.0f, 5.0f, 0.0f)));
+                 Matrix4x4(camera->viewMatrix()).map(Vector3D(1.0f, 1.0f, 1.0f) + Vector3D(0.0f, 5.0f, 0.0f)));
     }
 
     void checkRunModelToWorld()

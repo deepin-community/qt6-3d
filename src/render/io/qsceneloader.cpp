@@ -18,9 +18,10 @@
 
 QT_BEGIN_NAMESPACE
 
-using namespace Qt3DCore;
 
 namespace Qt3DRender {
+
+using namespace Qt3DCore;
 
 /*!
     \class Qt3DRender::QSceneLoader
@@ -57,7 +58,7 @@ namespace Qt3DRender {
 /*!
     \qmltype SceneLoader
     \inqmlmodule Qt3D.Render
-    \instantiates Qt3DRender::QSceneLoader
+    \nativetype Qt3DRender::QSceneLoader
     \inherits Component
     \since 5.7
     \brief Provides the facility to load an existing Scene.
@@ -88,7 +89,7 @@ namespace Qt3DRender {
  */
 
 /*!
-    \enum QSceneLoader::Status
+    \enum Qt3DRender::QSceneLoader::Status
 
     This enum identifies the state of loading
     \value None     The Qt3DRender::QSceneLoader hasn't been used yet.
@@ -98,7 +99,7 @@ namespace Qt3DRender {
  */
 
 /*!
-    \enum QSceneLoader::ComponentType
+    \enum Qt3DRender::QSceneLoader::ComponentType
 
     This enum specifies a component type.
     \value UnknownComponent Unknown component type
@@ -130,13 +131,13 @@ namespace Qt3DRender {
  */
 
 /*!
-    \property QSceneLoader::source
+    \property Qt3DRender::QSceneLoader::source
 
     Holds the url to the source to be loaded.
  */
 
 /*!
-    \property QSceneLoader::status
+    \property Qt3DRender::QSceneLoader::status
 
     Holds the status of scene loading.
     \list

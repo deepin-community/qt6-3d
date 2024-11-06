@@ -8,9 +8,10 @@
 
 QT_BEGIN_NAMESPACE
 
-using namespace Qt3DCore;
 
 namespace Qt3DRender {
+using namespace Qt3DCore;
+
 /*!
     \class Qt3DRender::QRenderTargetSelector
     \inmodule Qt3DRender
@@ -27,7 +28,7 @@ namespace Qt3DRender {
     \qmltype RenderTargetSelector
     \inqmlmodule Qt3D.Render
     \since 5.7
-    \instantiates Qt3DRender::QRenderTargetSelector
+    \nativetype Qt3DRender::QRenderTargetSelector
     \inherits FrameGraphNode
     \brief Provides a way of specifying a render target.
 
@@ -57,7 +58,7 @@ QRenderTargetSelector::~QRenderTargetSelector()
 }
 
 /*!
-    \property QRenderTargetSelector::target
+    \property Qt3DRender::QRenderTargetSelector::target
     Holds the current render target
  */
 

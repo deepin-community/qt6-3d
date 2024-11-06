@@ -16,9 +16,10 @@
 
 QT_BEGIN_NAMESPACE
 
-using namespace Qt3DCore;
 
 namespace  Qt3DExtras {
+
+using namespace Qt3DCore;
 
 namespace {
 
@@ -227,7 +228,7 @@ QByteArray QSphereGeometryPrivate::generateIndexData() const
 
 /*!
  * \qmltype SphereGeometry
- * \instantiates Qt3DExtras::QSphereGeometry
+ * \nativetype Qt3DExtras::QSphereGeometry
  * \inqmlmodule Qt3D.Extras
  * \brief SphereGeometry allows creation of a sphere in 3D space.
  *
@@ -402,7 +403,7 @@ void QSphereGeometry::setGenerateTangents(bool gen)
 }
 
 /*!
- * \property QSphereGeometry::generateTangents
+ * \property Qt3DExtras::QSphereGeometry::generateTangents
  *
  * Holds the value of the automatic tangent vectors generation flag.
  * Tangent vectors are orthogonal to normal vectors.
@@ -414,7 +415,7 @@ bool QSphereGeometry::generateTangents() const
 }
 
 /*!
- * \property QSphereGeometry::rings
+ * \property Qt3DExtras::QSphereGeometry::rings
  *
  * Holds the number of rings in the sphere.
  */
@@ -425,7 +426,7 @@ int QSphereGeometry::rings() const
 }
 
 /*!
- * \property QSphereGeometry::slices
+ * \property Qt3DExtras::QSphereGeometry::slices
  *
  * Holds the number of slices in the sphere.
  */
@@ -436,7 +437,7 @@ int QSphereGeometry::slices() const
 }
 
 /*!
- * \property QSphereGeometry::radius
+ * \property Qt3DExtras::QSphereGeometry::radius
  *
  * Holds the radius of the sphere.
  */
@@ -447,7 +448,7 @@ float QSphereGeometry::radius() const
 }
 
 /*!
- * \property QSphereGeometry::positionAttribute
+ * \property Qt3DExtras::QSphereGeometry::positionAttribute
  *
  * Holds the geometry position attribute.
  */
@@ -458,7 +459,7 @@ QAttribute *QSphereGeometry::positionAttribute() const
 }
 
 /*!
- * \property QSphereGeometry::normalAttribute
+ * \property Qt3DExtras::QSphereGeometry::normalAttribute
  *
  * Holds the geometry normal attribute.
  */
@@ -469,7 +470,7 @@ QAttribute *QSphereGeometry::normalAttribute() const
 }
 
 /*!
- * \property QSphereGeometry::texCoordAttribute
+ * \property Qt3DExtras::QSphereGeometry::texCoordAttribute
  *
  * Holds the geometry texture coordinate attribute.
  */
@@ -480,7 +481,7 @@ QAttribute *QSphereGeometry::texCoordAttribute() const
 }
 
 /*!
- * \property QSphereGeometry::tangentAttribute
+ * \property Qt3DExtras::QSphereGeometry::tangentAttribute
  *
  * Holds the geometry tangent attribute.
  */
@@ -491,7 +492,7 @@ QAttribute *QSphereGeometry::tangentAttribute() const
 }
 
 /*!
- * \property QSphereGeometry::indexAttribute
+ * \property Qt3DExtras::QSphereGeometry::indexAttribute
  *
  * Holds the geometry index attribute.
  */

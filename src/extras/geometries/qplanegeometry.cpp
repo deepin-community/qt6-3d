@@ -11,9 +11,10 @@
 
 QT_BEGIN_NAMESPACE
 
-using namespace Qt3DCore;
 
 namespace  Qt3DExtras {
+
+using namespace Qt3DCore;
 
 namespace {
 
@@ -111,7 +112,7 @@ QByteArray createPlaneIndexData(const QSize &resolution)
 
 /*!
  * \qmltype PlaneGeometry
- * \instantiates Qt3DExtras::QPlaneGeometry
+ * \nativetype Qt3DExtras::QPlaneGeometry
  * \inqmlmodule Qt3D.Extras
  * \brief PlaneGeometry allows creation of a plane in 3D space.
  *
@@ -286,7 +287,7 @@ void QPlaneGeometry::setMirrored(bool mirrored)
 }
 
 /*!
- * \property QPlaneGeometry::resolution
+ * \property Qt3DExtras::QPlaneGeometry::resolution
  *
  * Holds the plane resolution.
  */
@@ -297,7 +298,7 @@ QSize QPlaneGeometry::resolution() const
 }
 
 /*!
- * \property QPlaneGeometry::width
+ * \property Qt3DExtras::QPlaneGeometry::width
  *
  * Holds the plane width.
  */
@@ -308,7 +309,7 @@ float QPlaneGeometry::width() const
 }
 
 /*!
- * \property QPlaneGeometry::height
+ * \property Qt3DExtras::QPlaneGeometry::height
  *
  * Holds the plane height.
  */
@@ -319,7 +320,7 @@ float QPlaneGeometry::height() const
 }
 
 /*!
- * \property QPlaneGeometry::mirrored
+ * \property Qt3DExtras::QPlaneGeometry::mirrored
  * \since 5.9
  *
  * Controls if the UV coordinates of the plane should be flipped vertically.
@@ -331,7 +332,7 @@ bool QPlaneGeometry::mirrored() const
 }
 
 /*!
- * \property QPlaneGeometry::positionAttribute
+ * \property Qt3DExtras::QPlaneGeometry::positionAttribute
  *
  * Holds the geometry position attribute.
  */
@@ -342,7 +343,7 @@ QAttribute *QPlaneGeometry::positionAttribute() const
 }
 
 /*!
- * \property QPlaneGeometry::normalAttribute
+ * \property Qt3DExtras::QPlaneGeometry::normalAttribute
  *
  * Holds the geometry normal attribute.
  */
@@ -353,7 +354,7 @@ QAttribute *QPlaneGeometry::normalAttribute() const
 }
 
 /*!
- * \property QPlaneGeometry::texCoordAttribute
+ * \property Qt3DExtras::QPlaneGeometry::texCoordAttribute
  *
  * Holds the geometry texture coordinate attribute.
  */
@@ -364,7 +365,7 @@ QAttribute *QPlaneGeometry::texCoordAttribute() const
 }
 
 /*!
- * \property QPlaneGeometry::tangentAttribute
+ * \property Qt3DExtras::QPlaneGeometry::tangentAttribute
  *
  * Holds the geometry tangent attribute.
  */
@@ -375,7 +376,7 @@ QAttribute *QPlaneGeometry::tangentAttribute() const
 }
 
 /*!
- * \property QPlaneGeometry::indexAttribute
+ * \property Qt3DExtras::QPlaneGeometry::indexAttribute
  *
  * Holds the geometry index attribute.
  */

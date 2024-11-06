@@ -8,9 +8,10 @@
 
 QT_BEGIN_NAMESPACE
 
-using namespace Qt3DCore;
 
 namespace Qt3DRender {
+
+using namespace Qt3DCore;
 
 QPickingProxyPrivate::QPickingProxyPrivate()
     : Qt3DCore::QBoundingVolumePrivate()
@@ -51,7 +52,7 @@ void QPickingProxyPrivate::setView(QGeometryView *view)
 
 /*!
     \qmltype PickingProxy
-    \instantiates Qt3DRender::QPickingProxy
+    \nativetype Qt3DRender::QPickingProxy
     \inqmlmodule Qt3D.Render
     \inherits Component3D
     \since 2.16

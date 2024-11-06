@@ -66,6 +66,9 @@ void QPaintedTextureImagePrivate::repaint()
 QPaintedTextureImage::QPaintedTextureImage(Qt3DCore::QNode *parent)
     : QAbstractTextureImage(*new QPaintedTextureImagePrivate, parent)
 {
+    Q_D(QPaintedTextureImage);
+
+    d->m_currentGenerator = QSharedPointer<QPaintedTextureImageDataGenerator>::create(QImage{}, 0, id());
 }
 
 QPaintedTextureImage::~QPaintedTextureImage()
@@ -73,7 +76,7 @@ QPaintedTextureImage::~QPaintedTextureImage()
 }
 
 /*!
-    \property QPaintedTextureImage::width
+    \property Qt3DRender::QPaintedTextureImage::width
 
     This property holds the width of the texture image.
     The width must be greater than or equal to 1.
@@ -85,7 +88,7 @@ int QPaintedTextureImage::width() const
 }
 
 /*!
-    \property QPaintedTextureImage::height
+    \property Qt3DRender::QPaintedTextureImage::height
 
     This property holds the height of the texture image.
     The height must be greater than or equal to 1.
@@ -97,7 +100,7 @@ int QPaintedTextureImage::height() const
 }
 
 /*!
-    \property QPaintedTextureImage::size
+    \property Qt3DRender::QPaintedTextureImage::size
 
     This property holds the size of the texture image.
 

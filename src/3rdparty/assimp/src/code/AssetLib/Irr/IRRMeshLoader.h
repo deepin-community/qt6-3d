@@ -2,7 +2,7 @@
 Open Asset Import Library (assimp)
 ----------------------------------------------------------------------
 
-Copyright (c) 2006-2021, assimp team
+Copyright (c) 2006-2024, assimp team
 
 All rights reserved.
 
@@ -62,29 +62,45 @@ namespace Assimp {
  */
 class IRRMeshImporter : public BaseImporter, public IrrlichtBase {
 public:
-    IRRMeshImporter();
-    ~IRRMeshImporter();
+    /// @brief The class constructor.
+    IRRMeshImporter() = default;
+
+    /// @brief The class destructor.
+    ~IRRMeshImporter() override = default;
 
     // -------------------------------------------------------------------
     /** Returns whether the class can handle the format of the given file.
      *  See BaseImporter::CanRead() for details.
      */
     bool CanRead(const std::string &pFile, IOSystem *pIOHandler,
-            bool checkSig) const;
+            bool checkSig) const override;
 
 protected:
     // -------------------------------------------------------------------
     /** Return importer meta information.
      * See #BaseImporter::GetInfo for the details
      */
-    const aiImporterDesc *GetInfo() const;
+    const aiImporterDesc *GetInfo() const override;
 
     // -------------------------------------------------------------------
     /** Imports the given file into the given scene structure.
      * See BaseImporter::InternReadFile() for details
      */
     void InternReadFile(const std::string &pFile, aiScene *pScene,
-            IOSystem *pIOHandler);
+            IOSystem *pIOHandler) override;
+
+private:
+    enum class VertexFormat {
+        standard = 0, // "standard" - also noted as 'normal' format elsewhere
+        t2coord = 1, // "2tcoord" - standard + 2 UV maps
+        tangent = 2, // "tangents" - standard + tangents and bitangents
+    };
+
+    void ParseBufferVertices(const char *sz, const char *end, VertexFormat vertexFormat,
+            std::vector<aiVector3D> &vertices, std::vector<aiVector3D> &normals,
+            std::vector<aiVector3D> &tangents, std::vector<aiVector3D> &bitangents,
+            std::vector<aiVector3D> &UVs, std::vector<aiVector3D> &UV2s,
+            std::vector<aiColor4D> &colors, bool &useColors);
 };
 
 } // end of namespace Assimp

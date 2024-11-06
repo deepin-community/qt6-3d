@@ -8,9 +8,10 @@
 
 QT_BEGIN_NAMESPACE
 
-using namespace Qt3DCore;
 
 namespace Qt3DRender {
+
+using namespace Qt3DCore;
 
 QTechniquePrivate::QTechniquePrivate()
     : QNodePrivate()
@@ -23,7 +24,7 @@ QTechniquePrivate::~QTechniquePrivate()
 
 /*!
     \qmltype Technique
-    \instantiates Qt3DRender::QTechnique
+    \nativetype Qt3DRender::QTechnique
     \inqmlmodule Qt3D.Render
     \inherits Qt3DCore::QNode
     \since 5.7

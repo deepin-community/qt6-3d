@@ -56,7 +56,6 @@ if(QT_FEATURE_private_tests)
     target_compile_definitions(RhiRendererLib PRIVATE
         BUILD_QT3D_MODULE
         QT_BUILDING_QT
-        QT_NO_FOREACH
     )
 
 endif()

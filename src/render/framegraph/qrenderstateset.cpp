@@ -8,9 +8,10 @@
 
 QT_BEGIN_NAMESPACE
 
-using namespace Qt3DCore;
 
 namespace Qt3DRender {
+
+using namespace Qt3DCore;
 
 QRenderStateSetPrivate::QRenderStateSetPrivate()
     : QFrameGraphNodePrivate()
@@ -64,7 +65,7 @@ QRenderStateSetPrivate::QRenderStateSetPrivate()
     \inqmlmodule Qt3D.Render
     \since 5.5
     \inherits FrameGraphNode
-    \instantiates Qt3DRender::QRenderStateSet
+    \nativetype Qt3DRender::QRenderStateSet
     \brief The RenderStateSet \l {FrameGraphNode}{FrameGraph} node offers a way of
     specifying a set of RenderState objects to be applied during the execution
     of a framegraph branch.

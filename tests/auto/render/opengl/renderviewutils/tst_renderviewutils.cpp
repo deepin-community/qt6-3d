@@ -1,5 +1,5 @@
 // Copyright (C) 2015 Klaralvdalens Datakonsult AB (KDAB).
-// SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only WITH Qt-GPL-exception-1.0
+// SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only
 
 #include <QtTest/QTest>
 #include <qbackendnodetester.h>
@@ -811,8 +811,8 @@ void tst_RenderViewUtils::transformedProperties()
 
     // THEN
     QCOMPARE(position0Value, positionQt);
-    QCOMPARE(position1Value, viewMatrix * worldMatrix * position);
-    QCOMPARE(position2Value, worldMatrix * position);
+    QCOMPARE(position1Value, (viewMatrix * worldMatrix).map(position));
+    QCOMPARE(position2Value, worldMatrix.map(position));
     QCOMPARE(position3Value, Vector3D((worldMatrix * Vector4D(position, 0.0f))));
 }
 

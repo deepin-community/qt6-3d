@@ -8,9 +8,10 @@
 
 QT_BEGIN_NAMESPACE
 
-using namespace Qt3DCore;
 
 namespace Qt3DInput {
+
+using namespace Qt3DCore;
 
 namespace {
 
@@ -114,7 +115,7 @@ void QKeyboardHandlerPrivate::keyEvent(QKeyEvent *event)
 /*!
     \qmltype KeyboardHandler
     \inqmlmodule Qt3D.Input
-    \instantiates Qt3DInput::QKeyboardHandler
+    \nativetype Qt3DInput::QKeyboardHandler
     \inherits Component3D
     \brief QML frontend for QKeyboardHandler C++ class.
     \since 5.5

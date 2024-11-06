@@ -34,11 +34,11 @@
 
 QT_BEGIN_NAMESPACE
 
-using namespace Qt3DCore;
 
 namespace Qt3DRender {
 namespace Render {
 
+using namespace Qt3DCore;
 
 EntityPrivate::EntityPrivate()
     : Qt3DCore::QBackendNodePrivate(Entity::ReadOnly)
@@ -67,6 +67,7 @@ void EntityPrivate::componentRemoved(Qt3DCore::QNode *frontend)
 Entity::Entity()
     : BackendNode(*new EntityPrivate)
     , m_nodeManagers(nullptr)
+    , m_parentLessTransform(true)
     , m_boundingDirty(false)
     , m_treeEnabled(true)
 {

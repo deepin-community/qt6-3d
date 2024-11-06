@@ -8,9 +8,10 @@
 
 QT_BEGIN_NAMESPACE
 
-using namespace Qt3DCore;
 
 namespace Qt3DRender {
+
+using namespace Qt3DCore;
 
 QTechniqueFilterPrivate::QTechniqueFilterPrivate()
     : QFrameGraphNodePrivate()
@@ -36,7 +37,7 @@ QTechniqueFilterPrivate::QTechniqueFilterPrivate()
 /*!
     \qmltype TechniqueFilter
     \inqmlmodule Qt3D.Render
-    \instantiates Qt3DRender::QTechniqueFilter
+    \nativetype Qt3DRender::QTechniqueFilter
     \inherits FrameGraphNode
     \since 5.7
     \brief A FrameGraphNode used to select used Techniques.

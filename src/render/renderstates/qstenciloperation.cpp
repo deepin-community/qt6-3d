@@ -32,7 +32,7 @@ QStencilOperationPrivate::~QStencilOperationPrivate() = default;
     \ingroup renderstates
     \inqmlmodule Qt3D.Render
     \inherits RenderState
-    \instantiates Qt3DRender::QStencilOperation
+    \nativetype Qt3DRender::QStencilOperation
 
     A StencilOperation type specifies the stencil operations
     for the front- and back-facing polygons. The stencil operation control
@@ -52,12 +52,12 @@ QStencilOperationPrivate::~QStencilOperationPrivate() = default;
 */
 
 /*!
-    \property QStencilOperation::front
+    \property Qt3DRender::QStencilOperation::front
     Holds the stencil operation arguments for front-facing polygons.
 */
 
 /*!
-    \property QStencilOperation::back
+    \property Qt3DRender::QStencilOperation::back
     Holds the stencil operation arguments for back-facing polygons.
 */
 
@@ -72,15 +72,15 @@ QStencilOperation::QStencilOperation(QNode *parent)
 
     const auto resend = [d]() { d->update(); };
 
-    (void) connect(d->m_front, &QStencilOperationArguments::allTestsPassOperationChanged, resend);
-    (void) connect(d->m_front, &QStencilOperationArguments::depthTestFailureOperationChanged, resend);
-    (void) connect(d->m_front, &QStencilOperationArguments::stencilTestFailureOperationChanged, resend);
-    (void) connect(d->m_front, &QStencilOperationArguments::faceModeChanged, resend);
+    (void) connect(d->m_front, &QStencilOperationArguments::allTestsPassOperationChanged, this, resend);
+    (void) connect(d->m_front, &QStencilOperationArguments::depthTestFailureOperationChanged, this, resend);
+    (void) connect(d->m_front, &QStencilOperationArguments::stencilTestFailureOperationChanged, this, resend);
+    (void) connect(d->m_front, &QStencilOperationArguments::faceModeChanged, this, resend);
 
-    (void) connect(d->m_back, &QStencilOperationArguments::allTestsPassOperationChanged, resend);
-    (void) connect(d->m_back, &QStencilOperationArguments::depthTestFailureOperationChanged, resend);
-    (void) connect(d->m_back, &QStencilOperationArguments::stencilTestFailureOperationChanged, resend);
-    (void) connect(d->m_back, &QStencilOperationArguments::faceModeChanged, resend);
+    (void) connect(d->m_back, &QStencilOperationArguments::allTestsPassOperationChanged, this, resend);
+    (void) connect(d->m_back, &QStencilOperationArguments::depthTestFailureOperationChanged, this, resend);
+    (void) connect(d->m_back, &QStencilOperationArguments::stencilTestFailureOperationChanged, this, resend);
+    (void) connect(d->m_back, &QStencilOperationArguments::faceModeChanged, this, resend);
 }
 
 /*! \internal */

@@ -3,7 +3,7 @@
 Open Asset Import Library (assimp)
 ---------------------------------------------------------------------------
 
-Copyright (c) 2006-2021, assimp team
+Copyright (c) 2006-2024, assimp team
 
 All rights reserved.
 
@@ -71,7 +71,7 @@ static std::wstring Utf8ToWide(const char *in) {
     // size includes terminating null; std::wstring adds null automatically
     std::wstring out(static_cast<size_t>(size) - 1, L'\0');
     MultiByteToWideChar(CP_UTF8, 0, in, -1, &out[0], size);
-    
+
     return out;
 }
 
@@ -85,7 +85,7 @@ static std::string WideToUtf8(const wchar_t *in) {
     // size includes terminating null; std::string adds null automatically
     std::string out(static_cast<size_t>(size) - 1, '\0');
     WideCharToMultiByte(CP_UTF8, 0, in, -1, &out[0], size, nullptr, nullptr);
-    
+
     return out;
 }
 #endif
@@ -93,18 +93,22 @@ static std::string WideToUtf8(const wchar_t *in) {
 // ------------------------------------------------------------------------------------------------
 // Tests for the existence of a file at the given path.
 bool DefaultIOSystem::Exists(const char *pFile) const {
+    if (pFile == nullptr) {
+        return false;
+    }
+        
 #ifdef _WIN32
     struct __stat64 filestat;
     if (_wstat64(Utf8ToWide(pFile).c_str(), &filestat) != 0) {
         return false;
     }
 #else
-    FILE *file = ::fopen(pFile, "rb");
-    if (!file) {
+	struct stat statbuf;
+    stat(pFile, &statbuf);
+    // test for a regular file
+    if (!S_ISREG(statbuf.st_mode)) {
         return false;
     }
-
-    ::fclose(file);
 #endif
 
     return true;
@@ -116,16 +120,18 @@ IOStream *DefaultIOSystem::Open(const char *strFile, const char *strMode) {
     ai_assert(strFile != nullptr);
     ai_assert(strMode != nullptr);
     FILE *file;
+	
 #ifdef _WIN32
     std::wstring name = Utf8ToWide(strFile);
     if (name.empty()) {
         return nullptr;
     }
-    
+
     file = ::_wfopen(name.c_str(), Utf8ToWide(strMode).c_str());
 #else
     file = ::fopen(strFile, strMode);
 #endif
+	
     if (!file) {
         return nullptr;
     }
@@ -173,7 +179,7 @@ inline static std::string MakeAbsolutePath(const char *in) {
         free(ret);
     }
 #endif
-    if (!ret) {
+    else {
         // preserve the input path, maybe someone else is able to fix
         // the path before it is accessed (e.g. our file system filter)
         ASSIMP_LOG_WARN("Invalid path: ", std::string(in));

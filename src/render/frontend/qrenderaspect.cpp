@@ -155,7 +155,6 @@
 
 QT_BEGIN_NAMESPACE
 
-using namespace Qt3DCore;
 
 namespace {
 
@@ -197,7 +196,7 @@ QStringList dumpSGFilterState(Qt3DRender::Render::TechniqueManager *manager,
     if (entity != nullptr) {
         QString res = dumpNode(entity);
         auto materials = entity->componentsOfType<QMaterial>();
-        if (materials.size() && materials.front()->effect()) {
+        if (!materials.empty() && materials.front()->effect()) {
             auto m = materials.front();
             const auto techniques = m->effect()->techniques();
             for (auto t: m->effect()->techniques()) {
@@ -216,7 +215,7 @@ QStringList dumpSGFilterState(Qt3DRender::Render::TechniqueManager *manager,
                 for (auto r: renderPasses)
                     filters += dumpNodeFilters(QLatin1String("RP"), r->filterKeys());
 
-                if (filters.size())
+                if (!filters.empty())
                     res += QLatin1String(" [ %1 ]").arg(filters.join(QLatin1String(" ")));
             }
         }
@@ -233,6 +232,8 @@ QStringList dumpSGFilterState(Qt3DRender::Render::TechniqueManager *manager,
 
 }
 namespace Qt3DRender {
+
+using namespace Qt3DCore;
 
 #define CreateSynchronizerJobPtr(lambda, type) \
     Render::SynchronizerJobPtr::create(lambda, type, #type)
@@ -565,7 +566,7 @@ void QRenderAspectPrivate::registerBackendType(const QMetaObject &obj,
 }
 
 /*!
- * \enum QRenderAspect::SubmissionType
+ * \enum Qt3DRender::QRenderAspect::SubmissionType
  *
  * \value Automatic
  *        The QRenderAspect takes care of submitting rendering commands to the

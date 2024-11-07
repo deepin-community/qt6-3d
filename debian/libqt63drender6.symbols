@@ -1886,7 +1886,6 @@ libQt63DRender.so.6 libqt63drender6 #MINVER#
  _ZN10Qt3DRender6Render10ShaderData16syncFromFrontEndEPKN8Qt3DCore5QNodeEb@Qt_6_PRIVATE_API 6.6.1
  (arch=!amd64)_ZN10Qt3DRender6Render10ShaderData20updateWorldTransformERK10QMatrix4x4@Qt_6_PRIVATE_API 6.6.1
  (arch=amd64)_ZN10Qt3DRender6Render10ShaderData20updateWorldTransformERKN8Qt3DCore13Matrix4x4_SSEE@Qt_6_PRIVATE_API 6.6.1
- _ZN10Qt3DRender6Render10ShaderData30generatePropertyValuesForBlockERK7QString@Qt_6_PRIVATE_API 6.6.1
  _ZN10Qt3DRender6Render10ShaderDataC1Ev@Qt_6_PRIVATE_API 6.6.1
  _ZN10Qt3DRender6Render10ShaderDataC2Ev@Qt_6_PRIVATE_API 6.6.1
  _ZN10Qt3DRender6Render10ShaderDataD0Ev@Qt_6_PRIVATE_API 6.6.1
@@ -2271,7 +2270,6 @@ libQt63DRender.so.6 libqt63drender6 #MINVER#
  _ZN10Qt3DRender6Render21PlatformSurfaceFilter16staticMetaObjectE@Qt_6_PRIVATE_API 6.6.1
  _ZN10Qt3DRender6Render21PlatformSurfaceFilter18m_surfacesValidityE@Qt_6_PRIVATE_API 6.6.1
  _ZN10Qt3DRender6Render21PlatformSurfaceFilter18markSurfaceAsValidEv@Qt_6_PRIVATE_API 6.6.1
- _ZN10Qt3DRender6Render21PlatformSurfaceFilter19m_surfacesSemaphoreE@Qt_6_PRIVATE_API 6.6.1
  _ZN10Qt3DRender6Render21PlatformSurfaceFilterC1EP7QObject@Qt_6_PRIVATE_API 6.6.1
  _ZN10Qt3DRender6Render21PlatformSurfaceFilterC2EP7QObject@Qt_6_PRIVATE_API 6.6.1
  _ZN10Qt3DRender6Render21PlatformSurfaceFilterD0Ev@Qt_6_PRIVATE_API 6.6.1
@@ -3284,7 +3282,6 @@ libQt63DRender.so.6 libqt63drender6 #MINVER#
  (arch=!amd64)_ZNK10Qt3DRender6Render10ShaderData22getTransformedPropertyEPKNS1_13PropertyValueERK10QMatrix4x4@Qt_6_PRIVATE_API 6.6.1
  (arch=amd64)_ZNK10Qt3DRender6Render10ShaderData22getTransformedPropertyEPKNS1_13PropertyValueERKN8Qt3DCore13Matrix4x4_SSEE@Qt_6_PRIVATE_API 6.6.1
  _ZNK10Qt3DRender6Render10ShaderData22propertyValuesForBlockEi@Qt_6_PRIVATE_API 6.6.1
- _ZNK10Qt3DRender6Render10ShaderData25hasPropertyValuesForBlockEi@Qt_6_PRIVATE_API 6.6.1
  _ZNK10Qt3DRender6Render10SortPolicy9sortTypesEv@Qt_6_PRIVATE_API 6.6.1
  _ZNK10Qt3DRender6Render11BackendNode16resourceAccessorEv@Qt_6_PRIVATE_API 6.6.1
  _ZNK10Qt3DRender6Render11BackendNode8rendererEv@Qt_6_PRIVATE_API 6.6.1
@@ -3530,7 +3527,6 @@ libQt63DRender.so.6 libqt63drender6 #MINVER#
  _ZNK10Qt3DRender9QViewport10metaObjectEv@Qt_6 6.6.1
  _ZNK10Qt3DRender9QViewport14normalizedRectEv@Qt_6 6.6.1
  _ZNK10Qt3DRender9QViewport5gammaEv@Qt_6 6.6.1
- _ZSt19piecewise_construct@Qt_6 6.6.1
  _ZTIFSt6vectorIN10Qt3DRender10RayCasting21QCollisionQueryResult3HitESaIS3_EERS5_RKS5_E@Qt_6_PRIVATE_API 6.6.1
  _ZTIN10Qt3DRender10QAlphaTestE@Qt_6 6.6.1
  _ZTIN10Qt3DRender10QClipPlaneE@Qt_6 6.6.1

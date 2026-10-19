@@ -1,3 +1,9 @@
+qt6-3d (6.8.0+dfsg-0deepin3) unstable; urgency=medium
+
+  * Add CVE-2026-111487 patch for mixed morph target attributes.
+
+ -- Tian ShiLin <tianshilin@uniontech.com>  Mon, 19 Oct 2026 10:16:40 +0800
+
 qt6-3d (6.8.0+dfsg-0deepin2) unstable; urgency=medium
 
   * New upstream release (6.8.0).

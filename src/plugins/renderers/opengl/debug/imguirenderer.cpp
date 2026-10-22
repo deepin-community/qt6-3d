@@ -132,8 +132,13 @@ Qt3DRRD::ImGuiRenderer::ImGuiRenderer(Qt3DRR::OpenGL::Renderer *renderer)
     ImGui::CreateContext();
 
     ImGuiIO &io = ImGui::GetIO();
-    for (ImGuiKey key : keyMap.values())
-        io.KeyMap[key] = key;
+
+    auto imGuiPath = qgetenv("QT3D_IMGUI_PATH");
+    if (!imGuiPath.isEmpty()) {
+        io.IniFilename = QByteArray{imGuiPath + QByteArray{"/imgui.ini"}}.constData();
+    } else {
+        io.IniFilename = nullptr;
+    }
 
 #ifndef QT_NO_CLIPBOARD
     io.SetClipboardTextFn = [](void *user_data, const char *text) {
@@ -641,18 +646,20 @@ void Qt3DRRD::ImGuiRenderer::onMouseChange(QMouseEvent *event)
     m_mousePressed[2] = event->buttons() & Qt::MiddleButton;
 }
 
+#if QT_CONFIG(wheelevent)
 void Qt3DRRD::ImGuiRenderer::onWheel(QWheelEvent *event)
 {
     // 5 lines per unit
     m_mouseWheelH += event->pixelDelta().x() / (ImGui::GetTextLineHeight());
     m_mouseWheel += event->pixelDelta().y() / (5.f * ImGui::GetTextLineHeight());
 }
+#endif
 
 void Qt3DRRD::ImGuiRenderer::onKeyPressRelease(QKeyEvent *event)
 {
     ImGuiIO& io = ImGui::GetIO();
     if (keyMap.contains(event->key()))
-        io.KeysDown[keyMap[event->key()]] = event->type() == QEvent::KeyPress;
+        io.AddKeyEvent(keyMap[event->key()], event->type() == QEvent::KeyPress);
 
     if (event->type() == QEvent::KeyPress) {
         QString text = event->text();
@@ -681,9 +688,11 @@ void Qt3DRRD::ImGuiRenderer::processEvent(QEvent *event)
     case QEvent::MouseButtonRelease:
         this->onMouseChange(static_cast<QMouseEvent *>(event));
         break;
+#if QT_CONFIG(wheelevent)
     case QEvent::Wheel:
         this->onWheel(static_cast<QWheelEvent *>(event));
         break;
+#endif
     case QEvent::KeyPress:
     case QEvent::KeyRelease:
         this->onKeyPressRelease(static_cast<QKeyEvent *>(event));

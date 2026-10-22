@@ -15,6 +15,7 @@
 // We mean it.
 //
 
+#include <QtGui/QOffscreenSurface>
 #include <Qt3DCore/qnodeid.h>
 #include <Qt3DRender/qpickevent.h>
 #include <Qt3DQuickScene2D/qscene2d.h>
@@ -56,28 +57,28 @@ public:
     void render();
     void initializeRender();
     void setSharedObject(Qt3DRender::Quick::Scene2DSharedObjectPtr sharedObject);
+    void invalidate();
     void cleanup();
     void setOutput(Qt3DCore::QNodeId outputId);
     void initializeSharedObject();
 
     void syncFromFrontEnd(const Qt3DCore::QNode *frontEnd, bool firstTime) override;
 
-    bool updateFbo(QOpenGLTexture *texture);
     void syncRenderControl();
     bool registerObjectPickerEvents(Qt3DCore::QEntity *qentity);
     void unregisterObjectPickerEvents(Qt3DCore::QNodeId entityId);
     void handlePickEvent(int type, const QPickEvent *ev);
 
+    QOffscreenSurface *m_surface;
     QOpenGLContext *m_context;
     QOpenGLContext *m_shareContext;
+    QRhi *m_rhi;
     QThread *m_renderThread;
     Qt3DCore::QNodeId m_outputId;
     QSharedPointer<Qt3DRender::Quick::Scene2DSharedObject> m_sharedObject;
     Qt3DCore::QNodeId m_peerId;
     Qt3DRender::Render::Attachment m_attachmentData;
 
-    GLuint m_fbo;
-    GLuint m_rbo;
     QSize m_textureSize;
 
     bool m_initialized;

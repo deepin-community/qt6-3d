@@ -141,15 +141,19 @@ Vector3D QRay3D::point(float t) const
 
 QRay3D &QRay3D::transform(const Matrix4x4 &matrix)
 {
+    Vector3D pointAtDistance = point(distance());
     m_origin = matrix.map(m_origin);
-    m_direction = matrix.mapVector(m_direction).normalized();
+    pointAtDistance = matrix.map(pointAtDistance);
+    m_direction = (pointAtDistance - m_origin).normalized();
+    m_distance = (pointAtDistance - m_origin).length();
 
     return *this;
 }
 
 QRay3D QRay3D::transformed(const Matrix4x4 &matrix) const
 {
-    return QRay3D(matrix.map(m_origin), matrix.mapVector(m_direction).normalized());
+    QRay3D cpy(m_origin, m_direction, m_distance);
+    return cpy.transform(matrix);
 }
 
 bool QRay3D::operator==(const QRay3D &other) const
@@ -226,11 +230,7 @@ float QRay3D::projectedDistance(const Vector3D  &point) const
 }
 
 /*!
-    Returns the projection of \a vector onto this ray.  In the
-    following diagram, the dotted line is the ray, and V is the
-    \a vector.  The return value will be the vector V':
-
-    \image qray3d-project.png
+    Returns the projection of \a vector onto this ray.
 
     \sa projectedDistance()
 */

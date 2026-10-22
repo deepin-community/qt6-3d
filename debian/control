@@ -1,40 +1,41 @@
 Source: qt6-3d
 Section: libs
-Priority: optional
 Maintainer: Debian Qt/KDE Maintainers <debian-qt-kde@lists.debian.org>
-Uploaders: Patrick Franz <deltaone@debian.org>, Lu YaNing <dluyaning@gmail.com>,
-Build-Depends: cmake (>= 3.24~),
-               debhelper-compat (= 13),
-               libassimp-dev (>= 5.1.1~),
+Uploaders: Patrick Franz <deltaone@debian.org>,
+Build-Depends: debhelper-compat (= 13),
+               dh-sequence-pkgkde-symbolshelper,
+               dh-sequence-qmldeps,
+               cmake (>= 3.24~),
+               libassimp-dev (>= 5.4.3~),
                libgl-dev,
                libgl1-mesa-dri <!nocheck>,
                libssl-dev,
                libvulkan-dev [linux-any],
                ninja-build,
-               pkg-config,
                pkg-kde-tools,
-               qt6-base-dev (>= 6.8.0+dfsg~),
-               qt6-base-private-dev (>= 6.8.0+dfsg~),
-               qt6-declarative-dev (>= 6.8.0+dfsg~),
-               qt6-declarative-private-dev (>= 6.8.0+dfsg~),
-               qt6-multimedia-dev (>= 6.8.0~),
-               qt6-shadertools-dev (>= 6.8.0~),
+               pkgconf,
+               qt6-base-dev (>= 6.11.2+dfsg~),
+               qt6-base-private-dev (>= 6.11.2+dfsg~),
+               qt6-declarative-dev (>= 6.11.2+dfsg~),
+               qt6-declarative-private-dev (>= 6.11.2+dfsg~),
+               qt6-multimedia-dev (>= 6.11.2~),
+               qt6-shadertools-dev (>= 6.11.2~),
                xauth <!nocheck>,
                xvfb <!nocheck>,
                zlib1g-dev,
-Build-Depends-Indep: qt6-base-dev (>= 6.8~) <!nodoc>,
-                     qt6-documentation-tools (>= 6.8~) <!nodoc>,
-Standards-Version: 4.6.2
+Build-Depends-Indep: qt6-base-dev (>= 6.11~) <!nodoc>,
+                     qt6-documentation-tools (>= 6.11~) <!nodoc>,
+Standards-Version: 4.7.4
 Homepage: https://www.qt.io/developers/
 Vcs-Browser: https://salsa.debian.org/qt-kde-team/qt6/qt6-3d
 Vcs-Git: https://salsa.debian.org/qt-kde-team/qt6/qt6-3d.git
-Rules-Requires-Root: no
 
 Package: libqt63dcore6
 Architecture: any
 Multi-Arch: same
 Pre-Depends: ${misc:Pre-Depends},
-Depends: ${misc:Depends}, ${shlibs:Depends},
+Depends: ${misc:Depends},
+         ${shlibs:Depends},
 Description: Qt 6 3D Core library
  Qt is a cross-platform C++ application framework. Qt's primary feature
  is its rich set of widgets that provide standard GUI functionality.
@@ -132,6 +133,19 @@ Description: Qt 6 3D Quick Scene 2D library
  .
  This package contains the Qt 6 Quick Scene 2D library.
 
+Package: libqt63dquickscene3d6
+Architecture: any
+Multi-Arch: same
+Pre-Depends: ${misc:Pre-Depends},
+Depends: libqt63dcore6 (= ${binary:Version}),
+         ${misc:Depends},
+         ${shlibs:Depends},
+Description: Qt 6 3D Quick Scene 3D library
+ Qt is a cross-platform C++ application framework. Qt's primary feature
+ is its rich set of widgets that provide standard GUI functionality.
+ .
+ This package contains the Qt 6 Quick Scene 3D library.
+
 Package: libqt63danimation6
 Architecture: any
 Multi-Arch: same
@@ -198,7 +212,9 @@ Package: qml6-module-qt3d-core
 Architecture: any
 Multi-Arch: same
 Pre-Depends: ${misc:Pre-Depends},
-Depends: ${misc:Depends}, ${shlibs:Depends},
+Depends: ${misc:Depends},
+         ${qml6:Depends},
+         ${shlibs:Depends},
 Description: Qt 6 3D Core QML module
  Qt is a cross-platform C++ application framework. Qt's primary feature
  is its rich set of widgets that provide standard GUI functionality.
@@ -209,7 +225,9 @@ Package: qml6-module-qt3d-animation
 Architecture: any
 Multi-Arch: same
 Pre-Depends: ${misc:Pre-Depends},
-Depends: ${misc:Depends}, ${shlibs:Depends},
+Depends: ${misc:Depends},
+         ${qml6:Depends},
+         ${shlibs:Depends},
 Breaks: libqt63dquickanimation6
 Replaces: libqt63dquickanimation6
 Description: Qt 6 3D Animation QML module
@@ -222,7 +240,9 @@ Package: qml6-module-qt3d-extras
 Architecture: any
 Multi-Arch: same
 Pre-Depends: ${misc:Pre-Depends},
-Depends: ${misc:Depends}, ${shlibs:Depends},
+Depends: ${misc:Depends},
+         ${qml6:Depends},
+         ${shlibs:Depends},
 Description: Qt 6 3D Extras QML module
  Qt is a cross-platform C++ application framework. Qt's primary feature
  is its rich set of widgets that provide standard GUI functionality.
@@ -233,7 +253,9 @@ Package: qml6-module-qt3d-input
 Architecture: any
 Multi-Arch: same
 Pre-Depends: ${misc:Pre-Depends},
-Depends: ${misc:Depends}, ${shlibs:Depends},
+Depends: ${misc:Depends},
+         ${qml6:Depends},
+         ${shlibs:Depends},
 Breaks: libqt63dquickinput6
 Replaces: libqt63dquickinput6
 Description: Qt 6 3D Input QML module
@@ -246,7 +268,9 @@ Package: qml6-module-qt3d-logic
 Architecture: any
 Multi-Arch: same
 Pre-Depends: ${misc:Pre-Depends},
-Depends: ${misc:Depends}, ${shlibs:Depends},
+Depends: ${misc:Depends},
+         ${qml6:Depends},
+         ${shlibs:Depends},
 Description: Qt 6 3D Logic QML module
  Qt is a cross-platform C++ application framework. Qt's primary feature
  is its rich set of widgets that provide standard GUI functionality.
@@ -257,7 +281,9 @@ Package: qml6-module-qt3d-render
 Architecture: any
 Multi-Arch: same
 Pre-Depends: ${misc:Pre-Depends},
-Depends: ${misc:Depends}, ${shlibs:Depends},
+Depends: ${misc:Depends},
+         ${qml6:Depends},
+         ${shlibs:Depends},
 Breaks: libqt63dquickrender6
 Replaces: libqt63dquickrender6
 Description: Qt 6 3D Renderer QML module
@@ -270,7 +296,9 @@ Package: qml6-module-qtquick-scene3d
 Architecture: any
 Multi-Arch: same
 Pre-Depends: ${misc:Pre-Depends},
-Depends: ${misc:Depends}, ${shlibs:Depends},
+Depends: ${misc:Depends},
+         ${qml6:Depends},
+         ${shlibs:Depends},
 Description: Qt 6 Quick Scene 3D QML module
  Qt is a cross-platform C++ application framework. Qt's primary feature
  is its rich set of widgets that provide standard GUI functionality.
@@ -281,7 +309,9 @@ Package: qml6-module-qtquick-scene2d
 Architecture: any
 Multi-Arch: same
 Pre-Depends: ${misc:Pre-Depends},
-Depends: ${misc:Depends}, ${shlibs:Depends},
+Depends: ${misc:Depends},
+         ${qml6:Depends},
+         ${shlibs:Depends},
 Description: Qt 6 Quick Scene 2D QML module
  Qt is a cross-platform C++ application framework. Qt's primary feature
  is its rich set of widgets that provide standard GUI functionality.
@@ -300,7 +330,16 @@ Depends: libqt63danimation6 (= ${binary:Version}),
          libqt63dquick6 (= ${binary:Version}),
          libqt63dquickextras6 (= ${binary:Version}),
          libqt63dquickscene2d6 (= ${binary:Version}),
+         libqt63dquickscene3d6 (= ${binary:Version}),
          libqt63drender6 (= ${binary:Version}),
+         qml6-module-qt3d-animation (= ${binary:Version}),
+         qml6-module-qt3d-core (= ${binary:Version}),
+         qml6-module-qt3d-extras (= ${binary:Version}),
+         qml6-module-qt3d-input (= ${binary:Version}),
+         qml6-module-qt3d-logic (= ${binary:Version}),
+         qml6-module-qt3d-render (= ${binary:Version}),
+         qml6-module-qtquick-scene2d (= ${binary:Version}),
+         qml6-module-qtquick-scene3d (= ${binary:Version}),
          qt6-base-dev,
          ${misc:Depends},
 Description: Qt 6 3D - development files
@@ -311,9 +350,11 @@ Description: Qt 6 3D - development files
  applications using Qt 3D library.
 
 Package: qt6-3d-doc
+Build-Profiles: <!nodoc>
 Architecture: all
 Section: doc
-Depends: qt6-base-doc, ${misc:Depends},
+Depends: qt6-base-doc,
+         ${misc:Depends},
 Multi-Arch: foreign
 Description: Qt 6 3D documentation
  Qt is a cross-platform C++ application framework. Qt's primary feature
@@ -322,9 +363,11 @@ Description: Qt 6 3D documentation
  This package contains the documentation for the Qt 6 3D.
 
 Package: qt6-3d-doc-html
+Build-Profiles: <!nodoc>
 Architecture: all
 Section: doc
-Depends: qt6-base-doc-html, ${misc:Depends},
+Depends: qt6-base-doc-html,
+         ${misc:Depends},
 Multi-Arch: foreign
 Description: Qt 6 3D HTML documentation
  Qt is a cross-platform C++ application framework. Qt's primary feature
@@ -333,9 +376,11 @@ Description: Qt 6 3D HTML documentation
  This package contains the HTML documentation for the Qt 6 3D.
 
 Package: qt6-3d-doc-dev
+Build-Profiles: <!nodoc>
 Architecture: all
 Section: libdevel
-Depends: qt6-base-doc-dev, ${misc:Depends},
+Depends: qt6-base-doc-dev,
+         ${misc:Depends},
 Multi-Arch: foreign
 Description: Qt 6 3d tags files
  Qt is a cross-platform C++ application framework. Qt's primary feature
@@ -348,7 +393,9 @@ Package: qt6-3d-examples
 Architecture: any
 Multi-Arch: same
 Section: misc
-Depends: ${misc:Depends}, ${shlibs:Depends},
+Depends: ${misc:Depends},
+         ${qml6:Depends},
+         ${shlibs:Depends},
 Description: Qt 6 3D examples
  Qt is a cross-platform C++ application framework. Qt's primary feature
  is its rich set of widgets that provide standard GUI functionality.

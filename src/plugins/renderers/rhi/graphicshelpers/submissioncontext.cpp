@@ -595,7 +595,7 @@ bool SubmissionContext::beginDrawing(QSurface *surface)
     QRhiSwapChain *swapChain = swapChainInfo->swapChain;
 
     // Resize swapchain if needed
-    if (surface->size() != swapChain->currentPixelSize()) {
+    if (swapChain->surfacePixelSize() != swapChain->currentPixelSize()) {
         bool couldRebuild = swapChain->createOrResize();
         if (!couldRebuild)
             return false;

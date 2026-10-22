@@ -1,0 +1,3 @@
+# libQt63DQuickLogic is a private lib in a public path
+qml6-module-qt3d-logic: package-name-doesnt-match-sonames libQt63DQuickLogic6
+qml6-module-qt3d-logic: no-symbols-control-file usr/lib/*/libQt63DQuickLogic.so.6.*

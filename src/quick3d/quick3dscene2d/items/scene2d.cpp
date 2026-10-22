@@ -9,8 +9,9 @@
 #include <QtCore/qthread.h>
 #include <QtCore/qatomic.h>
 #include <QtGui/qevent.h>
-#include <QtGui/QOpenGLFunctions>
-#include <QQuickRenderTarget>
+#include <QtGui/rhi/qrhi.h>
+#include <QtQuick/QQuickGraphicsDevice>
+#include <QtQuick/QQuickRenderTarget>
 
 #include <private/qscene2d_p.h>
 #include <private/scene2d_p.h>
@@ -27,7 +28,6 @@
 #include <private/qpicktriangleevent_p.h>
 #include <private/entity_p.h>
 #include <private/trianglesvisitor_p.h>
-
 
 QT_BEGIN_NAMESPACE
 
@@ -68,6 +68,11 @@ bool RenderQmlEventHandler::event(QEvent *e)
         return true;
     }
 
+    case Scene2DEvent::Invalidate: {
+        m_node->invalidate();
+        return true;
+    }
+
     case Scene2DEvent::Quit: {
         m_node->cleanup();
         return true;
@@ -81,12 +86,12 @@ bool RenderQmlEventHandler::event(QEvent *e)
 
 Scene2D::Scene2D()
     : Qt3DRender::Render::BackendNode(Qt3DCore::QBackendNode::ReadWrite)
+    , m_surface(nullptr)
     , m_context(nullptr)
     , m_shareContext(nullptr)
+    , m_rhi(nullptr)
     , m_renderThread(nullptr)
     , m_sharedObject(nullptr)
-    , m_fbo(0)
-    , m_rbo(0)
     , m_initialized(false)
     , m_renderInitialized(false)
     , m_mouseEnabled(true)
@@ -207,44 +212,33 @@ void Scene2D::initializeRender()
                                         new Scene2DEvent(Scene2DEvent::Initialize));
             return;
         }
+
         m_context = new QOpenGLContext();
         m_context->setFormat(m_shareContext->format());
         m_context->setShareContext(m_shareContext);
         m_context->create();
 
-        m_context->makeCurrent(m_sharedObject->m_surface);
+        m_surface = new QOffscreenSurface;
+        m_surface->setFormat(m_context->format());
+        m_surface->create();
+
+        const QSurfaceFormat format = m_sharedObject->m_quickWindow->requestedFormat();
+        QRhiGles2InitParams rhiParams;
+        rhiParams.format = format;
+        rhiParams.fallbackSurface = m_surface;
+        rhiParams.window = m_sharedObject->m_quickWindow;
+        QRhiGles2NativeHandles importDev;
+        importDev.context = m_context;
+        m_rhi = QRhi::create(QRhi::OpenGLES2, &rhiParams, { }, &importDev);
+
+        const QQuickGraphicsDevice graphicsDevice = QQuickGraphicsDevice::fromRhi(m_rhi);
+        m_sharedObject->m_quickWindow->setGraphicsDevice(graphicsDevice);
         m_sharedObject->m_renderControl->initialize();
-        m_context->doneCurrent();
 
         QCoreApplication::postEvent(m_sharedObject->m_renderManager,
                                     new Scene2DEvent(Scene2DEvent::Prepare));
         m_renderInitialized = true;
     }
-}
-
-bool Scene2D::updateFbo(QOpenGLTexture *texture)
-{
-    QOpenGLFunctions *gl = m_context->functions();
-    if (m_fbo == 0) {
-        gl->glGenFramebuffers(1, &m_fbo);
-        gl->glGenRenderbuffers(1, &m_rbo);
-    }
-    // TODO: Add another codepath when GL_DEPTH24_STENCIL8 is not supported
-    gl->glBindRenderbuffer(GL_RENDERBUFFER, m_rbo);
-    gl->glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8,
-                              m_textureSize.width(), m_textureSize.height());
-    gl->glBindRenderbuffer(GL_RENDERBUFFER, 0);
-
-    gl->glBindFramebuffer(GL_FRAMEBUFFER, m_fbo);
-    gl->glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0,
-                               GL_TEXTURE_2D, texture->textureId(), 0);
-    gl->glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, m_rbo);
-    GLenum status = gl->glCheckFramebufferStatus(GL_FRAMEBUFFER);
-    gl->glBindFramebuffer(GL_FRAMEBUFFER, 0);
-
-    if (status != GL_FRAMEBUFFER_COMPLETE)
-        return false;
-    return true;
 }
 
 void Scene2D::syncRenderControl()
@@ -253,7 +247,9 @@ void Scene2D::syncRenderControl()
 
         m_sharedObject->clearSyncRequest();
 
+        m_sharedObject->m_renderControl->beginFrame();
         m_sharedObject->m_renderControl->sync();
+        m_sharedObject->m_renderControl->endFrame();
 
         // gui thread can now continue
         m_sharedObject->wake();
@@ -263,29 +259,34 @@ void Scene2D::syncRenderControl()
 void Scene2D::render()
 {
     if (m_initialized && m_renderInitialized && m_sharedObject.data() != nullptr) {
-
         QMutexLocker lock(&m_sharedObject->m_mutex);
 
         QOpenGLTexture *texture = nullptr;
         const Qt3DRender::Render::Attachment *attachmentData = nullptr;
         QMutex *textureLock = nullptr;
 
-        m_context->makeCurrent(m_sharedObject->m_surface);
-
         if (resourceAccessor()->accessResource(RenderBackendResourceAccessor::OutputAttachment,
                                                m_outputId, (void**)&attachmentData, nullptr)) {
-            if (!resourceAccessor()->accessResource(RenderBackendResourceAccessor::OGLTextureWrite,
-                                                    attachmentData->m_textureUuid,
-                                                       (void**)&texture, &textureLock)) {
-                // Need to call sync even if the texture is not in use
+            auto syncAndRequestRender = [this] {
                 syncRenderControl();
-                m_context->doneCurrent();
-                qCDebug(Qt3DRender::Quick::Scene2D) << Q_FUNC_INFO << "Texture not in use.";
                 QCoreApplication::postEvent(m_sharedObject->m_renderObject,
                                             new Scene2DEvent(Scene2DEvent::Render));
+            };
+            if (!resourceAccessor()->accessResource(RenderBackendResourceAccessor::OGLTextureWrite,
+                                                    attachmentData->m_textureUuid,
+                                                    (void **)&texture, &textureLock)) {
+                qCDebug(Qt3DRender::Quick::Scene2D) << Q_FUNC_INFO << "Texture not in use.";
+                // Need to call sync even if the texture is not in use
+                syncAndRequestRender();
                 return;
             }
             textureLock->lock();
+            if (!texture) {
+                textureLock->unlock();
+                qCDebug(Qt3DRender::Quick::Scene2D) << Q_FUNC_INFO << "Missing texture.";
+                syncAndRequestRender();
+                return;
+            }
             const QSize textureSize = QSize(texture->width(), texture->height());
             if (m_attachmentData.m_textureUuid != attachmentData->m_textureUuid
                 || m_attachmentData.m_point != attachmentData->m_point
@@ -295,24 +296,15 @@ void Scene2D::render()
                 || m_textureSize != textureSize) {
                 m_textureSize = textureSize;
                 m_attachmentData = *attachmentData;
-                if (!updateFbo(texture)) {
-                    // Need to call sync even if the fbo is not usable
-                    syncRenderControl();
-                    textureLock->unlock();
-                    m_context->doneCurrent();
-                    qCWarning(Qt3DRender::Quick::Scene2D) << Q_FUNC_INFO << "Fbo not initialized.";
-                    return;
-                }
+                m_sharedObject->m_quickWindow->setRenderTarget(QQuickRenderTarget::fromOpenGLTexture(texture->textureId(), m_textureSize));
             }
         }
-
-        // TODO QT6 FIXME
-//        if (m_fbo != m_sharedObject->m_quickWindow->renderTargetId())
-//            m_sharedObject->m_quickWindow->setRenderTarget(QQuickRenderTarget::fromNativeTexture({m_fbo, 0}, m_textureSize));
 
         // Call disallow rendering while mutex is locked
         if (m_renderPolicy == QScene2D::SingleShot)
             m_sharedObject->disallowRender();
+
+        m_sharedObject->m_renderControl->beginFrame();
 
         // Sync
         if (m_sharedObject->isSyncRequested()) {
@@ -325,20 +317,35 @@ void Scene2D::render()
         // Render
         m_sharedObject->m_renderControl->render();
 
+        m_sharedObject->m_renderControl->endFrame();
+
         // Tell main thread we are done so it can begin cleanup if this is final frame
         if (m_renderPolicy == QScene2D::SingleShot)
             QCoreApplication::postEvent(m_sharedObject->m_renderManager,
                                         new Scene2DEvent(Scene2DEvent::Rendered));
 
-        // TODOQT6 Restore functionality
-//        m_sharedObject->m_quickWindow->resetOpenGLState();
-        m_context->functions()->glFlush();
-        if (texture->isAutoMipMapGenerationEnabled())
+        if (texture->isAutoMipMapGenerationEnabled()) {
+            m_context->makeCurrent(m_surface);
             texture->generateMipMaps();
+            m_context->doneCurrent();
+        }
         textureLock->unlock();
-        m_context->doneCurrent();
 
         // gui thread can now continue
+        m_sharedObject->wake();
+    }
+}
+
+// this function gets called while the main thread is waiting
+void Scene2D::invalidate()
+{
+    if (m_renderInitialized && m_initialized) {
+        m_sharedObject->m_renderControl->invalidate();
+        m_sharedObject->m_quickWindow->setRenderTarget({ });
+        m_sharedObject->m_quickWindow->setGraphicsDevice({ });
+    }
+    if (m_sharedObject) {
+        // wake up the main thread
         m_sharedObject->wake();
     }
 }
@@ -347,18 +354,17 @@ void Scene2D::render()
 void Scene2D::cleanup()
 {
     if (m_renderInitialized && m_initialized) {
-        m_context->makeCurrent(m_sharedObject->m_surface);
-        m_sharedObject->m_renderControl->invalidate();
-        m_context->functions()->glDeleteFramebuffers(1, &m_fbo);
-        m_context->functions()->glDeleteRenderbuffers(1, &m_rbo);
-        m_context->doneCurrent();
+        delete m_rhi;
+        m_rhi = nullptr;
+        delete m_context;
+        m_context = nullptr;
+        delete m_surface;
+        m_surface = nullptr;
         m_renderInitialized = false;
     }
     if (m_initialized) {
         delete m_sharedObject->m_renderObject;
         m_sharedObject->m_renderObject = nullptr;
-        delete m_context;
-        m_context = nullptr;
         m_initialized = false;
     }
     if (m_sharedObject) {
@@ -372,7 +378,6 @@ void Scene2D::cleanup()
             renderThread->quit();
     }
 }
-
 
 bool Scene2D::registerObjectPickerEvents(Qt3DCore::QEntity *qentity)
 {

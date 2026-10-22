@@ -17,6 +17,8 @@
 #include <Qt3DCore/private/qmath3d_p.h>
 #include <Qt3DCore/private/qloadgltf_p.h>
 
+#include <QtGui/qquaternion.h>
+
 QT_BEGIN_NAMESPACE
 
 using namespace Qt3DCore;
@@ -539,7 +541,8 @@ QByteArray GLTFSkeletonLoader::resolveLocalData(const QString &path) const
 
     QString absPath = d.absoluteFilePath(path);
     QFile f(absPath);
-    f.open(QIODevice::ReadOnly);
+    if (!f.open(QIODevice::ReadOnly))
+        return QByteArray();
     return f.readAll();
 }
 

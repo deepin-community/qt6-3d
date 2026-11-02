@@ -1,4 +1,6 @@
 # SymbolsHelper-Confirmed: 6.12.0 amd64
+libQt63DCore.so.6 libqt63dcore6 #MINVER#
+* Build-Depends-Package: qt6-3d-dev
  (arch=any-amd64)_ZN8Qt3DCore12Vector3D_SSEC1ERKNS_12Vector4D_SSEE@Qt_6_PRIVATE_API 6.12.0
  (arch=any-amd64)_ZN8Qt3DCore12Vector3D_SSEC2ERKNS_12Vector4D_SSEE@Qt_6_PRIVATE_API 6.12.0
  (arch=any-amd64)_ZN8Qt3DCorelsE6QDebugRKNS_12Vector3D_SSEE@Qt_6_PRIVATE_API 6.12.0
@@ -1176,5 +1178,3 @@
  _ZThn16_NK8Qt3DCore14QAspectManager11lookupNodesERK5QListINS_7QNodeIdEE@Qt_6_PRIVATE_API 6.12.0
  _ZZN9QMetaType21registerConverterImplI5QListIPN8Qt3DCore5QNodeEE9QIterableI13QMetaSequenceEEEbSt8functionIFbPKvPvEES_S_E10unregister@Qt_6 6.12.0
  _ZZN9QMetaType23registerMutableViewImplI5QListIPN8Qt3DCore5QNodeEE9QIterableI13QMetaSequenceEEEbSt8functionIFbPvSA_EES_S_E10unregister@Qt_6 6.12.0
-* Build-Depends-Package: qt6-3d-dev
-libQt63DCore.so.6 libqt63dcore6 #MINVER#

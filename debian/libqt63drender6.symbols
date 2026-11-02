@@ -1,4 +1,6 @@
 # SymbolsHelper-Confirmed: 6.12.0 amd64
+libQt63DRender.so.6 libqt63drender6 #MINVER#
+* Build-Depends-Package: qt6-3d-dev
  (arch=!any-amd64)_ZN10Qt3DRender10RayCasting30QAbstractCollisionQueryService12addEntityHitERNS0_21QCollisionQueryResultEN8Qt3DCore7QNodeIdERK9QVector3DfS8_@Qt_6_PRIVATE_API 6.12.0
  (arch=!any-amd64)_ZN10Qt3DRender10RayCasting6QRay3D12setDirectionERK9QVector3D@Qt_6_PRIVATE_API 6.12.0
  (arch=!any-amd64)_ZN10Qt3DRender10RayCasting6QRay3D9setOriginERK9QVector3D@Qt_6_PRIVATE_API 6.12.0
@@ -4465,5 +4467,3 @@
  _ZZN9QMetaType23registerMutableViewImplI5QListIPN10Qt3DRender11QShaderDataEE9QIterableI13QMetaSequenceEEEbSt8functionIFbPvSA_EES_S_E10unregister@Qt_6 6.12.0
  _ZZN9QMetaType23registerMutableViewImplI5QListIdE9QIterableI13QMetaSequenceEEEbSt8functionIFbPvS7_EES_S_E10unregister@Qt_6 6.12.0
  _ZZN9QMetaType23registerMutableViewImplI5QListIiE9QIterableI13QMetaSequenceEEEbSt8functionIFbPvS7_EES_S_E10unregister@Qt_6 6.12.0
-* Build-Depends-Package: qt6-3d-dev
-libQt63DRender.so.6 libqt63drender6 #MINVER#
